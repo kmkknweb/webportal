@@ -298,8 +298,7 @@ async function initPage() {
   document.getElementById('facebookBtn').href = site.facebook_url;
   document.getElementById('footerTitle').textContent = site.footer_title;
   document.getElementById('footerCopy').textContent = site.copyright;
-  document.getElementById('footerRight').innerHTML = (site.footer_text || '').replaceAll('\n', '<br>').replaceAll('\n', '<br>').replaceAll('
-', '<br>');
+  document.getElementById('footerRight').innerHTML = (site.footer_text || '').replaceAll('\\n', '<br>').replaceAll('\n', '<br>');
   ['brandLogo','footerLogo'].forEach(id => { document.getElementById(id).src = site.logo; });
 
   const publishedNews = news
