@@ -47,6 +47,59 @@ body{font-family:'Noto Sans Thai',sans-serif;background:#f9eaed;color:#000}
 .footer-left{display:flex;align-items:center;gap:12px}
 .footer-logo{width:28px;height:28px;border-radius:50%;overflow:hidden;border:1px solid #f0cdd3}
 @media (max-width:900px){.nav{display:none}.hero h1{font-size:26px}}
+  :root{
+  --maroon:#7a0019;
+  --maroon-dark:#5c0013;
+  --maroon-light:#990022;
+}
+
+/* เมนูด้านบน */
+.nav a:hover,
+.nav a.active{
+  background:var(--maroon) !important;
+  color:#fff !important;
+}
+
+/* ปุ่มกลับ */
+.btn-back{
+  background:var(--maroon) !important;
+  color:#fff !important;
+  border:1px solid var(--maroon) !important;
+  box-shadow:0 4px 14px rgba(122,0,25,.22);
+  transition:.2s ease;
+}
+.btn-back:hover{
+  background:var(--maroon-dark) !important;
+  border-color:var(--maroon-dark) !important;
+}
+
+/* ปุ่มใน hero */
+.hero-actions a{
+  background:var(--maroon) !important;
+  color:#fff !important;
+  border:1px solid var(--maroon) !important;
+  box-shadow:0 4px 14px rgba(122,0,25,.18);
+  transition:.2s ease;
+}
+.hero-actions a:hover{
+  background:var(--maroon-dark) !important;
+  border-color:var(--maroon-dark) !important;
+}
+
+/* ปุ่ม filter */
+.chip{
+  background:var(--maroon) !important;
+  color:#fff !important;
+  border:1px solid var(--maroon) !important;
+  box-shadow:0 4px 12px rgba(122,0,25,.15);
+  transition:.2s ease;
+}
+.chip:hover,
+.chip.active{
+  background:var(--maroon-dark) !important;
+  color:#fff !important;
+  border-color:var(--maroon-dark) !important;
+}
 </style>
 </head>
 <body>
