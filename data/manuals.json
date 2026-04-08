@@ -6,7 +6,9 @@
     "summary": "แนวทางมาตรฐานกลางในการจัดทำ เผยแพร่ และควบคุมเนื้อหาสื่อประชาสัมพันธ์ของสมาคมและศาลเจ้า",
     "file": "manuals/media-and-public-relations-guidelines.pdf",
     "featured": true,
-    "status": "published"
+    "status": "published",
+    "access": "internal",
+    "role": ["staff", "admin", "executive"]
   },
   {
     "id": "association-regulations-and-bylaws",
@@ -15,7 +17,9 @@
     "summary": "เอกสารระเบียบข้อบังคับของสมาคมปึงเถ่ากงม่าขอนแก่น สำหรับใช้อ้างอิงในการบริหารและการดำเนินงาน",
     "file": "manuals/association-regulations-and-bylaws.pdf",
     "featured": true,
-    "status": "published"
+    "status": "published",
+    "access": "internal",
+    "role": ["member", "staff", "admin", "executive"]
   },
   {
     "id": "asset-management-admin-manual",
@@ -24,7 +28,9 @@
     "summary": "คู่มือสำหรับผู้ดูแลระบบ Admin ในการตั้งค่า เพิ่ม แก้ไข และบริหารข้อมูลในระบบทรัพย์สิน",
     "file": "manuals/asset-management-admin-manual.pdf",
     "featured": true,
-    "status": "published"
+    "status": "published",
+    "access": "restricted",
+    "role": ["admin", "executive"]
   },
   {
     "id": "asset-maintenance-manual",
@@ -33,7 +39,9 @@
     "summary": "คู่มือระบบการซ่อมแซมบำรุงรักษา การสร้างงานซ่อม ติดตามสถานะ และรับทรัพย์สินกลับคืน",
     "file": "manuals/asset-maintenance-manual.pdf",
     "featured": true,
-    "status": "published"
+    "status": "published",
+    "access": "restricted",
+    "role": ["staff", "admin", "executive"]
   },
   {
     "id": "asset-management-user-manual",
@@ -42,7 +50,9 @@
     "summary": "คู่มือสำหรับพนักงานและเจ้าหน้าที่ในการเบิก รับคืน และตรวจสอบสถานะทรัพย์สินในระบบ",
     "file": "manuals/asset-management-user-manual.pdf",
     "featured": true,
-    "status": "published"
+    "status": "published",
+    "access": "internal",
+    "role": ["staff", "admin", "executive"]
   },
   {
     "id": "ritual-birthday-of-pueng-thao-kong",
@@ -51,7 +61,9 @@
     "summary": "แนวทางการจัดพิธีวันพระสูติองค์ปึงเถ่ากง ตั้งแต่วัตถุประสงค์ ผู้ร่วมพิธี ขั้นตอนดำเนินพิธี และรายการของไหว้",
     "file": "manuals/ritual-birthday-of-pueng-thao-kong.pdf",
     "featured": true,
-    "status": "published"
+    "status": "published",
+    "access": "internal",
+    "role": ["member", "staff", "admin", "executive"]
   },
   {
     "id": "ritual-birthday-of-pueng-thao-ma-and-moon-festival",
@@ -60,6 +72,8 @@
     "summary": "แนวทางการจัดพิธีวันพระสูติองค์ปึงเถ่าม่าและวันไหว้พระจันทร์ พร้อมขั้นตอนดำเนินพิธีและรายการสิ่งของประกอบพิธี",
     "file": "manuals/ritual-birthday-of-pueng-thao-ma-and-moon-festival.pdf",
     "featured": true,
-    "status": "published"
+    "status": "published",
+    "access": "internal",
+    "role": ["member", "staff", "admin", "executive"]
   }
 ]
