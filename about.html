@@ -1,1 +1,159 @@
-<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ประวัติสมาคม</title></head><body style="font-family:sans-serif;padding:40px"><h1>ประวัติสมาคม</h1><p>หน้า placeholder สำหรับพัฒนาต่อในลำดับถัดไป</p><p><a href="index.html">← กลับหน้าแรก</a></p></body></html>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ข้อมูลสมาคมและประวัติศาลเจ้า | สมาคมปึงเถ่ากงม่าขอนแก่น</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;500;600&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --rose-50:#fdf6f7; --rose-100:#f9eaed; --rose-200:#f0cdd3; --rose-300:#e3a8b2;
+  --rose-400:#d4818f; --rose-500:#c2606f; --rose-600:#a84858; --rose-700:#8c3847;
+  --rose-800:#6e2a36; --white:#ffffff; --text-dark:#000000; --text-mid:#000000; --text-soft:#000000;
+  --shadow-sm:0 2px 8px rgba(162,72,88,0.08); --shadow-md:0 8px 32px rgba(162,72,88,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans Thai',sans-serif;background:var(--rose-100);color:#000;min-height:100vh}
+.topbar{
+  position:sticky;top:0;z-index:20;background:rgba(253,246,247,.94);
+  backdrop-filter:blur(12px);border-bottom:1px solid rgba(211,160,170,.3);
+  padding:0 24px;height:80px;display:flex;align-items:center;justify-content:space-between;gap:20px
+}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:#000}
+.logo-ring{width:60px;height:60px;border-radius:50%;border:1.5px solid var(--rose-300);background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.logo-ring img,.footer-logo img{width:100%;height:100%;object-fit:contain}
+.brand-text .name{font-family:'Noto Serif Thai',serif;font-size:18px;line-height:1.2}
+.brand-text .sub{font-size:13px;margin-top:2px}
+.nav{display:flex;gap:10px}
+.nav a,.btn-back{padding:8px 14px;border-radius:999px;text-decoration:none;color:#000}
+.nav a:hover,.nav a.active{background:var(--rose-50)}
+.btn-back{background:var(--rose-700);color:#fff}
+.hero{background:#fff;border-bottom:1px solid rgba(211,160,170,.25);padding:30px 24px 26px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--rose-600);letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:10px}
+.hero-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--rose-400)}
+.hero h1{font-family:'Noto Serif Thai',serif;font-size:32px;line-height:1.35;margin-bottom:10px}
+.hero p{max-width:920px;line-height:1.9}
+.hero-actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.hero-actions a,.section-link{padding:10px 16px;border-radius:14px;border:1px solid var(--rose-200);background:var(--rose-50);color:#000;text-decoration:none}
+.hero-actions a:hover,.section-link:hover{background:#fff}
+.main{max-width:1100px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:18px}
+.panel{background:#fff;border:1px solid rgba(211,160,170,.2);border-radius:18px;box-shadow:var(--shadow-sm);padding:22px}
+.panel h2{font-family:'Noto Serif Thai',serif;font-size:22px;margin-bottom:12px}
+.panel p{line-height:1.95;margin-bottom:12px}
+.panel ul{padding-left:20px}
+.panel li{line-height:1.85;margin-bottom:6px}
+.timeline{display:grid;grid-template-columns:160px 1fr;gap:14px;margin-top:8px}
+.timeline-year{font-weight:600;color:var(--rose-700)}
+.footer{background:#fff;border-top:1px solid rgba(211,160,170,.2);padding:20px 24px;display:flex;justify-content:space-between;gap:20px}
+.footer-left{display:flex;align-items:center;gap:12px}
+.footer-logo{width:28px;height:28px;border-radius:50%;overflow:hidden;border:1px solid var(--rose-200)}
+@media (max-width:900px){
+  .nav{display:none}
+  .hero h1{font-size:26px}
+  .timeline{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <div class="logo-ring"><img id="brandLogo" src="assets/images/logo.png" alt="โลโก้"></div>
+    <div class="brand-text">
+      <div class="name" id="brandName">สมาคมปึงเถ่ากงม่าขอนแก่น</div>
+      <div class="sub" id="brandSub">ระบบสารสนเทศภายในสมาคม</div>
+    </div>
+  </a>
+  <nav class="nav">
+    <a href="index.html">หน้าแรก</a>
+    <a class="active" href="about.html">ข้อมูลสมาคม</a>
+    <a href="beliefs.html">เทพเจ้า</a>
+    <a href="people.html">บุคลากร</a>
+  </nav>
+  <a class="btn-back" href="index.html">กลับหน้าแรก</a>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">Temple History</div>
+  <h1>ข้อมูลสมาคมและประวัติศาลเจ้าปึงเถ่ากงม่าขอนแก่น</h1>
+  <p>หน้านี้สรุปประวัติศาลเจ้า ประวัติงานสมโภช และการจัดตั้งสมาคม โดยเรียบเรียงจากเอกสารประวัติฉบับเต็ม เพื่อให้สมาชิกและผู้สนใจสามารถอ่านภาพรวมได้ง่ายบนเว็บไซต์</p>
+  <div class="hero-actions">
+    <a href="history.PDF" target="_blank" rel="noopener noreferrer">อ่านเอกสารฉบับเต็ม (PDF)</a>
+    <a href="beliefs.html">ดูหน้าเทพเจ้าและสิ่งศักดิ์สิทธิ์</a>
+  </div>
+</section>
+
+<main class="main">
+  <section class="panel">
+    <h2>ประวัติศาลเจ้า</h2>
+    <p>ศาลเจ้าปึงเถ่ากงม่าขอนแก่นก่อสร้างอยู่ในบริเวณศาลเจ้าปู่ครูเย็นซึ่งมีอยู่ก่อนแล้ว ตั้งแต่ปี พ.ศ. 2504 โดยการนำของเถ้าแก่กิมฮงและประชาชนชาวขอนแก่น ต่อมาเมื่อเวลาผ่านไปกว่า 30 ปี อาคารเดิมชำรุดทรุดโทรมและมีพื้นที่ไม่เพียงพอต่อจำนวนผู้มีจิตศรัทธาที่เข้ามากราบไหว้เพิ่มขึ้นทุกปี</p>
+    <p>ในราวปี พ.ศ. 2536 ผู้อาวุโส 3 ท่าน คือ คุณวีระชัย นิธิวัฒน์ศักดิ์, คุณชุมพล อรุณยะเดช และคุณเลี่ยงฮี่ แซ่ตั้ง ได้ร่วมกันเป็นแกนนำก่อสร้างศาลเจ้าหลังใหม่ พร้อมเปิดรับบริจาคจากพ่อค้าและประชาชนในจังหวัดขอนแก่นและจังหวัดใกล้เคียง เพื่อสร้างศาลเจ้าหลังใหม่ถวายแด่องค์ปึงเถ่ากง องค์ปึงเถ่าม่า องค์เจ้าแม่ทับทิม องค์เทพไฉ่ซิงเอี๊ย และศาลเจ้าปู่ครูเย็น โดยใช้งบประมาณก่อสร้างกว่า 12 ล้านบาท</p>
+    <p>อาคารศาลเจ้าหลังใหม่และอาคารศาลเจ้าปู่ครูเย็นหลังใหม่ ได้มีการจัดงานฉลองสมโภชเมื่อวันที่ 21–30 มีนาคม 2539 ซึ่งเป็นจุดเปลี่ยนสำคัญที่ทำให้ศาลเจ้าในรูปแบบปัจจุบันกลายเป็นศูนย์รวมศรัทธาของชุมชนจีนในจังหวัดขอนแก่น</p>
+  </section>
+
+  <section class="panel">
+    <h2>ลำดับเหตุการณ์สำคัญ</h2>
+    <div class="timeline">
+      <div class="timeline-year">พ.ศ. 2504</div>
+      <div>เริ่มมีการก่อสร้างศาลเจ้าปึงเถ่ากงม่าในบริเวณศาลเจ้าปู่ครูเย็นเดิม</div>
+      <div class="timeline-year">พ.ศ. 2536</div>
+      <div>เริ่มขับเคลื่อนการก่อสร้างศาลเจ้าหลังใหม่ โดยผู้อาวุโสและคณะกรรมการ</div>
+      <div class="timeline-year">พ.ศ. 2539</div>
+      <div>จัดงานสมโภชอาคารศาลเจ้าใหม่และอาคารศาลเจ้าปู่ครูเย็นหลังใหม่</div>
+      <div class="timeline-year">พ.ศ. 2543</div>
+      <div>จดทะเบียนจัดตั้งเป็นสมาคมปึงเถ่ากงม่า ขอนแก่น เพื่อบริหารกองทุนและสนับสนุนกิจกรรมของศาลเจ้า</div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>ประวัติงานสมโภช</h2>
+    <p>ประเพณีของการจัดงานสมโภชในอดีตคือ “งานงิ้ว” ประจำปี ซึ่งเดิมกำหนดวันมงคลตามปฏิทินจีนและไม่ตรงกันทุกปี ต่อมาจึงกำหนดวันที่ 1 เดือน 10 ตามปฏิทินจีนเป็นวันแรกของการจัดงาน รวมทั้งสิ้น 10 วัน 10 คืน และมีการแสดงงิ้วตลอดงาน จึงเรียกกันว่า “งานงิ้วประจำปี”</p>
+    <p>กิจกรรมสำคัญของงานสมโภช ได้แก่ ขบวนแห่เจ้าชมเมือง การเชิญเจ้าจากศาลต่าง ๆ เข้าร่วมพิธี การเชิดสิงโตถวายพรแก่บ้านเรือนและกิจการค้าตลอดเส้นทาง รวมถึงพิธีอัญเชิญเจ้าและการประกอบพิธีสักการะตามธรรมเนียมจีนโพ้นทะเลที่สืบทอดกันมาอย่างยาวนาน</p>
+    <p>งานสมโภชจึงไม่ใช่เพียงงานประจำปีเท่านั้น แต่ยังเป็นพื้นที่ที่สะท้อนความสามัคคี ความศรัทธา และสายสัมพันธ์ของชุมชนจีนในจังหวัดขอนแก่นจากรุ่นสู่รุ่น</p>
+  </section>
+
+  <section class="panel">
+    <h2>การจัดตั้งสมาคม</h2>
+    <p>ในอดีต คณะกรรมการจัดงานประจำปีแต่ละชุดจะนำเงินบริจาคและรายได้จากการประมูลสิ่งของมงคลไปใช้ในการจัดงานและดูแลค่าใช้จ่ายของศาลเจ้าตลอดปี เมื่อหมดสมัย เงินคงเหลือจะถูกนำไปบริจาคแก่องค์กรการกุศล การดำเนินการเช่นนี้ทำต่อเนื่องทุกปี</p>
+    <p>เมื่อยอดเงินคงเหลือจากการจัดงานและการประมูลเพิ่มขึ้นมาก โดยเฉพาะในปี พ.ศ. 2539 ที่มีเงินเหลือกว่า 8 ล้านบาท จึงเกิดแนวคิดในการตั้งกองทุนถาวรและสร้างระบบบริหารที่ชัดเจน จนในปี พ.ศ. 2543 ได้มีการจดทะเบียนตั้งเป็น “สมาคมปึงเถ่ากงม่า ขอนแก่น” เพื่อทำหน้าที่ดูแลกองทุน สนับสนุนกิจกรรมของคณะกรรมการจัดงานประจำปี และเป็นพี่เลี้ยงให้การดำเนินงานของศาลเจ้ามีความมั่นคงและยั่งยืนมากขึ้น</p>
+  </section>
+
+  <section class="panel">
+    <h2>หัวข้อที่เกี่ยวข้อง</h2>
+    <ul>
+      <li>ภาพการก่อสร้างศาลเจ้าเดิมและศาลเจ้าหลังใหม่</li>
+      <li>พิธีลงเสาเอกและงานสมโภชอาคารหลังใหม่</li>
+      <li>ประวัติเทพเจ้าและสิ่งศักดิ์สิทธิ์ภายในศาลเจ้า</li>
+      <li>พิธีคัดเลือกคณะกรรมการจัดงานสมโภชฯ ประจำปี</li>
+    </ul>
+    <p><a class="section-link" href="beliefs.html">ไปยังหน้าเทพเจ้าและสิ่งศักดิ์สิทธิ์</a></p>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-left">
+    <div class="footer-logo"><img id="footerLogo" src="assets/images/logo.png" alt="โลโก้"></div>
+    <div><strong id="footerTitle">สมาคมปึงเถ่ากงม่าขอนแก่น</strong><br><span id="footerCopy">© พ.ศ. 2568 สงวนลิขสิทธิ์</span></div>
+  </div>
+  <div id="footerRight">ระบบสารสนเทศภายในสมาคม<br>สำหรับสมาชิกและกรรมการเท่านั้น</div>
+</footer>
+
+<script>
+async function loadJSON(path){const r=await fetch(path); if(!r.ok) throw new Error(path); return r.json();}
+async function initPage(){
+  let site={name:'สมาคมปึงเถ่ากงม่าขอนแก่น',subtitle:'ระบบสารสนเทศภายในสมาคม',logo:'assets/images/logo.png',footer_title:'สมาคมปึงเถ่ากงม่าขอนแก่น',footer_text:'ระบบสารสนเทศภายในสมาคม\\nสำหรับสมาชิกและกรรมการเท่านั้น',copyright:'© พ.ศ. 2568 สงวนลิขสิทธิ์'};
+  try{const s=await loadJSON('data/site.json'); site={...site,...s};}catch(e){}
+  document.title=`ข้อมูลสมาคมและประวัติศาลเจ้า | ${site.name}`;
+  document.getElementById('brandName').textContent=site.name;
+  document.getElementById('brandSub').textContent=site.subtitle||'';
+  document.getElementById('footerTitle').textContent=site.footer_title||site.name;
+  document.getElementById('footerCopy').textContent=site.copyright||'';
+  document.getElementById('footerRight').innerHTML=(site.footer_text||'').replace(/\\n|\n/g,'<br>');
+  ['brandLogo','footerLogo'].forEach(id=>document.getElementById(id).src=site.logo);
+}
+initPage();
+</script>
+</body>
+</html>
