@@ -120,6 +120,52 @@ tr:last-child td{border-bottom:none}
   .person-card{grid-template-columns:72px 1fr}
   .person-photo,.person-placeholder{width:72px;height:72px}
 }
+  :root{
+  --maroon:#7a0019;
+  --maroon-dark:#5c0013;
+}
+
+/* เมนูด้านบน */
+.nav-link{
+  background:var(--maroon);
+  color:#fff !important;
+  border:1px solid var(--maroon);
+  box-shadow:0 4px 12px rgba(122,0,25,.14);
+}
+.nav-link:hover,
+.nav-link.active{
+  background:var(--maroon-dark);
+  color:#fff !important;
+  border-color:var(--maroon-dark);
+}
+
+/* ปุ่มกลับ */
+.btn-back{
+  background:var(--maroon) !important;
+  color:#fff !important;
+  border:1px solid var(--maroon) !important;
+  box-shadow:0 4px 14px rgba(122,0,25,.22);
+  transition:.2s ease;
+}
+.btn-back:hover{
+  background:var(--maroon-dark) !important;
+  border-color:var(--maroon-dark) !important;
+}
+
+/* ปุ่ม filter */
+.filter-chip{
+  background:var(--maroon) !important;
+  color:#fff !important;
+  border:1px solid var(--maroon) !important;
+  box-shadow:0 4px 12px rgba(122,0,25,.15);
+  transition:.2s ease;
+}
+.filter-chip:hover,
+.filter-chip.active{
+  background:var(--maroon-dark) !important;
+  color:#fff !important;
+  border-color:var(--maroon-dark) !important;
+}
 </style>
 </head>
 <body>
