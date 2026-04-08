@@ -283,7 +283,7 @@ async function initPage() {
   }
 
   const [news, manuals, systems] = await Promise.all([
-    loadJSON('webportal/data/news.json').catch(() => []),
+    loadJSON('data/news.json').catch(() => []),
     loadJSON('data/manuals.json').catch(() => []),
     loadJSON('data/systems.json').catch(() => [])
   ]);
