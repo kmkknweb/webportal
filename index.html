@@ -168,8 +168,7 @@ body::before{
       <h1 id="heroTitle">ศูนย์กลางประกาศ ข่าวสาร และทางเข้าระบบงาน</h1>
       <p id="heroDescription">หน้าแรกนี้ออกแบบสำหรับสมาชิกและผู้ปฏิบัติงานภายใน เพื่อให้เปิดมาแล้วเห็นทันทีว่ามีประกาศอะไร งานใดใกล้ถึง และต้องเข้าใช้ระบบไหนต่อ</p>
     </div>
-    <div class="hero-right">
-      <a class="pill-btn" href="manuals.html">เอกสารองค์กร</a>
+    <div class="hero-right">      
       <a class="pill-btn" href="news.html">ข่าวสารทั้งหมด</a>
       <a class="pill-btn" id="facebookBtn" href="https://www.facebook.com/kongmakkn" target="_blank" rel="noopener noreferrer">Facebook</a>
     </div>
@@ -177,10 +176,11 @@ body::before{
 
   <div class="quick-menu-wrap">
     <div class="quick-menu" id="quickMenu">
-      <a class="quick-btn yellow" href="manuals.html">เอกสารองค์กร</a>
-      <a class="quick-btn yellow" href="meetings.html">รายงานประชุม</a>
+      
       <a class="quick-btn green" href="people.html">บุคลากร</a>
       <a class="quick-btn green" href="about.html">ข้อมูลสมาคม</a>
+      <a class="quick-btn yellow" href="manuals.html">เอกสารองค์กร</a>
+      <a class="quick-btn yellow" href="meetings.html">รายงานประชุม</a>
       <a class="quick-btn red" href="systems.html">ระบบงานสำคัญ</a>
       <a class="quick-btn red" href="login.html">สำหรับผู้บริหาร</a>
     </div>
@@ -268,7 +268,7 @@ async function initPage() {
   document.getElementById('heroTitle').textContent = site.hero_title || 'ศูนย์กลางประกาศ ข่าวสาร และทางเข้าระบบงาน';
   document.getElementById('heroDescription').textContent = site.hero_description || '';
   document.getElementById('topLogin').href = site.login_url;
-  document.getElementById('facebookBtn').href = site.facebook_url;
+  
   document.getElementById('footerTitle').textContent = site.footer_title;
   document.getElementById('footerCopy').textContent = site.copyright;
   document.getElementById('footerRight').innerHTML = (site.footer_text || '').replace(/\\n|\n/g, '<br>');
