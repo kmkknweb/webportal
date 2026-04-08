@@ -6,7 +6,9 @@
     "url": "#",
     "featured": true,
     "visibility": "members",
-    "status": "active"
+    "status": "active",
+    "access": "internal",
+    "role": ["staff", "admin", "executive"]
   },
   {
     "id": "system-002",
@@ -15,7 +17,9 @@
     "url": "#",
     "featured": true,
     "visibility": "members",
-    "status": "active"
+    "status": "active",
+    "access": "internal",
+    "role": ["member", "staff", "admin", "executive"]
   },
   {
     "id": "system-003",
@@ -24,6 +28,8 @@
     "url": "#",
     "featured": true,
     "visibility": "members",
-    "status": "active"
+    "status": "active",
+    "access": "internal",
+    "role": ["staff", "admin", "executive"]
   }
 ]
