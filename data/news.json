@@ -1,0 +1,62 @@
+[
+  {
+    "id": "news-001",
+    "title": "ประกาศนัดประชุมสามัญประจำปี 2568",
+    "summary": "แจ้งกำหนดการประชุมใหญ่ประจำปีของสมาคม",
+    "content": "",
+    "date": "2025-04-05",
+    "category": "announcement",
+    "dot_color": "#1D9E75",
+    "cover_image": "",
+    "pinned": true,
+    "visibility": "public",
+    "status": "published",
+    "created_at": "2025-04-01",
+    "updated_at": "2025-04-05"
+  },
+  {
+    "id": "news-002",
+    "title": "กำหนดการงานไหว้เจ้าประจำปี",
+    "summary": "แจ้งกำหนดการงานพิธีสำคัญประจำปี",
+    "content": "",
+    "date": "2025-03-28",
+    "category": "event",
+    "dot_color": "#BA7517",
+    "cover_image": "",
+    "pinned": false,
+    "visibility": "public",
+    "status": "published",
+    "created_at": "2025-03-25",
+    "updated_at": "2025-03-28"
+  },
+  {
+    "id": "news-003",
+    "title": "อัปโหลดรายงานการประชุมกรรมการ ครั้งที่ 2/2568",
+    "summary": "เผยแพร่รายงานการประชุมกรรมการล่าสุด",
+    "content": "",
+    "date": "2025-03-15",
+    "category": "document",
+    "dot_color": "#c2606f",
+    "cover_image": "",
+    "pinned": false,
+    "visibility": "members",
+    "status": "published",
+    "created_at": "2025-03-15",
+    "updated_at": "2025-03-15"
+  },
+  {
+    "id": "news-004",
+    "title": "ระเบียบการใช้พื้นที่ศาลเจ้าฉบับปรับปรุง",
+    "summary": "อัปเดตระเบียบการใช้พื้นที่ศาลเจ้า",
+    "content": "",
+    "date": "2025-03-02",
+    "category": "regulation",
+    "dot_color": "#b4b2a9",
+    "cover_image": "",
+    "pinned": false,
+    "visibility": "members",
+    "status": "published",
+    "created_at": "2025-03-02",
+    "updated_at": "2025-03-02"
+  }
+]

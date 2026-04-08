@@ -1,0 +1,29 @@
+[
+  {
+    "id": "system-001",
+    "title": "ระบบทรัพย์สิน",
+    "description": "ระบบค้นหาและติดตามข้อมูลทรัพย์สินของสมาคม",
+    "url": "#",
+    "featured": true,
+    "visibility": "members",
+    "status": "active"
+  },
+  {
+    "id": "system-002",
+    "title": "ระบบเอกสาร",
+    "description": "ศูนย์รวมเอกสาร คู่มือ และไฟล์อ้างอิงสำคัญ",
+    "url": "#",
+    "featured": true,
+    "visibility": "members",
+    "status": "active"
+  },
+  {
+    "id": "system-003",
+    "title": "ระบบบริจาค",
+    "description": "ระบบติดตามการรับบริจาคและกิจกรรมระดมทุน",
+    "url": "#",
+    "featured": true,
+    "visibility": "members",
+    "status": "active"
+  }
+]

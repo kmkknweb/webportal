@@ -1,0 +1,27 @@
+[
+  {
+    "title": "ประวัติสมาคม",
+    "url": "#history",
+    "visibility": "public"
+  },
+  {
+    "title": "ข่าวสาร",
+    "url": "#news",
+    "visibility": "public"
+  },
+  {
+    "title": "คู่มือ",
+    "url": "manuals.html",
+    "visibility": "members"
+  },
+  {
+    "title": "ระบบงาน",
+    "url": "#systems",
+    "visibility": "members"
+  },
+  {
+    "title": "ติดต่อ",
+    "url": "#contact",
+    "visibility": "public"
+  }
+]
