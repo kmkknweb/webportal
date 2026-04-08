@@ -165,13 +165,6 @@ body::before{
       </section>
     </div>
 
-    <section class="panel" id="systems">
-      <div class="panel-head">
-        <div class="panel-title">ระบบงานสำคัญ</div>
-        <a class="panel-more" href="systems.html">ดูทั้งหมด →</a>
-      </div>
-      <div class="system-grid" id="systemsGrid"></div>
-    </section>
   </main>
 
   <footer class="footer">
@@ -312,21 +305,6 @@ async function initPage() {
   }
       
 
-  const systemsGrid = document.getElementById('systemsGrid');
-  systemsGrid.innerHTML = '';
-  const featuredSystems = systems.filter(item => item.featured && item.status === 'active').slice(0,3);
-  if (!featuredSystems.length) {
-    systemsGrid.innerHTML = '<div class="empty-note">ยังไม่มีระบบงานที่ตั้งค่าไว้</div>';
-  } else {
-    featuredSystems.forEach(item => {
-      const a = document.createElement('a');
-      a.className = 'system-card';
-      a.href = item.url || '#';
-      a.innerHTML = `<div class="system-kicker">System</div><h3>${item.title || ''}</h3><p>${item.description || ''}</p>`;
-      systemsGrid.appendChild(a);
-    });
-  }
-}
 initPage().catch(console.error);
 </script>
 </body>
