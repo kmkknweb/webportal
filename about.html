@@ -13,6 +13,11 @@
   --rose-400:#d4818f; --rose-500:#c2606f; --rose-600:#a84858; --rose-700:#8c3847;
   --rose-800:#6e2a36; --white:#ffffff; --text-dark:#000000; --text-mid:#000000; --text-soft:#000000;
   --shadow-sm:0 2px 8px rgba(162,72,88,0.08); --shadow-md:0 8px 32px rgba(162,72,88,0.12);
+
+  /* เพิ่มสีแดงเลือดหมู */
+  --maroon:#7a0019;
+  --maroon-dark:#5c0013;
+  --maroon-light:#990022;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -28,17 +33,67 @@ body{font-family:'Noto Sans Thai',sans-serif;background:var(--rose-100);color:#0
 .brand-text .name{font-family:'Noto Serif Thai',serif;font-size:18px;line-height:1.2}
 .brand-text .sub{font-size:13px;margin-top:2px}
 .nav{display:flex;gap:10px}
-.nav a,.btn-back{padding:8px 14px;border-radius:999px;text-decoration:none;color:#000}
-.nav a:hover,.nav a.active{background:var(--rose-50)}
-.btn-back{background:var(--rose-700);color:#fff}
+
+/* เมนูทั่วไป */
+.nav a{
+  padding:8px 14px;
+  border-radius:999px;
+  text-decoration:none;
+  color:#000;
+  transition:.2s ease;
+}
+
+/* เมนูที่ active / hover ให้เด่นขึ้น */
+.nav a:hover,
+.nav a.active{
+  background:var(--maroon);
+  color:#fff;
+}
+
+/* ปุ่มกลับหน้าแรก */
+.btn-back{
+  padding:10px 16px;
+  border-radius:999px;
+  text-decoration:none;
+  background:var(--maroon);
+  color:#fff;
+  font-weight:500;
+  border:1px solid var(--maroon);
+  box-shadow:0 4px 14px rgba(122,0,25,.22);
+  transition:.2s ease;
+}
+.btn-back:hover{
+  background:var(--maroon-dark);
+  border-color:var(--maroon-dark);
+}
+
+/* ปุ่มใน hero + section link */
+.hero-actions a,
+.section-link{
+  display:inline-block;
+  padding:10px 16px;
+  border-radius:14px;
+  border:1px solid var(--maroon);
+  background:var(--maroon);
+  color:#fff;
+  text-decoration:none;
+  font-weight:500;
+  box-shadow:0 4px 14px rgba(122,0,25,.18);
+  transition:.2s ease;
+}
+.hero-actions a:hover,
+.section-link:hover{
+  background:var(--maroon-dark);
+  border-color:var(--maroon-dark);
+  color:#fff;
+}
+
 .hero{background:#fff;border-bottom:1px solid rgba(211,160,170,.25);padding:30px 24px 26px}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--rose-600);letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:10px}
 .hero-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--rose-400)}
 .hero h1{font-family:'Noto Serif Thai',serif;font-size:32px;line-height:1.35;margin-bottom:10px}
 .hero p{max-width:920px;line-height:1.9}
 .hero-actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
-.hero-actions a,.section-link{padding:10px 16px;border-radius:14px;border:1px solid var(--rose-200);background:var(--rose-50);color:#000;text-decoration:none}
-.hero-actions a:hover,.section-link:hover{background:#fff}
 .main{max-width:1100px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:18px}
 .panel{background:#fff;border:1px solid rgba(211,160,170,.2);border-radius:18px;box-shadow:var(--shadow-sm);padding:22px}
 .panel h2{font-family:'Noto Serif Thai',serif;font-size:22px;margin-bottom:12px}
