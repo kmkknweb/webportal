@@ -40,7 +40,7 @@
     "shop_name": "วันมันนี่",
     "photo": "",
     "order": 3,
-    "term": "2568-2569",
+    "term": "",
     "access": "public",
     "role": [
       "member",
@@ -57,7 +57,7 @@
     "shop_name": "แฟรี่พลาซ่า",
     "photo": "",
     "order": 4,
-    "term": "2568-2569",
+    "term": "",
     "access": "public",
     "role": [
       "member",
@@ -74,7 +74,7 @@
     "shop_name": "มิตซูยนต์ไพบูลย์ ขอนแก่น",
     "photo": "",
     "order": 5,
-    "term": "2568-2569",
+    "term": "",
     "access": "public",
     "role": [
       "member",
@@ -91,7 +91,7 @@
     "shop_name": "เคี้ยงเทรดดิ้ง",
     "photo": "",
     "order": 6,
-    "term": "2568-2569",
+    "term": "",
     "access": "public",
     "role": [
       "member",
@@ -108,7 +108,7 @@
     "shop_name": "เทพประทานพรเอ็นเนอร์จี",
     "photo": "",
     "order": 7,
-    "term": "2568-2569",
+    "term": "",
     "access": "public",
     "role": [
       "member",
@@ -125,7 +125,7 @@
     "shop_name": "เจริญยิ่งซัพพลาย",
     "photo": "",
     "order": 8,
-    "term": "2568-2569",
+    "term": "",
     "access": "public",
     "role": [
       "member",
@@ -142,7 +142,7 @@
     "shop_name": "สินทวีโภคภัณฑ์(ขก)",
     "photo": "",
     "order": 9,
-    "term": "2568-2569",
+    "term": "",
     "access": "public",
     "role": [
       "member",
@@ -159,7 +159,7 @@
     "shop_name": "",
     "photo": "",
     "order": 10,
-    "term": "2568-2569",
+    "term": "",
     "access": "public",
     "role": [
       "member",
