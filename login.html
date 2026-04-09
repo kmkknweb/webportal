@@ -71,7 +71,7 @@ window.login = function(){
   signInWithEmailAndPassword(auth, email, password)
     .then(()=>{
       document.getElementById('msg').innerText = "เข้าสู่ระบบสำเร็จ";
-      window.location.href = "index.html";
+      window.location.href = "systems.html";
     })
     .catch(err=>{
       document.getElementById('msg').innerText = "ผิดพลาด: "+err.message;
