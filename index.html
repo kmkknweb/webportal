@@ -37,8 +37,9 @@ body::before{
 }
 .brand{display:flex;align-items:center;gap:14px;text-decoration:none}
 .logo-ring{
-  width:60px;height:60px;border-radius:50%;border:1.5px solid var(--rose-300);background:var(--white);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;box-shadow:var(--shadow-sm)
+  border:none;
+  background:transparent;
+  border-radius:0;
 }
 .logo-ring img,.footer-logo img{width:100%;height:100%;object-fit:contain}
   .brand{
@@ -49,12 +50,14 @@ body::before{
   }
 .brand-text{
   min-width:0;
+  
 }
   .brand-text .name{
   font-size:15px;
   line-height:1.2;
   overflow:hidden;
   text-overflow:ellipsis;
+  color:#000 !important;
   white-space:nowrap;
   }
 .topbar-nav{display:flex;gap:8px}
