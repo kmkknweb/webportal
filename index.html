@@ -41,15 +41,22 @@ body::before{
   display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;box-shadow:var(--shadow-sm)
 }
 .logo-ring img,.footer-logo img{width:100%;height:100%;object-fit:contain}
+  .brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  }
+.brand-text{
+  min-width:0;
+}
   .brand-text .name{
-  font-size:16px;
+  font-size:15px;
   line-height:1.2;
-  color:#fff
-  white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  white-space:nowrap;
   }
-.brand-text .sub{font-size:13px;color:var(--text-soft);margin-top:2px}
 .topbar-nav{display:flex;gap:8px}
 .nav-link{
   font-size:13px;color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;
@@ -178,6 +185,12 @@ body::before{
   .news-card{grid-template-columns:auto 1fr}
   .news-meta{grid-column:2}
 }
+  @media (max-width:600px){
+  .btn-login{
+    padding:6px 10px;
+    font-size:12px;
+  }
+  
   @media (max-width:600px){
   .brand-text .name{
     font-size:14px;
