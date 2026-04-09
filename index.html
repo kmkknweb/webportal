@@ -381,7 +381,7 @@ async function initPage() {
     });
   }
 }
-initPage().catch(console.error);
+window.addEventListener('DOMContentLoaded', initPage);
 </script>
 </body>
 </html>
