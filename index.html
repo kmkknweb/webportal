@@ -328,26 +328,6 @@ async function initPage() {
   ['brandLogo','footerLogo'].forEach(id => document.getElementById(id).src = site.logo);
 
   const publishedNews = news.filter(item => item.status === 'published').sort((a,b) => new Date(b.date) - new Date(a.date));
-  const announceList = document.getElementById('announceList');
-  announceList.innerHTML = '';
-  const announcements = publishedNews.slice(0,3);
-  if (!announcements.length) {
-    announceList.innerHTML = '<div class="empty-note">ยังไม่มีประกาศในระบบ</div>';
-  } else {
-    announcements.forEach(item => {
-      const wrap = document.createElement('div');
-      wrap.className = 'news-card';
-      wrap.innerHTML = `
-        <div class="news-dot" style="background:${item.dot_color || '#c2606f'}"></div>
-        <div>
-          <h3>${item.title || ''}</h3>
-          <p>${item.summary || ''}</p>
-        </div>
-        <div class="news-meta">${formatThaiDate(item.date || '')}</div>
-      `;
-      announceList.appendChild(wrap);
-    });
-  }
 
   const calendarList = document.getElementById('calendarList');
   calendarList.innerHTML = '';
