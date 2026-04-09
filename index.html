@@ -222,23 +222,38 @@ body::before{
   <span><i class="dot red"></i> เอกสารสำคัญเฉพาะผู้มีสิทธิ์</span>
 </div>
   <main class="main">
-    <div class="grid-main">
-      <section class="panel" id="announcements">
-        <div class="panel-head">
-          <div class="panel-title">ข่าวล่าสุด</div>
-          <a class="panel-more" href="news.html">ดูทั้งหมด →</a>
-        </div>
-        <div class="fb-page" data-href="https://www.facebook.com/kongmakkn" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/kongmakkn" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/kongmakkn">ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</a></blockquote></div>
-      </section>
 
-      <section class="panel" id="calendar">
-        <div class="panel-head">
-          <div class="panel-title">ปฏิทินงานที่กำลังจะมาถึง</div>
-          <span class="panel-more">รายการใกล้ถึง</span>
-        </div>
-        <div class="calendar-list" id="calendarList"></div>
-      </section>
+  <section class="panel" id="announcements">
+    <div class="panel-head">
+      <div class="panel-title">ข่าวล่าสุด</div>
+      <a class="panel-more" href="news.html">ดูทั้งหมด →</a>
     </div>
+
+    <div class="fb-box">
+      <div class="fb-page"
+        data-href="https://www.facebook.com/kongmakkn"
+        data-tabs="timeline"
+        data-width=""
+        data-height="400"
+        data-small-header="false"
+        data-adapt-container-width="true"
+        data-hide-cover="false"
+        data-show-facepile="false">
+        <blockquote cite="https://www.facebook.com/kongmakkn" class="fb-xfbml-parse-ignore">
+          <a href="https://www.facebook.com/kongmakkn">ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</a>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid-main">
+    <section class="panel" id="calendar">
+      <div class="panel-head">
+        <div class="panel-title">ปฏิทินงานที่กำลังจะมาถึง</div>
+        <span class="panel-more">รายการใกล้ถึง</span>
+      </div>
+      <div class="calendar-list" id="calendarList"></div>
+    </section>
 
     <section class="panel" id="updates">
       <div class="panel-head">
@@ -247,7 +262,10 @@ body::before{
       </div>
       <div class="updates-list" id="updatesList"></div>
     </section>
+  </div>
+
   </main>
+    
 
   <footer class="footer">
     <div class="footer-left">
