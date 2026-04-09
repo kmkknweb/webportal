@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+iii<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8"/>
@@ -162,6 +162,11 @@ window.logout = function(){
     window.location.href = "login.html";
   });
 }
+  window.addEventListener('pageshow', () => {
+  if (!auth.currentUser) {
+    window.location.href = 'login.html';
+  }
+});
                      </script>
 </body>
 </html>
