@@ -6,7 +6,7 @@
     "shop_name": "ขอนแก่นแหอวน",
     "photo": "",
     "order": 1,
-  //  "term": "2568-2569",
+     "term": "",
     "access": "public",
     "role": [
       "member",
@@ -23,7 +23,7 @@
     "shop_name": "เจริญธานี ขอนแก่น",
     "photo": "",
     "order": 2,
-    "term": "2568-2569",
+    "term": "",
     "access": "public",
     "role": [
       "member",
