@@ -317,73 +317,24 @@ body::before{
 </div>
 
 <script>
-/* ===== ตั้งค่า Facebook Token ===== */
-const FB_TOKEN = 'EAAZBDFUrUVgEBROZCZA2p4ZB6rN6zRxblVCmFKcccc9A1LRivVj0CQZBa54HncatRoX8x3lkdgOlok3HxU8TJZC5phbvcxRxVZBCCxl7ZClgIX5F6l2J3kHTR5ClDqOS5r7NcYu9aZCUTtS04Yfzdo93lsSsevDViQwHZCYIKYXZAC0TtKlZCMm8kh9h8ZAjlWJ7U';
-const FB_PAGE  = 'kongmakkn';
-/* ================================= */
+async function loadNews(){
+  const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://rss.app/feeds/MbweeQ4a5GQXn1w8.xml");
+  const data = await res.json();
 
-async function loadJSON(path) {
-  const response = await fetch(path);
-  if (!response.ok) throw new Error(`Failed to load ${path}`);
-  return await response.json();
+  const container = document.getElementById("announceList");
+  container.innerHTML = "";
+
+  data.items.slice(0,3).forEach(item=>{
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <h3>${item.title}</h3>
+      <p>${item.description.substring(0,100)}...</p>
+    `;
+    container.appendChild(div);
+  });
 }
-function formatThaiDate(dateString) {
-  const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-  const date = new Date(dateString);
-  if (isNaN(date)) return dateString;
-  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear() + 543}`;
-}
-
-/* ===== ฟังก์ชันดึงโพสต์ Facebook ===== */
-async function loadFBPosts() {
-  const feed = document.getElementById('fbNewsFeed');
-  try {
-    const pageRes = await fetch(
-      `https://graph.facebook.com/v19.0/${FB_PAGE}?fields=id&access_token=${FB_TOKEN}`
-    );
-    const pageData = await pageRes.json();
-    if (pageData.error) throw new Error(pageData.error.message);
-
-    const postsRes = await fetch(
-      `https://graph.facebook.com/v19.0/${pageData.id}/posts?fields=message,story,full_picture,permalink_url,created_time&limit=10&access_token=${FB_TOKEN}`
-    );
-    const postsData = await postsRes.json();
-    if (postsData.error) throw new Error(postsData.error.message);
-
-    const posts = postsData.data || [];
-    feed.innerHTML = '';
-
-    if (!posts.length) {
-      feed.innerHTML = '<div class="fb-loading">ไม่พบโพสต์ในขณะนี้</div>';
-      return;
-    }
-
-    posts.forEach(post => {
-      const text = post.message || post.story || '(ไม่มีข้อความ)';
-      const date = new Date(post.created_time).toLocaleDateString('th-TH', {
-        year: 'numeric', month: 'long', day: 'numeric'
-      });
-      const card = document.createElement('a');
-      card.className = 'fb-post-card';
-      card.href = post.permalink_url;
-      card.target = '_blank';
-      card.rel = 'noopener noreferrer';
-      card.innerHTML = `
-        ${post.full_picture
-          ? `<img src="${post.full_picture}" alt="" onerror="this.outerHTML='<div class=\\'no-img\\'>🏮</div>'">`
-          : '<div class="no-img">🏮</div>'}
-        <div>
-          <div class="post-date">📅 ${date}</div>
-          <div class="post-text">${text}</div>
-        </div>
-      `;
-      feed.appendChild(card);
-    });
-  } catch (e) {
-    feed.innerHTML = `<div class="fb-loading" style="color:#c00;">โหลดไม่สำเร็จ: ${e.message}</div>`;
-  }
-}
-/* ===== จบฟังก์ชัน Facebook ===== */
+loadNews();
+</script>
 
 async function initPage() {
   let site = {
