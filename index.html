@@ -274,7 +274,7 @@ async function loadNews(){
   container.innerHTML = "กำลังโหลดข่าว...";
 
   try {
-    const rssUrl = "ใส่ลิงก์ RSS ของคุณ";
+    const rssUrl = "https://rss.app/feeds/MbweeQ4a5GQXn1w8.xml";
     const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(rssUrl);
 
     const res = await fetch(apiUrl);
