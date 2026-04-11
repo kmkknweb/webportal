@@ -20,88 +20,211 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--rose-100);color:var(--text-dark);min-height:100vh;position:relative;overflow-x:hidden}
+body{
+  font-family:'Noto Sans Thai',sans-serif;
+  background-color:var(--rose-100);
+  color:var(--text-dark);
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
+}
 body::before{
-  content:'';position:fixed;inset:0;
+  content:'';
+  position:fixed;
+  inset:0;
   background-image:
     radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(196,128,143,0.15) 0%, transparent 50%);
-  pointer-events:none;z-index:0
+  pointer-events:none;
+  z-index:0;
 }
 .page{position:relative;z-index:1}
+
 .topbar{
-  position:sticky;top:0;z-index:100;background:rgba(253,246,247,.92);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(211,160,170,.3);padding:0 24px;height:80px;
-  display:flex;align-items:center;justify-content:space-between;gap:18px
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(253,246,247,.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(211,160,170,.3);
+  padding:0 24px;
+  height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
 }
-.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  min-width:0;
+}
 .logo-ring{
   border:none;
   background:transparent;
   border-radius:0;
-}
-.logo-ring img,.footer-logo img{width:60px;height:60px;object-fit:contain}
-  .brand{
   display:flex;
   align-items:center;
-  gap:10px;
-  min-width:0;
-  }
-.brand-text{
-  min-width:0;
-  
+  justify-content:center;
+  flex-shrink:0;
 }
-  .brand-text .name{
+.logo-ring img,.footer-logo img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+}
+.brand-text{min-width:0}
+.brand-text .name{
+  font-family:'Noto Serif Thai',serif;
   font-size:15px;
+  font-weight:500;
+  color:#000;
   line-height:1.2;
   overflow:hidden;
   text-overflow:ellipsis;
-  color:#000 !important;
   white-space:nowrap;
-  }
+}
+.brand-text .sub{
+  font-size:12px;
+  color:#000;
+  margin-top:2px;
+}
 .topbar-nav{display:flex;gap:8px}
 .nav-link{
-  font-size:13px;color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;
-  background:var(--maroon);border:1px solid var(--maroon);box-shadow:0 4px 12px rgba(122,0,25,.14);
-  transition:all .18s ease
+  font-size:13px;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:999px;
+  text-decoration:none;
+  background:var(--maroon);
+  border:1px solid var(--maroon);
+  box-shadow:0 4px 12px rgba(122,0,25,.14);
+  transition:all .18s ease;
 }
-.nav-link:hover{background:var(--maroon-dark);border-color:var(--maroon-dark);color:#fff}
+.nav-link:hover{
+  background:var(--maroon-dark);
+  border-color:var(--maroon-dark);
+  color:#fff;
+}
 .btn-login{
-  display:flex;align-items:center;gap:7px;padding:9px 18px;background:var(--maroon);color:var(--white);
-  border:1px solid var(--maroon);border-radius:999px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;
-  box-shadow:0 4px 14px rgba(122,0,25,.22);transition:.2s ease;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 18px;
+  background:var(--maroon);
+  color:var(--white);
+  border:1px solid var(--maroon);
+  border-radius:999px;
+  font-size:13px;
+  font-weight:500;
+  text-decoration:none;
+  white-space:nowrap;
+  box-shadow:0 4px 14px rgba(122,0,25,.22);
+  transition:.2s ease;
 }
-.btn-login:hover{background:var(--maroon-dark);border-color:var(--maroon-dark)}
+.btn-login:hover{
+  background:var(--maroon-dark);
+  border-color:var(--maroon-dark);
+}
+
 .hero{
-  background:var(--white);border-bottom:1px solid rgba(211,160,170,.25);
-  padding:28px 24px 22px;display:flex;align-items:flex-start;justify-content:space-between;gap:24px
+  background:var(--white);
+  border-bottom:1px solid rgba(211,160,170,.25);
+  padding:28px 24px 22px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:24px;
 }
 .hero-left{max-width:780px}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--rose-600);letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:10px}
-.hero-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--rose-400)}
-.hero h1{font-family:'Noto Serif Thai',serif;font-size:clamp(24px,3vw,34px);font-weight:500;line-height:1.35;margin-bottom:10px}
-.hero p{font-size:14px;color:var(--text-mid);line-height:1.85;max-width:760px}
-.hero-right{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.pill-btn{
-  display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--maroon);border:1px solid var(--maroon);
-  border-radius:14px;color:#fff;font-size:13px;text-decoration:none;box-shadow:0 4px 14px rgba(122,0,25,.18);transition:.18s ease
+.hero-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+  color:var(--rose-600);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  font-weight:500;
+  margin-bottom:10px;
 }
-.pill-btn:hover{background:var(--maroon-dark);border-color:var(--maroon-dark);color:#fff}
+.hero-eyebrow::before{
+  content:'';
+  display:block;
+  width:20px;
+  height:1px;
+  background:var(--rose-400);
+}
+.hero h1{
+  font-family:'Noto Serif Thai',serif;
+  font-size:clamp(24px,3vw,34px);
+  font-weight:500;
+  line-height:1.35;
+  margin-bottom:10px;
+}
+.hero p{
+  font-size:14px;
+  color:var(--text-mid);
+  line-height:1.85;
+  max-width:760px;
+}
+.hero-right{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.pill-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 16px;
+  background:var(--maroon);
+  border:1px solid var(--maroon);
+  border-radius:14px;
+  color:#fff;
+  font-size:13px;
+  text-decoration:none;
+  box-shadow:0 4px 14px rgba(122,0,25,.18);
+  transition:.18s ease;
+}
+.pill-btn:hover{
+  background:var(--maroon-dark);
+  border-color:var(--maroon-dark);
+  color:#fff;
+}
 
 .quick-menu-wrap{
-  background:var(--white);border-bottom:1px solid rgba(211,160,170,.18);
-  padding:14px 0 16px
+  background:var(--white);
+  border-bottom:1px solid rgba(211,160,170,.18);
+  padding:14px 0 16px;
 }
 .quick-menu{
-  max-width:1180px;margin:0 auto;display:flex;gap:10px;overflow-x:auto;padding:0 24px;
-  scrollbar-width:none
+  max-width:1180px;
+  margin:0 auto;
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:0 24px;
+  scrollbar-width:none;
 }
 .quick-menu::-webkit-scrollbar{display:none}
 .quick-btn{
-  display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;color:#fff;
-  font-size:13px;text-decoration:none;white-space:nowrap;font-weight:500;box-shadow:0 5px 14px rgba(0,0,0,.10);
-  transition:all .18s ease
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:11px 16px;
+  border-radius:999px;
+  color:#fff;
+  font-size:13px;
+  text-decoration:none;
+  white-space:nowrap;
+  font-weight:500;
+  box-shadow:0 5px 14px rgba(0,0,0,.10);
+  transition:all .18s ease;
 }
 .quick-btn:hover{transform:translateY(-1px)}
 .quick-btn.green{background:var(--green)}
@@ -111,79 +234,197 @@ body::before{
 .quick-btn.red{background:var(--red)}
 .quick-btn.red:hover{background:var(--red-dark)}
 
-.main{max-width:1180px;margin:0 auto;padding:24px 24px 56px;display:flex;flex-direction:column;gap:24px}
-.grid-main{display:grid;grid-template-columns:1.35fr .95fr;gap:18px}
-.panel{background:var(--white);border:1px solid rgba(211,160,170,.2);border-radius:18px;box-shadow:var(--shadow-sm);padding:20px}
-.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-.panel-title{font-family:'Noto Serif Thai',serif;font-size:17px;font-weight:500;color:var(--text-dark);display:flex;align-items:center;gap:10px}
-.panel-title::before{content:'';display:block;width:4px;height:18px;background:var(--rose-400);border-radius:2px}
-.panel-more{font-size:12px;color:var(--text-soft);text-decoration:none}
-.panel-more:hover{color:var(--rose-600)}
-
-.news-grid{display:grid;grid-template-columns:1fr;gap:12px}
-.news-card{
-  display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:flex-start;padding:14px;
-  border:1px solid var(--rose-100);border-radius:14px;background:var(--rose-50)
-}
-.news-dot{width:10px;height:10px;border-radius:50%;margin-top:6px;background:var(--rose-500)}
-.news-card h3{font-size:15px;line-height:1.45;margin-bottom:4px}
-.news-card p{font-size:12px;line-height:1.7;color:var(--text-mid)}
-.news-meta{font-size:11px;color:var(--text-soft);white-space:nowrap}
-
-.calendar-list,.updates-list{display:flex;flex-direction:column;gap:12px}
-.calendar-item{border:1px solid var(--rose-100);border-radius:14px;padding:14px;background:#fff}
-.calendar-date{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--rose-50);border:1px solid var(--rose-200);font-size:11px;color:var(--rose-700);margin-bottom:8px}
-.calendar-time{font-size:11px;color:var(--text-soft);margin-bottom:6px}
-.calendar-item h3{font-size:14px;margin-bottom:4px}
-.calendar-item p{font-size:12px;color:var(--text-mid);line-height:1.7}
-.update-row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid var(--rose-50)}
-.update-row:last-child{border-bottom:none}
-.update-row .title{font-size:13px;line-height:1.5}
-.update-row .date{font-size:11px;color:var(--text-soft)}
-
-.footer{background:var(--white);border-top:1px solid rgba(211,160,170,.2);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.footer-left{display:flex;align-items:center;gap:12px}
-.footer-logo{width:28px;height:28px;border-radius:50%;border:1px solid var(--rose-200);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.footer-text{font-size:12px;color:var(--text-soft)}
-.footer-text strong{color:var(--text-mid);font-weight:500}
-.footer-right{font-size:11px;color:var(--text-soft);text-align:right}
-.empty-note{font-size:12px;color:var(--text-soft)}
-  .quick-legend{
+.quick-legend{
   display:flex;
   gap:16px;
   padding:8px 24px 0;
   font-size:12px;
   color:#555;
+  flex-wrap:wrap;
 }
-
 .quick-legend span{
   display:flex;
   align-items:center;
   gap:6px;
 }
-
 .dot{
   width:10px;
   height:10px;
   border-radius:50%;
   display:inline-block;
 }
+.dot.green{background:#2e7d32}
+.dot.yellow{background:#c69214}
+.dot.red{background:#8c1d2c}
 
-.dot.green{background:#2e7d32;}
-.dot.yellow{background:#c69214;}
-.dot.red{background:#8c1d2c;}
-  .fb-box{
+.main{
+  max-width:1180px;
+  margin:0 auto;
+  padding:24px 24px 56px;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+.grid-main{
+  display:grid;
+  grid-template-columns:1.35fr .95fr;
+  gap:18px;
+}
+.panel{
+  background:var(--white);
+  border:1px solid rgba(211,160,170,.2);
+  border-radius:18px;
+  box-shadow:var(--shadow-sm);
+  padding:20px;
+}
+.panel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+}
+.panel-title{
+  font-family:'Noto Serif Thai',serif;
+  font-size:17px;
+  font-weight:500;
+  color:var(--text-dark);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.panel-title::before{
+  content:'';
+  display:block;
+  width:4px;
+  height:18px;
+  background:var(--rose-400);
+  border-radius:2px;
+}
+.panel-more{
+  font-size:12px;
+  color:var(--text-soft);
+  text-decoration:none;
+}
+.panel-more:hover{color:var(--rose-600)}
+
+.news-grid{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.news-card{
+  display:block;
+  padding:14px;
+  border:1px solid var(--rose-100);
   border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 4px 12px rgba(0,0,0,0.08);
-  }
-  .fb-page iframe{
-  margin-top:-90px;
-  }
-.fb-box{
-  height:300px;
+  background:var(--rose-50);
+}
+.news-card h3{
+  font-size:15px;
+  line-height:1.5;
+  margin:0 0 8px 0;
+}
+.news-card p{
+  font-size:12px;
+  line-height:1.7;
+  color:var(--text-mid);
+  margin:0;
+}
+
+.calendar-list,.updates-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.calendar-item{
+  border:1px solid var(--rose-100);
+  border-radius:14px;
+  padding:14px;
+  background:#fff;
+}
+.calendar-date{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:999px;
+  background:var(--rose-50);
+  border:1px solid var(--rose-200);
+  font-size:11px;
+  color:var(--rose-700);
+  margin-bottom:8px;
+}
+.calendar-time{
+  font-size:11px;
+  color:var(--text-soft);
+  margin-bottom:6px;
+}
+.calendar-item h3{
+  font-size:14px;
+  margin-bottom:4px;
+}
+.calendar-item p{
+  font-size:12px;
+  color:var(--text-mid);
+  line-height:1.7;
+}
+.update-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid var(--rose-50);
+}
+.update-row:last-child{border-bottom:none}
+.update-row .title{
+  font-size:13px;
+  line-height:1.5;
+}
+.update-row .date{
+  font-size:11px;
+  color:var(--text-soft);
+}
+
+.footer{
+  background:var(--white);
+  border-top:1px solid rgba(211,160,170,.2);
+  padding:20px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.footer-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.footer-logo{
+  width:28px;
+  height:28px;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   overflow:hidden;
 }
+.footer-text{
+  font-size:12px;
+  color:var(--text-soft);
+}
+.footer-text strong{
+  color:var(--text-mid);
+  font-weight:500;
+}
+.footer-right{
+  font-size:11px;
+  color:var(--text-soft);
+  text-align:right;
+}
+.empty-note{
+  font-size:12px;
+  color:var(--text-soft);
+}
+
 @media (max-width:1000px){
   .grid-main{grid-template-columns:1fr}
 }
@@ -191,31 +432,22 @@ body::before{
   .topbar-nav{display:none}
   .hero{flex-direction:column}
   .hero-right{justify-content:flex-start}
-  .news-card{grid-template-columns:auto 1fr}
-  .news-meta{grid-column:2}
 }
-  @media (max-width:600px){
+@media (max-width:600px){
   .btn-login{
     padding:6px 10px;
     font-size:12px;
   }
-  
-  @media (max-width:600px){
   .brand-text .name{
     font-size:14px;
   }
   .brand-text .sub{
     font-size:11px;
   }
-  }
-    #announceList .news-card{
-  display:block;
-    }
+}
 </style>
 </head>
 <body>
-  <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v25.0&appId=APP_ID"></script>
 <div class="page">
   <header class="topbar">
     <a class="brand" href="index.html">
@@ -226,7 +458,7 @@ body::before{
       </div>
     </a>
     <nav class="topbar-nav">
-      <a class="nav-link" href="#announcements">ประกาศ</a>
+      <a class="nav-link" href="#announcements">ข่าวล่าสุด</a>
       <a class="nav-link" href="#calendar">ปฏิทินงาน</a>
       <a class="nav-link" href="#updates">อัปเดตล่าสุด</a>
     </nav>
@@ -239,7 +471,7 @@ body::before{
       <h1 id="heroTitle">ศูนย์กลางประกาศ ข่าวสาร และทางเข้าระบบงาน</h1>
       <p id="heroDescription">หน้าแรกนี้ออกแบบสำหรับสมาชิกและผู้ปฏิบัติงานภายใน เพื่อให้เปิดมาแล้วเห็นทันทีว่ามีประกาศอะไร งานใดใกล้ถึง และต้องเข้าใช้ระบบไหนต่อ</p>
     </div>
-    <div class="hero-right">      
+    <div class="hero-right">
       <a class="pill-btn" href="news.html">ข่าวสารทั้งหมด</a>
       <a class="pill-btn" id="facebookBtn" href="https://www.facebook.com/kongmakkn" target="_blank" rel="noopener noreferrer">Facebook</a>
     </div>
@@ -247,7 +479,6 @@ body::before{
 
   <div class="quick-menu-wrap">
     <div class="quick-menu" id="quickMenu">
-      
       <a class="quick-btn green" href="people.html">บุคลากร</a>
       <a class="quick-btn green" href="about.html">ข้อมูลสมาคม</a>
       <a class="quick-btn yellow" href="manuals.html">เอกสารองค์กร</a>
@@ -256,21 +487,67 @@ body::before{
       <a class="quick-btn red" href="login.html">สำหรับผู้บริหาร</a>
     </div>
   </div>
-<div class="quick-legend">
-  <span><i class="dot green"></i> เอกสารทั่วไป</span>
-  <span><i class="dot yellow"></i> เอกสารภายในเฉพาะสมาชิก</span>
-  <span><i class="dot red"></i> เอกสารสำคัญเฉพาะผู้มีสิทธิ์</span>
-</div>
-  <main class="main">
 
-  <section class="panel" id="announcements">
-    <div class="panel-head">
-      <div class="panel-title">ข่าวล่าสุด</div>
-      <a class="panel-more" href="news.html">ดูทั้งหมด →</a>
+  <div class="quick-legend">
+    <span><i class="dot green"></i> เอกสารทั่วไป</span>
+    <span><i class="dot yellow"></i> เอกสารภายในเฉพาะสมาชิก</span>
+    <span><i class="dot red"></i> เอกสารสำคัญเฉพาะผู้มีสิทธิ์</span>
+  </div>
+
+  <main class="main">
+    <section class="panel" id="announcements">
+      <div class="panel-head">
+        <div class="panel-title">ข่าวล่าสุด</div>
+        <a class="panel-more" href="news.html">ดูทั้งหมด →</a>
+      </div>
+      <div id="announceList" class="news-grid">กำลังโหลดข่าว...</div>
+    </section>
+
+    <div class="grid-main">
+      <section class="panel" id="calendar">
+        <div class="panel-head">
+          <div class="panel-title">ปฏิทินงานที่กำลังจะมาถึง</div>
+          <span class="panel-more">รายการใกล้ถึง</span>
+        </div>
+        <div class="calendar-list" id="calendarList"></div>
+      </section>
+
+      <section class="panel" id="updates">
+        <div class="panel-head">
+          <div class="panel-title">อัปเดตล่าสุดในระบบ</div>
+          <a class="panel-more" href="news.html">ดูทั้งหมด →</a>
+        </div>
+        <div class="updates-list" id="updatesList"></div>
+      </section>
     </div>
-    <div id="announceList">กำลังโหลดข่าว...</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-left">
+      <div class="footer-logo"><img id="footerLogo" src="assets/images/logo.png" alt="โลโก้สมาคม"/></div>
+      <div class="footer-text">
+        <strong id="footerTitle">สมาคมปึงเถ่ากงม่าขอนแก่น</strong><br>
+        <span id="footerCopy">© พ.ศ. 2568 สงวนลิขสิทธิ์</span>
+      </div>
+    </div>
+    <div class="footer-right" id="footerRight">ระบบสารสนเทศภายในสมาคม<br>สำหรับสมาชิกและกรรมการเท่านั้น</div>
+  </footer>
+</div>
 
 <script>
+async function loadJSON(path) {
+  const response = await fetch(path);
+  if (!response.ok) throw new Error(`Failed to load ${path}`);
+  return await response.json();
+}
+
+function formatThaiDate(dateString) {
+  const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const date = new Date(dateString);
+  if (isNaN(date)) return dateString;
+  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear() + 543}`;
+}
+
 async function loadNews(){
   const container = document.getElementById("announceList");
   if (!container) return;
@@ -285,76 +562,32 @@ async function loadNews(){
     const data = await res.json();
 
     if (!data.items || !data.items.length) {
-      container.innerHTML = "ไม่พบข่าว หรือ RSS ใช้งานไม่ได้";
+      container.innerHTML = "ไม่พบข่าว";
       return;
     }
 
     container.innerHTML = "";
 
     data.items.slice(0,3).forEach(item => {
+      const text = (item.description || "")
+        .replace(/<[^>]*>/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .substring(0,120);
+
       const div = document.createElement("div");
       div.className = "news-card";
       div.innerHTML = `
         <h3>${item.title || ""}</h3>
-        <p>${(item.description || "").replace(/<[^>]*>/g, "").substring(0,120)}...</p>
+        <p>${text}...</p>
       `;
       container.appendChild(div);
     });
+
   } catch (err) {
     container.innerHTML = "โหลดข่าวไม่สำเร็จ";
     console.error(err);
   }
-}
-loadNews();
-</script>
-
-
-    
-
-    
-  </section>
-
-  <div class="grid-main">
-    <section class="panel" id="calendar">
-      <div class="panel-head">
-        <div class="panel-title">ปฏิทินงานที่กำลังจะมาถึง</div>
-        <span class="panel-more">รายการใกล้ถึง</span>
-      </div>
-      <div class="calendar-list" id="calendarList"></div>
-    </section>
-
-    <section class="panel" id="updates">
-      <div class="panel-head">
-        <div class="panel-title">อัปเดตล่าสุดในระบบ</div>
-        <a class="panel-more" href="news.html">ดูทั้งหมด →</a>
-      </div>
-      <div class="updates-list" id="updatesList"></div>
-    </section>
-  </div>
-
-  </main>
-    
-
-  <footer class="footer">
-    <div class="footer-left">
-      <div class="footer-logo"><img id="footerLogo" src="assets/images/logo.png" alt="โลโก้สมาคม"/></div>
-      <div class="footer-text"><strong id="footerTitle">สมาคมปึงเถ่ากงม่าขอนแก่น</strong><br><span id="footerCopy">© พ.ศ. 2568 สงวนลิขสิทธิ์</span></div>
-    </div>
-    <div class="footer-right" id="footerRight">ระบบสารสนเทศภายในสมาคม<br>สำหรับสมาชิกและกรรมการเท่านั้น</div>
-  </footer>
-</div>
-
-<script>
-async function loadJSON(path) {
-  const response = await fetch(path);
-  if (!response.ok) throw new Error(`Failed to load ${path}`);
-  return await response.json();
-}
-function formatThaiDate(dateString) {
-  const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-  const date = new Date(dateString);
-  if (isNaN(date)) return dateString;
-  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear() + 543}`;
 }
 
 async function initPage() {
@@ -389,7 +622,7 @@ async function initPage() {
   document.getElementById('heroTitle').textContent = site.hero_title || 'ศูนย์กลางประกาศ ข่าวสาร และทางเข้าระบบงาน';
   document.getElementById('heroDescription').textContent = site.hero_description || '';
   document.getElementById('topLogin').href = site.login_url;
-  
+  document.getElementById('facebookBtn').href = site.facebook_url;
   document.getElementById('footerTitle').textContent = site.footer_title;
   document.getElementById('footerCopy').textContent = site.copyright;
   document.getElementById('footerRight').innerHTML = (site.footer_text || '').replace(/\\n|\n/g, '<br>');
@@ -429,7 +662,11 @@ async function initPage() {
     });
   }
 }
-window.addEventListener('DOMContentLoaded', initPage);
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadNews();
+  initPage();
+});
 </script>
 </body>
 </html>
