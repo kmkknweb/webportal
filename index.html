@@ -268,20 +268,38 @@ body::before{
 
 <script>
 async function loadNews(){
-  const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://rss.app/feeds/MbweeQ4a5GQXn1w8.xml");
-  const data = await res.json();
-
   const container = document.getElementById("announceList");
-  container.innerHTML = "";
+  if (!container) return;
 
-  data.items.slice(0,3).forEach(item=>{
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <h3>${item.title}</h3>
-      <p>${item.description.substring(0,100)}...</p>
-    `;
-    container.appendChild(div);
-  });
+  container.innerHTML = "กำลังโหลดข่าว...";
+
+  try {
+    const rssUrl = "ใส่ลิงก์ RSS ของคุณ";
+    const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(rssUrl);
+
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+
+    if (!data.items || !data.items.length) {
+      container.innerHTML = "ไม่พบข่าว หรือ RSS ใช้งานไม่ได้";
+      return;
+    }
+
+    container.innerHTML = "";
+
+    data.items.slice(0,3).forEach(item => {
+      const div = document.createElement("div");
+      div.className = "news-card";
+      div.innerHTML = `
+        <h3>${item.title || ""}</h3>
+        <p>${(item.description || "").replace(/<[^>]*>/g, "").substring(0,120)}...</p>
+      `;
+      container.appendChild(div);
+    });
+  } catch (err) {
+    container.innerHTML = "โหลดข่าวไม่สำเร็จ";
+    console.error(err);
+  }
 }
 loadNews();
 </script>
