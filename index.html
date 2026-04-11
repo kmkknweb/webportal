@@ -266,21 +266,30 @@ body::before{
       <a class="panel-more" href="news.html">ดูทั้งหมด →</a>
     </div>
 
-    <div class="fb-box">
-      <div class="fb-page"
-        data-href="https://www.facebook.com/kongmakkn"
-        data-tabs="timeline"
-        data-width=""
-        data-height="400"
-        data-small-header="true"
-        data-adapt-container-width="true"
-        data-hide-cover="true"
-        data-show-facepile="false">
-        <blockquote cite="https://www.facebook.com/kongmakkn" class="fb-xfbml-parse-ignore">
-          <a href="https://www.facebook.com/kongmakkn">ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</a>
-        </blockquote>
-      </div>
-    </div>
+<script>
+async function loadNews(){
+  const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://rss.app/feeds/MbweeQ4a5GQXn1w8.xml");
+  const data = await res.json();
+
+  const container = document.getElementById("announceList");
+  container.innerHTML = "";
+
+  data.items.slice(0,3).forEach(item=>{
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <h3>${item.title}</h3>
+      <p>${item.description.substring(0,100)}...</p>
+    `;
+    container.appendChild(div);
+  });
+}
+loadNews();
+</script>
+
+
+    
+
+    
   </section>
 
   <div class="grid-main">
