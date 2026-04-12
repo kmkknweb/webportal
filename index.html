@@ -513,6 +513,9 @@ body::before{
   </footer>
 </div>
 
+
+
+  
 <script>
 async function loadJSON(path) {
   const response = await fetch(path);
@@ -605,6 +608,13 @@ async function loadGoogleCalendar(){
     const text = await res.text();
 
 <script>
+<script>
+async function loadJSON(path) {
+  const response = await fetch(path);
+  if (!response.ok) throw new Error(`Failed to load ${path}`);
+  return await response.json();
+}
+
 function formatThaiDate(dateString) {
   const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
   const date = new Date(dateString);
@@ -612,24 +622,75 @@ function formatThaiDate(dateString) {
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear() + 543}`;
 }
 
-function formatThaiTime(dateString) {
-  const date = new Date(dateString);
-  if (isNaN(date)) return '';
-  return date.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+function formatCalendarDateFromICS(raw) {
+  if (!raw) return '';
+  const y = raw.substring(0,4);
+  const m = raw.substring(4,6);
+  const d = raw.substring(6,8);
+  return formatThaiDate(`${y}-${m}-${d}`);
 }
 
-async function loadGoogleCalendar(){
+function formatCalendarTimeFromICS(raw) {
+  if (!raw || raw.length < 13) return 'ทั้งวัน';
+  const h = raw.substring(9,11);
+  const m = raw.substring(11,13);
+  return `${h}:${m}`;
+}
+
+async function loadNews() {
+  const container = document.getElementById("announceList");
+  if (!container) return;
+
+  container.innerHTML = "กำลังโหลดข่าว...";
+
+  try {
+    const rssUrl = "https://rss.app/feeds/MbweeQ4a5GQXn1w8.xml";
+    const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(rssUrl);
+
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+
+    if (!data.items || !data.items.length) {
+      container.innerHTML = "ไม่พบข่าว";
+      return;
+    }
+
+    container.innerHTML = "";
+
+    data.items.slice(0, 3).forEach(item => {
+      const text = (item.description || "")
+        .replace(/<a[^>]*>.*?<\/a>/gi, "")
+        .replace(/<[^>]*>/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .substring(0, 120);
+
+      const div = document.createElement("div");
+      div.className = "news-card";
+      div.innerHTML = `
+        <h3>${item.title || ""}</h3>
+        <p>${text}...</p>
+      `;
+      container.appendChild(div);
+    });
+  } catch (err) {
+    container.innerHTML = "โหลดข่าวไม่สำเร็จ";
+    console.error(err);
+  }
+}
+
+async function loadGoogleCalendar() {
   const el = document.getElementById("calendarList");
   if (!el) return;
 
   el.innerHTML = "กำลังโหลดปฏิทิน...";
 
-  try{
+  try {
     const apiUrl = "https://script.google.com/macros/s/AKfycbzUab3crS4iMEDdrVQnbgEUKYn1fkrX7TGDRUF9eL9emcWx15RkwETTwhmc6S9AeDwz/exec";
     const res = await fetch(apiUrl + "?t=" + Date.now());
     const events = await res.json();
 
-    if (!events.length){
+    if (!events.length) {
       el.innerHTML = '<div class="empty-note">ยังไม่มีกำหนดการในปฏิทิน</div>';
       return;
     }
@@ -641,20 +702,58 @@ async function loadGoogleCalendar(){
       card.className = "calendar-item";
       card.innerHTML = `
         <div class="calendar-date">${formatThaiDate(item.start)}</div>
-        <div class="calendar-time">${formatThaiTime(item.start)}${item.location ? ' • ' + item.location : ''}</div>
+        <div class="calendar-time">${formatCalendarTimeFromICS(item.start ? item.start.replace(/[-:]/g,'').replace('.000Z','').replace('T','T') : '')}${item.location ? ' • ' + item.location : ''}</div>
         <h3>${item.title || ''}</h3>
         <p>${item.description || 'รายละเอียดเพิ่มเติมอยู่ในปฏิทินกลางของศาลเจ้า'}</p>
       `;
       el.appendChild(card);
     });
-
-  } catch(err){
+  } catch (err) {
     el.innerHTML = '<div class="empty-note">โหลดปฏิทินไม่สำเร็จ</div>';
     console.error(err);
   }
 }
-</script>
 
+async function initPage() {
+  let site = {
+    name: 'สมาคมปึงเถ่ากงม่าขอนแก่น',
+    subtitle: 'ระบบสารสนเทศภายในสมาคม',
+    hero_eyebrow: 'ระบบงานภายในสมาคม',
+    hero_title: 'ศูนย์กลางประกาศ ข่าวสาร และทางเข้าระบบงาน',
+    hero_description: 'หน้าแรกนี้ออกแบบสำหรับสมาชิกและผู้ปฏิบัติงานภายใน เพื่อให้เปิดมาแล้วเห็นทันทีว่ามีประกาศอะไร งานใดใกล้ถึง และต้องเข้าใช้ระบบไหนต่อ',
+    logo: 'assets/images/logo.png',
+    facebook_url: 'https://www.facebook.com/kongmakkn',
+    login_url: 'login.html',
+    footer_title: 'สมาคมปึงเถ่ากงม่าขอนแก่น',
+    footer_text: 'ระบบสารสนเทศภายในสมาคม\\nสำหรับสมาชิกและกรรมการเท่านั้น',
+    copyright: '© พ.ศ. 2568 สงวนลิขสิทธิ์'
+  };
+
+  try {
+    const siteFromJson = await loadJSON('data/site.json');
+    site = { ...site, ...siteFromJson };
+  } catch (e) {}
+
+  document.title = site.name;
+  document.getElementById('brandName').textContent = site.name;
+  document.getElementById('brandSub').textContent = site.subtitle;
+  document.getElementById('heroEyebrow').textContent = site.hero_eyebrow || 'ระบบงานภายในสมาคม';
+  document.getElementById('heroTitle').textContent = site.hero_title || 'ศูนย์กลางประกาศ ข่าวสาร และทางเข้าระบบงาน';
+  document.getElementById('heroDescription').textContent = site.hero_description || '';
+  document.getElementById('topLogin').href = site.login_url;
+  document.getElementById('facebookBtn').href = site.facebook_url;
+  document.getElementById('footerTitle').textContent = site.footer_title;
+  document.getElementById('footerCopy').textContent = site.copyright;
+  document.getElementById('footerRight').innerHTML = (site.footer_text || '').replace(/\\n|\n/g, '<br>');
+  ['brandLogo','footerLogo'].forEach(id => document.getElementById(id).src = site.logo);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadNews();
+  loadGoogleCalendar();
+  initPage();
+});
+</script>
 
 
   <script>
