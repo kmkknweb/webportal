@@ -622,7 +622,7 @@ async function initPage() {
     subtitle: 'ระบบสารสนเทศภายในสมาคม',
     hero_eyebrow: 'ระบบงานภายในสมาคม',
     hero_title: 'ศูนย์กลางประกาศ ข่าวสาร และทางเข้าระบบงาน',
-    hero_description: 'หน้าแรกนี้ออกแบบสำหรับสมาชิกและผู้ปฏิบัติงานภายใน เพื่อให้เปิดมาแล้วเห็นทันทีว่ามีประกาศอะไร งานใดใกล้ถึง และต้องเข้าใช้ระบบไหนต่อ',
+    hero_description: 'เพจสำหรับสมาชิกและผู้ปฏิบัติงานภายใน เพื่อประกาศข่าว งานกิจกรรม และเป็นลิงค์ระบบงานต่างๆที่ใช้ภายในสมาคม',
     /* ลิ้งค์โลโก้ - เปลี่ยนที่นี่ */
     logo: 'logo.png',
     facebook_url: 'https://www.facebook.com/kongmakkn',
@@ -641,7 +641,7 @@ async function initPage() {
   document.getElementById('brandName').textContent = site.name;
   document.getElementById('brandSub').textContent = site.subtitle;
   document.getElementById('heroEyebrow').textContent = site.hero_eyebrow || 'ระบบงานภายในสมาคม';
-  document.getElementById('heroTitle').textContent = site.hero_title || 'ศูนย์กลางประกาศ ข่าวสาร และทางเข้าระบบงาน';
+  document.getElementById('heroTitle').textContent = site.hero_title || 'ศูนย์กลางประกาศ ข่าวสาร กิจกรรม ข้อมูลเผยแพร่ และทางเข้าระบบงานสำหรับสมาชิกสมาคม';
   document.getElementById('heroDescription').textContent = site.hero_description || '';
   document.getElementById('topLogin').href = site.login_url;
   document.getElementById('facebookBtn').href = site.facebook_url;
