@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>เทพเจ้าและสิ่งศักดิ์สิทธิ์ | สมาคมปึงเถ่ากงม่าขอนแก่น</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;500;600&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --rose-50:#fdf6f7; --rose-100:#f9eaed; --rose-200:#f0cdd3; --rose-300:#e3a8b2;
+  --rose-400:#d4818f; --rose-500:#c2606f; --rose-600:#a84858; --rose-700:#8c3847;
+  --white:#fff; --shadow-sm:0 2px 8px rgba(162,72,88,0.08)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans Thai',sans-serif;background:#f9eaed;color:#000}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(253,246,247,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(211,160,170,.3);padding:0 24px;height:80px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:#000}
+.logo-ring{width:80px;height:80px;border-radius:0;border:none solid #e3a8b2;background:transparents; display:flex;align-items:center;justify-content:center;overflow:hidden}
+.logo-ring img,.footer-logo img{width:100%;height:100%;object-fit:contain}
+.brand-text .name{font-family:'Noto Serif Thai',serif;font-size:18px}
+.brand-text .sub{font-size:14px}
+.nav{display:flex;gap:10px}
+.nav a,.btn-back{padding:8px 14px;border-radius:999px;text-decoration:none;color:#000}
+.nav a:hover,.nav a.active{background:#fdf6f7}
+.btn-back{background:#8c3847;color:#fff}
+.hero{background:#fff;border-bottom:1px solid rgba(211,160,170,.25);padding:30px 24px 26px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a84858;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:10px}
+.hero-eyebrow::before{content:'';display:block;width:20px;height:1px;background:#d4818f}
+.hero h1{font-family:'Noto Serif Thai',serif;font-size:32px;line-height:1.35;margin-bottom:10px;font-weight:500}
+.hero p{max-width:920px;line-height:1.9}
+.hero-actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.hero-actions a,.chip{padding:10px 16px;border-radius:14px;border:1px solid #f0cdd3;background:#fdf6f7;color:#000;text-decoration:none}
+.filter{max-width:1100px;margin:0 auto;padding:22px 24px 0;display:flex;gap:10px;flex-wrap:wrap}
+.chip{cursor:pointer}
+.chip.active,.chip:hover{background:#fff}
+.main{max-width:1100px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:18px}
+.panel{background:#fff;border:1px solid rgba(211,160,170,.2);border-radius:18px;box-shadow:var(--shadow-sm);padding:22px}
+.panel h2{font-family:'Noto Serif Thai',serif;font-size:22px;margin-bottom:10px;font-weight:500}
+.panel p{line-height:1.95;margin-bottom:12px}
+.panel ul{padding-left:20px}
+.panel li{line-height:1.85;margin-bottom:6px}
+.hidden{display:none!important}
+.footer{background:#fff;border-top:1px solid rgba(211,160,170,.2);padding:20px 24px;display:flex;justify-content:space-between;gap:20px}
+.footer-left{display:flex;align-items:center;gap:12px}
+.footer-logo{width:28px;height:28px;border-radius:50%;overflow:hidden;border:1px solid #f0cdd3}
+@media (max-width:900px){.nav{display:none}.hero h1{font-size:26px}}
+  :root{
+  --maroon:#7a0019;
+  --maroon-dark:#5c0013;
+  --maroon-light:#990022;
+}
+
+/* เมนูด้านบน */
+.nav a:hover,
+.nav a.active{
+  background:var(--maroon) !important;
+  color:#fff !important;
+}
+
+/* ปุ่มกลับ */
+.btn-back{
+  background:var(--maroon) !important;
+  color:#fff !important;
+  border:1px solid var(--maroon) !important;
+  box-shadow:0 4px 14px rgba(122,0,25,.22);
+  transition:.2s ease;
+}
+.btn-back:hover{
+  background:var(--maroon-dark) !important;
+  border-color:var(--maroon-dark) !important;
+}
+
+/* ปุ่มใน hero */
+.hero-actions a{
+  background:var(--maroon) !important;
+  color:#fff !important;
+  border:1px solid var(--maroon) !important;
+  box-shadow:0 4px 14px rgba(122,0,25,.18);
+  transition:.2s ease;
+}
+.hero-actions a:hover{
+  background:var(--maroon-dark) !important;
+  border-color:var(--maroon-dark) !important;
+}
+
+/* ปุ่ม filter */
+.chip{
+  background:#5b9bd5 !important;
+  color:#fff !important;
+  border:1px solid #5b9bd5 !important;
+  box-shadow:0 4px 12px rgba(91,155,213,.25);
+  transition:.2s ease;
+  font-family:'Noto Sans Thai',sans-serif !important;
+}
+.chip:hover,
+.chip.active{
+  background:#3a7abf !important;
+  color:#fff !important;
+  border-color:var(--maroon-dark) !important;
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <div class="logo-ring"><img id="brandLogo" src="logo.png" alt="โลโก้"></div>
+    <div class="brand-text">
+      <div class="name" id="brandName">สมาคมปึงเถ่ากงม่าขอนแก่น</div>
+      <div class="sub" id="brandSub">ระบบสารสนเทศภายในสมาคม</div>
+    </div>
+  </a>
+  <nav class="nav">
+    <a href="index.html">หน้าแรก</a>
+    <a href="about.html">ข้อมูลสมาคม</a>
+    <a class="active" href="beliefs.html">เทพเจ้า</a>
+    <a href="people.html">บุคลากร</a>
+  </nav>
+  <a class="btn-back" href="index.html">กลับหน้าแรก</a>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">Beliefs & Deities</div>
+  <h1>เทพเจ้าและสิ่งศักดิ์สิทธิ์ภายในศาลเจ้า</h1>
+  <p>หน้านี้สรุปประวัติและความสำคัญของเทพเจ้าที่ประดิษฐานหรือมีความเกี่ยวข้องกับศาลเจ้าปึงเถ่ากงม่าขอนแก่น โดยเรียบเรียงจากเอกสารประวัติฉบับเดียวให้อ่านง่ายบนเว็บไซต์</p>
+  <div class="hero-actions">
+    <a href="https://drive.google.com/file/d/10DhrJC4NXLtR9Q0z3UUT-iLAs8ZztRzQ/preview" target="_blank" rel="noopener noreferrer">อ่านเอกสารฉบับเต็ม (PDF)</a>
+    <a href="about.html">กลับหน้าประวัติศาลเจ้า</a>
+  </div>
+</section>
+
+<div class="filter">
+  <button class="chip active" data-target="all">ทั้งหมด</button>
+  <button class="chip" data-target="ti-gong">เทพฟ้าดิน</button>
+  <button class="chip" data-target="pueng-thao">ปึงเถ่ากงม่า</button>
+  <button class="chip" data-target="mazu">เจ้าแม่ทับทิม</button>
+  <button class="chip" data-target="caishen">ไฉ่ซิงเอี้ย</button>
+  <button class="chip" data-target="teejoo">ตี่จู้เอี๊ยะ</button>
+  <button class="chip" data-target="guanyin">เจ้าแม่กวนอิม</button>
+  <button class="chip" data-target="nezha">นาจา</button>
+</div>
+
+<main class="main">
+  <section class="panel deity" id="ti-gong">
+    <h2>เทพฟ้าดิน (ทีกง)</h2>
+    <p>เทพฟ้าดิน หรือ "ฮุกเทียงแช่" เป็นเทพเจ้าสูงสุดแห่งท้องฟ้าในความเชื่อของชาวจีน โดยเฉพาะสายเต๋าและความเชื่อพื้นบ้านจีน ชาวจีนเคารพบูชาท่านในฐานะองค์เง็กเซียนฮ่องเต้ ผู้เป็นใหญ่สูงสุดบนสวรรค์และเป็นผู้กำกับดูแลสรรพสิ่งทั้งโลกมนุษย์และสวรรค์</p>
+    <ul>
+      <li>เป็นเทพสูงสุดแห่งสวรรค์และจักรวาล</li>
+      <li>เป็นศูนย์กลางแห่งศรัทธาในวันขึ้น 9 ค่ำ เดือน 1 ตามปฏิทินจีน</li>
+      <li>มีบทบาทสำคัญในพิธีศาลเจ้าจีนทั่วไป</li>
+    </ul>
+  </section>
+
+  <section class="panel deity" id="pueng-thao">
+    <h2>องค์ปึงเถ่ากงม่า</h2>
+    <p>องค์ปึงเถ่ากงม่าเป็นเทพเจ้าที่ชาวจีนโพ้นทะเลให้ความเคารพบูชามาอย่างยาวนาน โดยเฉพาะในชุมชนจีนที่อพยพมาตั้งถิ่นฐานในต่างแดน เชื่อกันว่า "ปึงเถ่ากง" หมายถึงผู้อาวุโสหรือผู้นำแห่งชุมชน ส่วน "ปึงเถ่าม่า" คือผู้ดูแลครอบครัวและคุณธรรมในบ้านเรือน จึงเป็นสัญลักษณ์ของผู้ปกป้องชุมชนทั้งทางกายภาพและจิตวิญญาณ</p>
+    <ul>
+      <li>ผู้คุ้มครองชุมชนและลูกหลาน</li>
+      <li>ศูนย์รวมศรัทธาและสายใยของชุมชน</li>
+      <li>เป็นองค์เทพประธานของงานสมโภชประจำปี</li>
+      <li>สะท้อนคุณค่าทางวัฒนธรรมจีนโพ้นทะเล</li>
+    </ul>
+  </section>
+
+  <section class="panel deity" id="mazu">
+    <h2>เจ้าแม่ทับทิม (หม่าโจ้ว)</h2>
+    <p>เจ้าแม่ทับทิม หรือ "หม่าโจ้ว" เป็นเทพธิดาแห่งท้องทะเลที่ได้รับการเคารพบูชาอย่างสูงในหมู่ชาวจีน โดยเฉพาะผู้ที่เกี่ยวข้องกับการเดินทางและการค้าทางทะเล ตามตำนานเดิมมีนามว่า "หลิน โม่เหนียง" ผู้มีเมตตาและมีญาณวิเศษในการช่วยผู้ประสบภัยทางทะเล</p>
+    <ul>
+      <li>คุ้มครองการเดินทางและท้องทะเล</li>
+      <li>เป็นศูนย์รวมศรัทธาของชุมชนชาวจีนโพ้นทะเล</li>
+      <li>เป็นสัญลักษณ์แห่งความเมตตาและความกตัญญู</li>
+      <li>มีพิธีบูชาสำคัญในวัน 23 เดือน 3 ตามปฏิทินจีน</li>
+    </ul>
+  </section>
+
+  <section class="panel deity" id="caishen">
+    <h2>ไฉ่ซิงเอี้ย</h2>
+    <p>ไฉ่ซิงเอี้ยคือเทพเจ้าแห่งโชคลาภ การเงิน และความมั่งคั่งที่ได้รับความเคารพบูชาอย่างแพร่หลายในหมู่ชาวจีนทั่วโลก โดยเฉพาะในช่วงตรุษจีนซึ่งถือเป็นฤกษ์ดีในการต้อนรับท่านเข้าสู่บ้าน เพื่อเสริมความรุ่งเรืองแก่ครอบครัวและกิจการค้าขาย</p>
+    <ul>
+      <li>เป็นเทพแห่งโชคลาภ ความสำเร็จทางธุรกิจ และความมั่งคั่ง</li>
+      <li>มีพิธีต้อนรับเทพในคืนวันสิ้นปีจีน</li>
+      <li>ผู้ศรัทธานิยมบูชาเพื่อเสริมโอกาสทางการเงินตลอดปี</li>
+      <li>มักประดิษฐานร่วมกับเทพเจ้าองค์สำคัญในศาลเจ้าจีนทั่วไป</li>
+    </ul>
+  </section>
+
+  <section class="panel deity" id="teejoo">
+    <h2>ตี่จู้เอี๊ยะ</h2>
+    <p>ตี่จู้เอี๊ยะคือเทพเจ้าประจำบ้านที่ชาวไทยเชื้อสายจีนให้ความเคารพบูชากันอย่างกว้างขวาง โดยเชื่อว่าเป็นผู้ดูแลบ้านเรือน ที่ดิน และผืนแผ่นดินในบริเวณที่อยู่อาศัย เปรียบเสมือนเทพารักษ์ผู้ปกป้องพื้นที่และความสงบสุขของผู้อยู่อาศัย</p>
+    <ul>
+      <li>คุ้มครองบ้านเรือนจากสิ่งอัปมงคลและเหตุเภทภัย</li>
+      <li>นำความร่มเย็น โชคลาภ และความเจริญมาสู่สมาชิกในบ้าน</li>
+      <li>ควรตั้งในตำแหน่งที่เหมาะสมตามหลักฮวงจุ้ย</li>
+      <li>นิยมบูชาในวันพระจีนและวันสำคัญ เช่น ตรุษจีน สารทจีน ขึ้นบ้านใหม่</li>
+    </ul>
+  </section>
+
+  <section class="panel deity" id="guanyin">
+    <h2>เจ้าแม่กวนอิม</h2>
+    <p>เจ้าแม่กวนอิม คือพระโพธิสัตว์ผู้ฟังเสียงแห่งโลกในคติพุทธมหายาน เป็นสัญลักษณ์ของความเมตตา การให้อภัย การปล่อยวาง และการช่วยเหลือสรรพสัตว์จากความทุกข์ ชาวไทยเชื้อสายจีนให้ความเคารพอย่างแพร่หลาย โดยเชื่อว่าท่านประทานพรด้านสุขภาพ ครอบครัว ความรัก และความสงบทางใจ</p>
+    <ul>
+      <li>เป็นสัญลักษณ์ของความกรุณาและการช่วยเหลือผู้อื่น</li>
+      <li>นิยมบูชาเพื่อขอความคุ้มครองและความสงบใจ</li>
+      <li>เป็นเทพสตรีที่มีศรัทธาแพร่หลายในเอเชีย รวมถึงประเทศไทย</li>
+    </ul>
+  </section>
+
+  <section class="panel deity" id="nezha">
+    <h2>องค์นาจาซาไท่จื้อ</h2>
+    <p>องค์นาจา หรือ "นาจาซาไท่จื้อ" เป็นเทพเจ้าตามความเชื่อจีนที่มีภาพลักษณ์เป็นเด็กชายผู้กล้าหาญ มีพลังเหนือธรรมชาติ และมีบทบาทในการปราบปีศาจและปกป้องธรรมะ จึงได้รับการเคารพในฐานะเทพแห่งความกล้าหาญ การคุ้มครอง และชัยชนะเหนืออุปสรรค</p>
+    <ul>
+      <li>นิยมบูชาเพื่อขอความคุ้มครองจากภัยอันตราย</li>
+      <li>เป็นสัญลักษณ์ของความมั่นใจ ความกล้าหาญ และความเด็ดเดี่ยว</li>
+      <li>เหมาะกับผู้ที่ต้องเผชิญการแข่งขันหรือความท้าทายสูง</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-left">
+    <div class="footer-logo"><img id="footerLogo" src="logo.png" alt="โลโก้"></div>
+    <div><strong id="footerTitle">สมาคมปึงเถ่ากงม่าขอนแก่น</strong><br><span id="footerCopy">© พ.ศ. 2568 สงวนลิขสิทธิ์</span></div>
+  </div>
+  <div id="footerRight">ระบบสารสนเทศภายในสมาคม<br>สำหรับสมาชิกและกรรมการเท่านั้น</div>
+</footer>
+
+<script>
+async function loadJSON(path){const r=await fetch(path); if(!r.ok) throw new Error(path); return r.json();}
+async function initPage(){
+  let site={name:'สมาคมปึงเถ่ากงม่าขอนแก่น',subtitle:'ระบบสารสนเทศภายในสมาคม',logo:'logo.png',footer_title:'สมาคมปึงเถ่ากงม่าขอนแก่น',footer_text:'ระบบสารสนเทศภายในสมาคม\\nสำหรับสมาชิกและกรรมการเท่านั้น',copyright:'© พ.ศ. 2568 สงวนลิขสิทธิ์'};
+  try{const s=await loadJSON('data/site.json'); site={...site,...s};}catch(e){}
+  document.title=`เทพเจ้าและสิ่งศักดิ์สิทธิ์ | ${site.name}`;
+  document.getElementById('brandName').textContent=site.name;
+  document.getElementById('brandSub').textContent=site.subtitle||'';
+  document.getElementById('footerTitle').textContent=site.footer_title||site.name;
+  document.getElementById('footerCopy').textContent=site.copyright||'';
+  document.getElementById('footerRight').innerHTML=(site.footer_text||'').replace(/\\n|\n/g,'<br>');
+  ['brandLogo','footerLogo'].forEach(id=>document.getElementById(id).src=site.logo);
+
+  document.querySelectorAll('.chip').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+      btn.classList.add('active');
+      const target=btn.dataset.target;
+      document.querySelectorAll('.deity').forEach(sec=>{
+        if(target==='all'||sec.id===target){sec.classList.remove('hidden');}
+        else{sec.classList.add('hidden');}
+      });
+      if(target!=='all'){
+        const el=document.getElementById(target);
+        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    });
+  });
+}
+initPage();
+</script>
+</body>
+</html>
