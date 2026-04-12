@@ -635,16 +635,21 @@ const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(icsUrl + "?t=" + 
 
     const today = new Date();
     today.setHours(0,0,0,0);
-const events = text
+
+    const events = text
   .split("BEGIN:VEVENT")
   .slice(1)
   .map(block => {
-    const title = (block.match(/SUMMARY:(.*)/) || [,''])[1].trim();
-    const desc = (block.match(/DESCRIPTION:(.*)/) || [,''])[1].replace(/\\n/g, ' ').trim();
-    const location = (block.match(/LOCATION:(.*)/) || [,''])[1].trim();
-
+    const summaryMatch = block.match(/SUMMARY:(.+)/);
+    const descMatch = block.match(/DESCRIPTION:(.+)/);
+    const locationMatch = block.match(/LOCATION:(.+)/);
     const startMatch = block.match(/DTSTART[^:]*:(\d{8})(T\d{6}Z?)?/);
-    if (!startMatch) return null;
+
+    if (!summaryMatch || !startMatch) return null;
+
+    const title = summaryMatch[1].trim();
+    const desc = (descMatch ? descMatch[1] : '').replace(/\\n/g, ' ').trim();
+    const location = (locationMatch ? locationMatch[1] : '').trim();
 
     const dateOnly = startMatch[1];
     const y = dateOnly.substring(0,4);
@@ -652,17 +657,12 @@ const events = text
     const d = dateOnly.substring(6,8);
     const startDate = new Date(`${y}-${m}-${d}T00:00:00`);
 
-    return {
-      title,
-      desc,
-      location,
-      startRaw: dateOnly,
-      startDate
-    };
+    return { title, desc, startRaw: dateOnly, startDate, location };
   })
-  .filter(item => item && item.title)
+  .filter(item => item && item.startDate >= today)
   .sort((a,b) => a.startDate - b.startDate)
   .slice(0,3);
+
 
 
 
