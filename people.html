@@ -610,14 +610,11 @@ tr:last-child td{border-bottom:none}
 
 <script>
 const SHEET_ID = "1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE";
-const EXEC_URL = "https://docs.google.com/spreadsheets/d/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/gviz/tq?tqx=out:json&sheet=executives";
 
-const HONO_URL = "https://docs.google.com/spreadsheets/d/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/gviz/tq?tqx=out:json&sheet=honorary";
-
-const ADVISOR_URL = "https://docs.google.com/spreadsheets/d/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/gviz/tq?tqx=out:json&sheet=advisor";
-
-const MEMBER_URL = "https://docs.google.com/spreadsheets/d/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/gviz/tq?tqx=out:json&sheet=members";
-
+const EXEC_URL = `https://opensheet.elk.sh/${SHEET_ID}/executives`;
+const HONO_URL = `https://opensheet.elk.sh/${SHEET_ID}/honorary`;
+const ADVISOR_URL = `https://opensheet.elk.sh/${SHEET_ID}/advisor`;
+const MEMBER_URL = `https://opensheet.elk.sh/${SHEET_ID}/members`;
 
 
 async function loadJSON(path) {
@@ -667,13 +664,17 @@ function mapPerson(p) {
 }
 
 async function loadSheet(url) {
-  const res = await fetch(url + '&t=' + Date.now(), { cache: 'no-store' });
+  const res = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
   if (!res.ok) throw new Error('โหลดข้อมูลจาก Google Sheet ไม่สำเร็จ');
-  const text = await res.text();
-  const json = parseGViz(text);
-  const rows = json.table.rows || [];
-  return rows.map(rowToObject).map(mapPerson);
-}
+  const rows = await res.json();
+
+  return rows.map(r => ({
+    member_code: r.member_no || '',
+    name: `${r.prefix || ''} ${r.first_name || ''} ${r.last_name || ''}`.trim(),
+    position: r.position || '',
+    shop_name: r.business_name || ''
+  }));
+                    }
 
 function createPersonCard(item) {
   return `
