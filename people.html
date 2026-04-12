@@ -427,10 +427,134 @@ async function initPage() {
     site = { ...site, ...siteFromJson };
   } catch (e) {}
 
-  executives = await loadJSON('data/executives.json').catch(() => []);
-  honorary = await loadJSON('data/honorary_committee.json').catch(() => []);
-  members = await loadJSON('data/members.json').catch(() => []);
 
+  <script>
+const SHEET_URL = "https://opensheet.elk.sh/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/people";
+
+let executives = [];
+let honorary = [];
+let members = [];
+let currentView = 'all';
+let currentSearch = '';
+
+function normalize(str) {
+  return (str || '').toString().trim().toLowerCase();
+}
+
+function matchesQuery(texts, q) {
+  if (!q) return true;
+  const bundle = texts.map(t => normalize(t)).join(' ');
+  return bundle.includes(q);
+}
+
+// 🔥 แปลงจาก Google Sheet → ระบบคุณ
+function mapData(data){
+  return data.map(p => ({
+    name: `${p.prefix || ''} ${p.first_name || ''} ${p.last_name || ''}`.trim(),
+    member_code: p.member_no || '',
+    shop_name: p.business_name || '',
+    position: p.association_role || '',
+    group: p.group_type || 'member'
+  }));
+}
+
+async function loadPeopleFromSheet(){
+  const res = await fetch(SHEET_URL + "?t=" + Date.now());
+  const raw = await res.json();
+  const data = mapData(raw);
+
+  executives = data.filter(x => x.group === 'committee');
+  honorary  = data.filter(x => x.group === 'honorary');
+  members   = data.filter(x => x.group === 'member');
+}
+
+// ===== render เดิม (ใช้ของคุณได้เลย) =====
+function renderMembers() {
+  const body = document.getElementById('membersBody');
+  body.innerHTML = '';
+
+  const q = normalize(currentSearch);
+
+  const filtered = members.filter(x =>
+    matchesQuery([x.member_code, x.name, x.shop_name], q)
+  );
+
+  filtered.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${item.member_code || ''}</td>
+      <td>${item.name || ''}</td>
+      <td>${item.shop_name || ''}</td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+function renderExecutives(){
+  const grid = document.getElementById('executivesGrid');
+  grid.innerHTML = '';
+
+  const q = normalize(currentSearch);
+
+  executives.filter(x =>
+    matchesQuery([x.name, x.position, x.shop_name], q)
+  ).forEach(item => {
+    const div = document.createElement('div');
+    div.className = "person-card";
+    div.innerHTML = `
+      <div class="person-placeholder">人</div>
+      <div>
+        <div class="person-name">${item.name}</div>
+        <div class="person-position">${item.position}</div>
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+function renderHonorary(){
+  const grid = document.getElementById('honoraryGrid');
+  grid.innerHTML = '';
+
+  const q = normalize(currentSearch);
+
+  honorary.filter(x =>
+    matchesQuery([x.name, x.position, x.shop_name], q)
+  ).forEach(item => {
+    const div = document.createElement('div');
+    div.className = "person-card";
+    div.innerHTML = `
+      <div class="person-placeholder">人</div>
+      <div>
+        <div class="person-name">${item.name}</div>
+        <div class="person-position">${item.position}</div>
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+async function initPage(){
+  await loadPeopleFromSheet();
+
+  renderExecutives();
+  renderHonorary();
+  renderMembers();
+
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    currentSearch = e.target.value;
+    renderExecutives();
+    renderHonorary();
+    renderMembers();
+  });
+}
+
+initPage();
+</script>
+  
+
+
+  
   document.title = `บุคลากรและสมาชิก | ${site.name}`;
   document.getElementById('brandName').textContent = site.name;
   document.getElementById('brandSub').textContent = site.subtitle;
