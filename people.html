@@ -330,8 +330,7 @@ function renderMembers() {
   body.innerHTML = '';
 
   const q = normalize(currentSearch);
-  const filtered = members.filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q));
-    .sort((a, b) => a.name.localeCompare(b.name, 'th'));
+  const filtered = members.filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q));    
 
   meta.textContent = `${filtered.length} รายการ`;
   count.textContent = `${filtered.length} รายการ`;
