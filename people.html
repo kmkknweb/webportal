@@ -260,12 +260,6 @@ let currentSearch = '';
 google.charts.load('current', { packages: ['table'] });
 google.charts.setOnLoadCallback(initPage);
 
-async function loadJSON(path) {
-  const response = await fetch(path);
-  if (!response.ok) throw new Error(`Failed to load ${path}`);
-  return await response.json();
-}
-
 function normalize(str) {
   return (str || '').toString().trim().toLowerCase();
 }
@@ -274,13 +268,24 @@ function matchesQuery(texts, q) {
   if (!q) return true;
   return texts.some(t => normalize(t).includes(q));
 }
+
+/* ✅ FIX รูป Drive จบ */
+function getImageUrl(url){
+  if(!url) return '';
+  const m = url.match(/\/d\/(.*?)\//);
+  return m ? `https://drive.google.com/uc?id=${m[1]}` : url;
+}
+
+/* ✅ CARD */
 function createPersonCard(item) {
+  const img = getImageUrl(item.photo);
+
   return `
     <div class="person-card">
       <div class="person-placeholder">
-        ${item.photo
-          ? `<img src="${item.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
-          : '人'}
+        ${img
+          ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+          : `<img src="assets/images/logo.png" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`}
       </div>
       <div>
         <div class="person-name">${item.name || ''}</div>
@@ -292,44 +297,49 @@ function createPersonCard(item) {
   `;
 }
 
+/* ✅ อ่าน Sheet */
 function querySheet(sheetName) {
   return new Promise((resolve, reject) => {
     const query = new google.visualization.Query(`${SHEET_BASE}${encodeURIComponent(sheetName)}`);
     query.send(response => {
       if (response.isError()) {
-        reject(new Error(`${sheetName}: ${response.getMessage()}`));
+        reject(new Error(response.getMessage()));
         return;
       }
+
       const table = response.getDataTable();
       const rows = [];
-      
-for (let i = 1; i < table.getNumberOfRows(); i++) {
-  rows.push({
-    member_code: table.getValue(i, 0) || '',
-    prefix: table.getValue(i, 1) || '',
-    first_name: table.getValue(i, 2) || '',
-    last_name: table.getValue(i, 3) || '',
-    position: table.getValue(i, 4) || '',
-    shop_name: table.getValue(i, 5) || '',
-    photo: table.getValue(i, 6) || '',
-    name: `${table.getValue(i, 1) || ''} ${table.getValue(i, 2) || ''} ${table.getValue(i, 3) || ''}`.trim()
-  });
-}
 
-                     
+      for (let i = 0; i < table.getNumberOfRows(); i++) {   // 🔥 FIX สำคัญ
+        rows.push({
+          member_code: table.getValue(i, 0) || '',
+          prefix: table.getValue(i, 1) || '',
+          first_name: table.getValue(i, 2) || '',
+          last_name: table.getValue(i, 3) || '',
+          position: table.getValue(i, 4) || '',
+          shop_name: table.getValue(i, 5) || '',
+          photo: table.getValue(i, 6) || '',
+          name: `${table.getValue(i, 1) || ''} ${table.getValue(i, 2) || ''} ${table.getValue(i, 3) || ''}`.trim()
+        });
+      }
+
       resolve(rows);
     });
   });
 }
 
+/* render */
 function renderCardSection(list, gridId, emptyId, metaId) {
   const grid = document.getElementById(gridId);
   const empty = document.getElementById(emptyId);
   const meta = document.getElementById(metaId);
+
   grid.innerHTML = '';
 
   const q = normalize(currentSearch);
-  const filtered = list.filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q));
+  const filtered = list
+    .filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q))
+    .sort((a, b) => (a.name || '').localeCompare((b.name || ''), 'th'));
 
   meta.textContent = `${filtered.length} รายการ`;
   empty.classList.toggle('hidden', filtered.length > 0);
@@ -346,14 +356,13 @@ function renderMembers() {
   const empty = document.getElementById('membersEmpty');
   const meta = document.getElementById('membersMeta');
   const count = document.getElementById('membersCount');
+
   body.innerHTML = '';
 
   const q = normalize(currentSearch);
-const filtered = members
-  .filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q))
-  .sort((a, b) => (a.name || '').localeCompare((b.name || ''), 'th'));
-  
-  
+  const filtered = members
+    .filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q))
+    .sort((a, b) => (a.name || '').localeCompare((b.name || ''), 'th'));
 
   meta.textContent = `${filtered.length} รายการ`;
   count.textContent = `${filtered.length} รายการ`;
@@ -362,10 +371,10 @@ const filtered = members
   filtered.forEach(item => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${item.member_code || ''}</td>
-      <td>${item.name || ''}</td>
-      <td>${item.position || ''}</td>
-      <td>${item.shop_name || ''}</td>
+      <td>${item.member_code}</td>
+      <td>${item.name}</td>
+      <td>${item.position}</td>
+      <td>${item.shop_name}</td>
     `;
     body.appendChild(tr);
   });
@@ -389,31 +398,6 @@ function applyView() {
 }
 
 async function initPage() {
-  let site = {
-    name: 'สมาคมปึงเถ่ากงม่าขอนแก่น',
-    subtitle: 'ระบบสารสนเทศภายในสมาคม',
-    logo: 'assets/images/logo.png',
-    footer_title: 'สมาคมปึงเถ่ากงม่าขอนแก่น',
-    footer_text: 'ระบบสารสนเทศภายในสมาคม\\nสำหรับสมาชิกและกรรมการเท่านั้น',
-    copyright: '© พ.ศ. 2568 สงวนลิขสิทธิ์'
-  };
-
-  try {
-    const siteFromJson = await loadJSON('data/site.json');
-    site = { ...site, ...siteFromJson };
-  } catch (e) {}
-
-  document.title = `บุคลากรและสมาชิก | ${site.name}`;
-  document.getElementById('brandName').textContent = site.name;
-  document.getElementById('brandSub').textContent = site.subtitle;
-  document.getElementById('footerTitle').textContent = site.footer_title || site.name;
-  document.getElementById('footerCopy').textContent = site.copyright;
-  document.getElementById('footerRight').innerHTML = (site.footer_text || '').replace(/\\n|\n/g, '<br>');
-  ['brandLogo','footerLogo'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.src = site.logo;
-  });
-
   try {
     [executives, honorary, advisor, members] = await Promise.all([
       querySheet('executives'),
@@ -422,19 +406,9 @@ async function initPage() {
       querySheet('members')
     ]);
   } catch (err) {
-    console.error(err);
-    alert('โหลดข้อมูลจาก Google Sheet ไม่สำเร็จ');
+    alert('โหลดข้อมูลไม่สำเร็จ');
     return;
   }
-
-  document.querySelectorAll('.filter-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentView = btn.dataset.view;
-      applyView();
-    });
-  });
 
   document.getElementById('searchInput').addEventListener('input', (e) => {
     currentSearch = e.target.value;
@@ -451,5 +425,11 @@ async function initPage() {
   applyView();
 }
 </script>
+    
+
+
+
+
+  
 </body>
 </html>
