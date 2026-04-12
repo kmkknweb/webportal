@@ -274,11 +274,14 @@ function matchesQuery(texts, q) {
   if (!q) return true;
   return texts.some(t => normalize(t).includes(q));
 }
-
 function createPersonCard(item) {
   return `
     <div class="person-card">
-      <div class="person-placeholder">人</div>
+      <div class="person-placeholder">
+        ${item.photo
+          ? `<img src="${item.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+          : '人'}
+      </div>
       <div>
         <div class="person-name">${item.name || ''}</div>
         ${item.position ? `<div class="person-position">${item.position}</div>` : ''}
