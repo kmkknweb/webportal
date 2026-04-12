@@ -302,19 +302,21 @@ function querySheet(sheetName) {
       }
       const table = response.getDataTable();
       const rows = [];
-      for (let i = 1; i < table.getNumberOfRows(); i++) {
-        rows.push({
-          member_code: table.getValue(i, 0) || '',
-          prefix: table.getValue(i, 1) || '',
-          first_name: table.getValue(i, 2) || '',
-          last_name: table.getValue(i, 3) || '',
-          position: table.getValue(i, 4) || '',
-          shop_name: table.getValue(i, 5) || '',
-          photo: table.getValue(i, 6) || ''
-          
-          name: `${table.getValue(i, 1) || ''} ${table.getValue(i, 2) || ''} ${table.getValue(i, 3) || ''}`.trim()
-        });
-      }
+      
+for (let i = 1; i < table.getNumberOfRows(); i++) {
+  rows.push({
+    member_code: table.getValue(i, 0) || '',
+    prefix: table.getValue(i, 1) || '',
+    first_name: table.getValue(i, 2) || '',
+    last_name: table.getValue(i, 3) || '',
+    position: table.getValue(i, 4) || '',
+    shop_name: table.getValue(i, 5) || '',
+    photo: table.getValue(i, 6) || '',
+    name: `${table.getValue(i, 1) || ''} ${table.getValue(i, 2) || ''} ${table.getValue(i, 3) || ''}`.trim()
+  });
+}
+
+                     
       resolve(rows);
     });
   });
