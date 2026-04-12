@@ -122,7 +122,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background:var(--rose-100);color:#0
 <body>
 <header class="topbar">
   <a class="brand" href="index.html">
-    <div class="logo-ring"><img id="brandLogo" src="assets/images/logo.png" alt="โลโก้"></div>
+    <div class="logo-ring"><img id="brandLogo" src="logo.png" alt="โลโก้"></div>
     <div class="brand-text">
       <div class="name" id="brandName">สมาคมปึงเถ่ากงม่าขอนแก่น</div>
       <div class="sub" id="brandSub">ระบบสารสนเทศภายในสมาคม</div>
@@ -196,7 +196,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background:var(--rose-100);color:#0
 
 <footer class="footer">
   <div class="footer-left">
-    <div class="footer-logo"><img id="footerLogo" src="assets/images/logo.png" alt="โลโก้"></div>
+    <div class="footer-logo"><img id="footerLogo" src="logo.png" alt="โลโก้"></div>
     <div><strong id="footerTitle">สมาคมปึงเถ่ากงม่าขอนแก่น</strong><br><span id="footerCopy">© พ.ศ. 2568 สงวนลิขสิทธิ์</span></div>
   </div>
   <div id="footerRight">ระบบสารสนเทศภายในสมาคม<br>สำหรับสมาชิกและกรรมการเท่านั้น</div>
@@ -205,7 +205,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background:var(--rose-100);color:#0
 <script>
 async function loadJSON(path){const r=await fetch(path); if(!r.ok) throw new Error(path); return r.json();}
 async function initPage(){
-  let site={name:'สมาคมปึงเถ่ากงม่าขอนแก่น',subtitle:'ระบบสารสนเทศภายในสมาคม',logo:'assets/images/logo.png',footer_title:'สมาคมปึงเถ่ากงม่าขอนแก่น',footer_text:'ระบบสารสนเทศภายในสมาคม\\nสำหรับสมาชิกและกรรมการเท่านั้น',copyright:'© พ.ศ. 2568 สงวนลิขสิทธิ์'};
+  let site={name:'สมาคมปึงเถ่ากงม่าขอนแก่น',subtitle:'ระบบสารสนเทศภายในสมาคม',logo:'logo.png',footer_title:'สมาคมปึงเถ่ากงม่าขอนแก่น',footer_text:'ระบบสารสนเทศภายในสมาคม\\nสำหรับสมาชิกและกรรมการเท่านั้น',copyright:'© พ.ศ. 2568 สงวนลิขสิทธิ์'};
   try{const s=await loadJSON('data/site.json'); site={...site,...s};}catch(e){}
   document.title=`ข้อมูลสมาคมและประวัติศาลเจ้า | ${site.name}`;
   document.getElementById('brandName').textContent=site.name;
