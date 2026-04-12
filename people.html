@@ -151,7 +151,7 @@ tr:last-child td{border-bottom:none}
     <div class="hero-left">
       <div class="hero-eyebrow">People Directory</div>
       <h1>บุคลากรและสมาชิก</h1>
-      <p>หน้านี้รวบรวมข้อมูลผู้บริหาร คณะกรรมการกิตติมศักดิ์ แอดไวเซอร์ และสมาชิกของสมาคม โดยสามารถเลือกดูแต่ละกลุ่มและค้นหาชื่อได้ในหน้าเดียว</p>
+      <p>หน้านี้รวบรวมข้อมูลผู้บริหาร คณะกรรมการกิตติมศักดิ์ ที่ปรึกษากิตติมศักดิ์ และสมาชิกของสมาคม โดยสามารถเลือกดูแต่ละกลุ่มและค้นหาชื่อได้ในหน้าเดียว</p>
     </div>
     <div class="hero-tools">
       <label class="search-box">
@@ -163,16 +163,16 @@ tr:last-child td{border-bottom:none}
 
   <div class="filter-wrap">
     <button class="filter-chip active" data-view="all">ทั้งหมด</button>
-    <button class="filter-chip" data-view="executives">ผู้บริหาร</button>
-    <button class="filter-chip" data-view="honorary">กิตติมศักดิ์</button>
-    <button class="filter-chip" data-view="advisor">แอดไวเซอร์</button>
+    <button class="filter-chip" data-view="executives">คณะกรรมการบริหาร</button>
+    <button class="filter-chip" data-view="honorary">กรรมการกิตติมศักดิ์</button>
+    <button class="filter-chip" data-view="advisor">ที่ปรึกษากิตติมศักดิ์</button>
     <button class="filter-chip" data-view="members">สมาชิก</button>
   </div>
 
   <main class="main">
     <section class="panel" id="executivesSection">
       <div class="panel-head">
-        <div class="panel-title">ผู้บริหาร</div>
+        <div class="panel-title">คณะกรรมการบริหาร</div>
         <div class="panel-meta" id="executivesMeta">0 รายการ</div>
       </div>
       <div class="card-grid" id="executivesGrid"></div>
@@ -330,7 +330,11 @@ function renderMembers() {
   body.innerHTML = '';
 
   const q = normalize(currentSearch);
-  const filtered = members.filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q));    
+const filtered = members
+  .filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q))
+  .sort((a, b) => (a.name || '').localeCompare((b.name || ''), 'th'));
+  
+  
 
   meta.textContent = `${filtered.length} รายการ`;
   count.textContent = `${filtered.length} รายการ`;
