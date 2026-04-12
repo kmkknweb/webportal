@@ -251,23 +251,13 @@ function matchesQuery(texts, q) {
 }
 
 function mapData(data) {
-  return data
-    .filter(p => normalize(p.status) !== 'hidden')
-    .map(p => ({
-      person_id: p.person_id || '',
-      member_code: p.member_no || '',
-      group: normalize(p.group_type) || 'member',
-      prefix: p.prefix || '',
-      first_name: p.first_name || '',
-      last_name: p.last_name || '',
-      name: `${p.prefix || ''} ${p.first_name || ''} ${p.last_name || ''}`.trim(),
-      shop_name: p.business_name || '',
-      position: p.association_role || 'สมาชิก',
-      term: p.term || '',
-      phone: p.phone || '',
-      note: p.note || '',
-      sort_order: Number(p.sort_order || 9999)
-    }));
+  return data.map(p => ({
+    name: `${p.prefix || ''} ${p.first_name || ''} ${p.last_name || ''}`.trim(),
+    member_code: p.member_no || '',
+    shop_name: p.business_name || '',
+    position: p.association_role || '',
+    group: (p.group_type || 'member').toLowerCase()   // 👈 สำคัญ
+  }));
 }
 
 function createPersonCard(item) {
