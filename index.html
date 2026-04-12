@@ -627,7 +627,8 @@ async function loadGoogleCalendar(){
     const icsUrl = "https://calendar.google.com/calendar/ical/kongmakhonkaen%40gmail.com/public/basic.ics";
 
 
-    const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(icsUrl);
+    const now = Math.floor(Date.now() / 60000); // เปลี่ยนทุก 1 นาที
+const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(icsUrl + "?t=" + now);
 
     const res = await fetch(proxyUrl);
     const text = await res.text();
