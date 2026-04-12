@@ -310,7 +310,7 @@ function querySheet(sheetName) {
       const table = response.getDataTable();
       const rows = [];
 
-      for (let i = 0; i < table.getNumberOfRows(); i++) {   // 🔥 FIX สำคัญ
+      for (let i = 1; i < table.getNumberOfRows(); i++) {   // 🔥 FIX สำคัญ
         rows.push({
           member_code: table.getValue(i, 0) || '',
           prefix: table.getValue(i, 1) || '',
