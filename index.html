@@ -634,30 +634,38 @@ async function loadGoogleCalendar(){
 
     const today = new Date();
     today.setHours(0,0,0,0);
+const events = text
+  .split("BEGIN:VEVENT")
+  .slice(1)
+  .map(block => {
+    const title = (block.match(/SUMMARY:(.*)/) || [,''])[1].trim();
+    const desc = (block.match(/DESCRIPTION:(.*)/) || [,''])[1].replace(/\\n/g, ' ').trim();
+    const location = (block.match(/LOCATION:(.*)/) || [,''])[1].trim();
 
-    const events = text
-      .split("BEGIN:VEVENT")
-      .slice(1)
-      .map(block => {
-        const title = (block.match(/SUMMARY:(.*)/) || [,''])[1].trim();
-        const desc = (block.match(/DESCRIPTION:(.*)/) || [,''])[1].replace(/\\n/g, ' ').trim();
-        const startRaw = (block.match(/DTSTART[^:]*:(\d{8}(T\d{6}Z?)?)/) || [,''])[1];
-        const location = (block.match(/LOCATION:(.*)/) || [,''])[1].trim();
+    const startMatch = block.match(/DTSTART[^:]*:(\d{8})(T\d{6}Z?)?/);
+    if (!startMatch) return null;
 
-        if (!startRaw) return null;
+    const dateOnly = startMatch[1];
+    const y = dateOnly.substring(0,4);
+    const m = dateOnly.substring(4,6);
+    const d = dateOnly.substring(6,8);
+    const startDate = new Date(`${y}-${m}-${d}T00:00:00`);
 
-        const dateOnly = startRaw.substring(0,8);
-        const y = dateOnly.substring(0,4);
-        const m = dateOnly.substring(4,6);
-        const d = dateOnly.substring(6,8);
-        const startDate = new Date(`${y}-${m}-${d}T00:00:00`);
+    return {
+      title,
+      desc,
+      location,
+      startRaw: dateOnly,
+      startDate
+    };
+  })
+  .filter(item => item && item.title)
+  .sort((a,b) => a.startDate - b.startDate)
+  .slice(0,3);
 
-        return { title, desc, startRaw, startDate, location };
-      })
-      .filter(item => item && item.title && item.startDate >= today)
-      .sort((a,b) => a.startDate - b.startDate)
-      .slice(0,3);
 
+
+    
     if (!events.length){
       el.innerHTML = '<div class="empty-note">ยังไม่มีกำหนดการในปฏิทิน</div>';
       return;
