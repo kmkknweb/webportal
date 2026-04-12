@@ -267,9 +267,10 @@ body::before{
 }
 .grid-main{
   display:grid;
-  grid-template-columns:1.35fr .95fr;
+  grid-template-columns:1fr;
   gap:18px;
 }
+  
 .panel{
   background:var(--white);
   border:1px solid rgba(211,160,170,.2);
@@ -522,15 +523,7 @@ body::before{
         <div class="calendar-list" id="calendarList">กำลังโหลดปฏิทิน...</div>
       </section>
 
-      <section class="panel" id="updates">
-        <div class="panel-head">
-          <div class="panel-title">อัปเดตล่าสุดในระบบ</div>
-          <a class="panel-more" href="news.html">ดูทั้งหมด →</a>
-        </div>
-        <div class="updates-list" id="updatesList"></div>
-      </section>
-    </div>
-  </main>
+      
 
   <footer class="footer">
     <div class="footer-left">
@@ -731,18 +724,9 @@ async function initPage() {
 
   const publishedNews = news.filter(item => item.status === 'published').sort((a,b) => new Date(b.date) - new Date(a.date));
 
-  const updatesList = document.getElementById('updatesList');
-  updatesList.innerHTML = '';
-  if (!publishedNews.length) {
-    updatesList.innerHTML = '<div class="empty-note">ยังไม่มีอัปเดตในระบบ</div>';
-  } else {
-    publishedNews.slice(0,5).forEach(item => {
-      const row = document.createElement('div');
-      row.className = 'update-row';
-      row.innerHTML = `<div class="title">${item.title || ''}</div><div class="date">${formatThaiDate(item.date || '')}</div>`;
-      updatesList.appendChild(row);
-    });
-  }
+
+
+                                     
 }
 
 window.addEventListener('DOMContentLoaded', () => {
