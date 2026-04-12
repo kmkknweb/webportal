@@ -386,8 +386,8 @@ async function loadPeopleFromSheet() {
   const data = mapData(raw);
 
   executives = data.filter(x => x.group === 'committee');
-  honorary = data.filter(x => x.group === 'honorary');
-  members = data.filter(x => x.group === 'member');
+honorary  = data.filter(x => x.group === 'honorary');
+members   = data.filter(x => x.group === 'member');
 }
 
 async function initPage() {
