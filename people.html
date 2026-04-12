@@ -13,6 +13,7 @@
   --rose-400:#d4818f; --rose-500:#c2606f; --rose-600:#a84858; --rose-700:#8c3847;
   --rose-800:#6e2a36; --white:#ffffff; --text-dark:#000000; --text-mid:#000000;
   --text-soft:#000000; --shadow-sm:0 2px 8px rgba(162,72,88,0.08); --shadow-md:0 8px 32px rgba(162,72,88,0.12);
+  --maroon:#7a0019; --maroon-dark:#5c0013;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -39,11 +40,19 @@ body::before{
 .logo-ring img,.footer-logo img{width:100%;height:100%;object-fit:contain}
 .brand-text .name{font-family:'Noto Serif Thai',serif;font-size:18px;font-weight:500;color:var(--text-dark);line-height:1.2}
 .brand-text .sub{font-size:13px;color:var(--text-soft);margin-top:2px}
-.topbar-nav{display:flex;gap:2px}
-.nav-link{font-size:13px;color:var(--text-mid);padding:7px 14px;border-radius:999px;text-decoration:none;transition:background .15s,color .15s}
-.nav-link:hover,.nav-link.active{background:rgba(211,160,170,.2);color:var(--text-dark)}
-.btn-back{display:flex;align-items:center;gap:7px;padding:8px 18px;background:var(--rose-700);color:var(--white);border:none;border-radius:999px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap}
-.btn-back:hover{background:var(--rose-800)}
+.topbar-nav{display:flex;gap:8px}
+.nav-link{
+  background:var(--maroon);color:#fff !important;border:1px solid var(--maroon);
+  box-shadow:0 4px 12px rgba(122,0,25,.14);font-size:13px;padding:7px 14px;border-radius:999px;
+  text-decoration:none;transition:.2s ease;font-weight:600;letter-spacing:.3px
+}
+.nav-link:hover,.nav-link.active{background:var(--maroon-dark);border-color:var(--maroon-dark)}
+.btn-back{
+  display:flex;align-items:center;gap:7px;padding:8px 18px;background:var(--maroon);color:var(--white);
+  border:1px solid var(--maroon);border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;
+  white-space:nowrap;box-shadow:0 4px 14px rgba(122,0,25,.22);transition:.2s ease;
+}
+.btn-back:hover{background:var(--maroon-dark);border-color:var(--maroon-dark)}
 
 .hero{
   background:var(--white);border-bottom:1px solid rgba(211,160,170,.25);
@@ -59,17 +68,16 @@ body::before{
   display:flex;align-items:center;gap:10px;background:var(--rose-50);border:1px solid var(--rose-200);
   border-radius:14px;padding:10px 14px;min-width:320px
 }
-.search-box input{
-  width:100%;border:none;outline:none;background:transparent;font-size:14px;color:#000
-}
+.search-box input{width:100%;border:none;outline:none;background:transparent;font-size:14px;color:#000}
 .search-box input::placeholder{color:#555}
 
 .filter-wrap{max-width:1180px;margin:0 auto;padding:22px 32px 0;display:flex;gap:10px;flex-wrap:wrap}
 .filter-chip{
-  border:1px solid var(--rose-200);background:var(--white);color:var(--text-mid);
-  padding:8px 14px;border-radius:999px;font-size:13px;cursor:pointer
+  background:var(--maroon);color:#fff !important;border:1px solid var(--maroon);
+  box-shadow:0 4px 12px rgba(122,0,25,.15);padding:8px 14px;border-radius:999px;font-size:13px;
+  cursor:pointer;transition:.2s ease;font-family:'Noto Sans Thai',sans-serif;font-weight:600;letter-spacing:.3px
 }
-.filter-chip.active,.filter-chip:hover{background:var(--rose-50);border-color:var(--rose-300)}
+.filter-chip:hover,.filter-chip.active{background:var(--maroon-dark);border-color:var(--maroon-dark)}
 
 .main{max-width:1180px;margin:0 auto;padding:22px 32px 56px;display:flex;flex-direction:column;gap:22px}
 .panel{background:var(--white);border:1px solid rgba(211,160,170,.2);border-radius:18px;box-shadow:var(--shadow-sm);padding:20px}
@@ -83,21 +91,19 @@ body::before{
   background:var(--rose-50);border:1px solid var(--rose-100);border-radius:16px;padding:16px;
   display:grid;grid-template-columns:88px 1fr;gap:14px;align-items:center
 }
-.person-photo,.person-placeholder{
+.person-placeholder{
   width:88px;height:88px;border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--rose-200);
-  display:flex;align-items:center;justify-content:center
+  display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--rose-600);font-family:'Noto Serif Thai',serif
 }
-.person-photo img{width:100%;height:100%;object-fit:cover}
-.person-placeholder{font-size:28px;color:var(--rose-600);font-family:'Noto Serif Thai',serif}
 .person-name{font-size:17px;font-weight:500;line-height:1.45}
-.person-position,.person-shop,.person-term{font-size:13px;line-height:1.7}
+.person-position,.person-shop,.person-term,.person-memberno{font-size:13px;line-height:1.7}
 .person-position{color:var(--rose-700);font-weight:500}
 
 .member-tools{
   display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px
 }
 .table-wrap{overflow:auto;border:1px solid var(--rose-100);border-radius:16px}
-table{width:100%;border-collapse:collapse;background:var(--white);min-width:680px}
+table{width:100%;border-collapse:collapse;background:var(--white);min-width:760px}
 th,td{padding:12px 14px;border-bottom:1px solid var(--rose-50);text-align:left;font-size:13px}
 th{background:var(--rose-50);font-weight:500}
 tr:last-child td{border-bottom:none}
@@ -112,66 +118,14 @@ tr:last-child td{border-bottom:none}
 .footer-text strong{color:var(--text-mid);font-weight:500}
 .footer-right{font-size:11px;color:var(--text-soft);text-align:right}
 .hidden{display:none !important}
+
 @media (max-width:1000px){.card-grid{grid-template-columns:1fr}}
 @media (max-width:900px){
   .topbar-nav{display:none}
   .hero{flex-direction:column}
   .search-box{min-width:100%}
   .person-card{grid-template-columns:72px 1fr}
-  .person-photo,.person-placeholder{width:72px;height:72px}
-}
-  :root{
-  --maroon:#7a0019;
-  --maroon-dark:#5c0013;
-}
-
-/* เมนูด้านบน */
-.nav-link{
-  background:var(--maroon);
-  color:#fff !important;
-  border:1px solid var(--maroon);
-  box-shadow:0 4px 12px rgba(122,0,25,.14);
-}
-.nav-link:hover,
-.nav-link.active{
-  background:var(--maroon-dark);
-  color:#fff !important;
-  border-color:var(--maroon-dark);
-}
-
-/* ปุ่มกลับ */
-.btn-back{
-  background:var(--maroon) !important;
-  color:#fff !important;
-  border:1px solid var(--maroon) !important;
-  box-shadow:0 4px 14px rgba(122,0,25,.22);
-  transition:.2s ease;
-}
-.btn-back:hover{
-  background:var(--maroon-dark) !important;
-  border-color:var(--maroon-dark) !important;
-}
-
-/* ปุ่ม filter */
-.filter-chip{
-  background:var(--maroon) !important;
-  color:#fff !important;
-  border:1px solid var(--maroon) !important;
-  box-shadow:0 4px 12px rgba(122,0,25,.15);
-  transition:.2s ease;
-}
-.filter-chip:hover,
-.filter-chip.active{
-  background:var(--maroon-dark) !important;
-  color:#fff !important;
-  border-color:var(--maroon-dark) !important;
-}
-  .nav-link,
-.btn-back,
-.filter-chip{
-  font-family:'Noto Sans Thai',sans-serif;
-  font-weight:600;
-  letter-spacing:0.3px;
+  .person-placeholder{width:72px;height:72px}
 }
 </style>
 </head>
@@ -218,7 +172,7 @@ tr:last-child td{border-bottom:none}
   <main class="main">
     <section class="panel" id="executivesSection">
       <div class="panel-head">
-        <div class="panel-title">ผู้บริหาร วาระ 2568-2569</div>
+        <div class="panel-title">ผู้บริหาร / คณะกรรมการ</div>
         <div class="panel-meta" id="executivesMeta">0 รายการ</div>
       </div>
       <div class="card-grid" id="executivesGrid"></div>
@@ -246,8 +200,9 @@ tr:last-child td{border-bottom:none}
         <table>
           <thead>
             <tr>
-              <th style="width:160px;">รหัสสมาชิก</th>
+              <th style="width:160px;">เลขสมาชิก</th>
               <th>ชื่อ</th>
+              <th>ตำแหน่ง</th>
               <th>ชื่อร้าน</th>
             </tr>
           </thead>
@@ -271,6 +226,8 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <script>
+const SHEET_URL = "https://opensheet.elk.sh/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/people";
+
 async function loadJSON(path) {
   const response = await fetch(path);
   if (!response.ok) throw new Error(`Failed to load ${path}`);
@@ -293,19 +250,35 @@ function matchesQuery(texts, q) {
   return bundle.includes(q);
 }
 
-function createPersonCard(item, secondaryLabel = 'shop_name') {
-  const photo = item.photo && item.photo.trim();
-  const secondary = item[secondaryLabel] || '';
-  const roleLine = item.position || item.committee_role || '';
+function mapData(data) {
+  return data
+    .filter(p => normalize(p.status) !== 'hidden')
+    .map(p => ({
+      person_id: p.person_id || '',
+      member_code: p.member_no || '',
+      group: normalize(p.group_type) || 'member',
+      prefix: p.prefix || '',
+      first_name: p.first_name || '',
+      last_name: p.last_name || '',
+      name: `${p.prefix || ''} ${p.first_name || ''} ${p.last_name || ''}`.trim(),
+      shop_name: p.business_name || '',
+      position: p.association_role || 'สมาชิก',
+      term: p.term || '',
+      phone: p.phone || '',
+      note: p.note || '',
+      sort_order: Number(p.sort_order || 9999)
+    }));
+}
+
+function createPersonCard(item) {
   return `
     <div class="person-card">
-      ${photo
-        ? `<div class="person-photo"><img src="${photo}" alt="${item.name || ''}"></div>`
-        : `<div class="person-placeholder">人</div>`}
+      <div class="person-placeholder">人</div>
       <div>
         <div class="person-name">${item.name || ''}</div>
-        ${roleLine ? `<div class="person-position">${roleLine}</div>` : ''}
-        ${secondary ? `<div class="person-shop">${secondary}</div>` : ''}
+        ${item.position ? `<div class="person-position">${item.position}</div>` : ''}
+        ${item.member_code ? `<div class="person-memberno">เลขสมาชิก: ${item.member_code}</div>` : ''}
+        ${item.shop_name ? `<div class="person-shop">${item.shop_name}</div>` : ''}
         ${item.term ? `<div class="person-term">วาระ: ${item.term}</div>` : ''}
       </div>
     </div>
@@ -320,8 +293,8 @@ function renderExecutives() {
 
   const q = normalize(currentSearch);
   const filtered = executives
-    .filter(x => matchesQuery([x.name, x.position, x.shop_name], q))
-    .sort((a,b) => (a.order || 999) - (b.order || 999));
+    .filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q))
+    .sort((a,b) => a.sort_order - b.sort_order);
 
   meta.textContent = `${filtered.length} รายการ`;
 
@@ -346,8 +319,8 @@ function renderHonorary() {
 
   const q = normalize(currentSearch);
   const filtered = honorary
-    .filter(x => matchesQuery([x.name, x.committee_role, x.shop_name], q))
-    .sort((a,b) => (a.order || 999) - (b.order || 999));
+    .filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q))
+    .sort((a,b) => a.sort_order - b.sort_order);
 
   meta.textContent = `${filtered.length} รายการ`;
 
@@ -373,8 +346,11 @@ function renderMembers() {
 
   const q = normalize(currentSearch);
   const filtered = members
-    .filter(x => matchesQuery([x.member_code, x.name, x.shop_name], q))
-    .sort((a,b) => normalize(a.name).localeCompare(normalize(b.name), 'th'));
+    .filter(x => matchesQuery([x.member_code, x.name, x.position, x.shop_name], q))
+    .sort((a,b) => {
+      if (a.member_code && b.member_code) return normalize(a.member_code).localeCompare(normalize(b.member_code), 'th');
+      return normalize(a.name).localeCompare(normalize(b.name), 'th');
+    });
 
   meta.textContent = `${filtered.length} รายการ`;
   count.textContent = `${filtered.length} รายการ`;
@@ -390,6 +366,7 @@ function renderMembers() {
     tr.innerHTML = `
       <td>${item.member_code || ''}</td>
       <td>${item.name || ''}</td>
+      <td>${item.position || 'สมาชิก'}</td>
       <td>${item.shop_name || ''}</td>
     `;
     body.appendChild(tr);
@@ -412,6 +389,17 @@ function applyView() {
   }
 }
 
+async function loadPeopleFromSheet() {
+  const res = await fetch(SHEET_URL + '?t=' + Date.now(), { cache: 'no-store' });
+  if (!res.ok) throw new Error('โหลดข้อมูลจาก Google Sheet ไม่สำเร็จ');
+  const raw = await res.json();
+  const data = mapData(raw);
+
+  executives = data.filter(x => x.group === 'committee');
+  honorary = data.filter(x => x.group === 'honorary');
+  members = data.filter(x => x.group === 'member');
+}
+
 async function initPage() {
   let site = {
     name: 'สมาคมปึงเถ่ากงม่าขอนแก่น',
@@ -427,141 +415,18 @@ async function initPage() {
     site = { ...site, ...siteFromJson };
   } catch (e) {}
 
-
-  <script>
-const SHEET_URL = "https://opensheet.elk.sh/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/people";
-
-let executives = [];
-let honorary = [];
-let members = [];
-let currentView = 'all';
-let currentSearch = '';
-
-function normalize(str) {
-  return (str || '').toString().trim().toLowerCase();
-}
-
-function matchesQuery(texts, q) {
-  if (!q) return true;
-  const bundle = texts.map(t => normalize(t)).join(' ');
-  return bundle.includes(q);
-}
-
-// 🔥 แปลงจาก Google Sheet → ระบบคุณ
-function mapData(data){
-  return data.map(p => ({
-    name: `${p.prefix || ''} ${p.first_name || ''} ${p.last_name || ''}`.trim(),
-    member_code: p.member_no || '',
-    shop_name: p.business_name || '',
-    position: p.association_role || '',
-    group: p.group_type || 'member'
-  }));
-}
-
-async function loadPeopleFromSheet(){
-  const res = await fetch(SHEET_URL + "?t=" + Date.now());
-  const raw = await res.json();
-  const data = mapData(raw);
-
-  executives = data.filter(x => x.group === 'committee');
-  honorary  = data.filter(x => x.group === 'honorary');
-  members   = data.filter(x => x.group === 'member');
-}
-
-// ===== render เดิม (ใช้ของคุณได้เลย) =====
-function renderMembers() {
-  const body = document.getElementById('membersBody');
-  body.innerHTML = '';
-
-  const q = normalize(currentSearch);
-
-  const filtered = members.filter(x =>
-    matchesQuery([x.member_code, x.name, x.shop_name], q)
-  );
-
-  filtered.forEach(item => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${item.member_code || ''}</td>
-      <td>${item.name || ''}</td>
-      <td>${item.shop_name || ''}</td>
-    `;
-    body.appendChild(tr);
-  });
-}
-
-function renderExecutives(){
-  const grid = document.getElementById('executivesGrid');
-  grid.innerHTML = '';
-
-  const q = normalize(currentSearch);
-
-  executives.filter(x =>
-    matchesQuery([x.name, x.position, x.shop_name], q)
-  ).forEach(item => {
-    const div = document.createElement('div');
-    div.className = "person-card";
-    div.innerHTML = `
-      <div class="person-placeholder">人</div>
-      <div>
-        <div class="person-name">${item.name}</div>
-        <div class="person-position">${item.position}</div>
-      </div>
-    `;
-    grid.appendChild(div);
-  });
-}
-
-function renderHonorary(){
-  const grid = document.getElementById('honoraryGrid');
-  grid.innerHTML = '';
-
-  const q = normalize(currentSearch);
-
-  honorary.filter(x =>
-    matchesQuery([x.name, x.position, x.shop_name], q)
-  ).forEach(item => {
-    const div = document.createElement('div');
-    div.className = "person-card";
-    div.innerHTML = `
-      <div class="person-placeholder">人</div>
-      <div>
-        <div class="person-name">${item.name}</div>
-        <div class="person-position">${item.position}</div>
-      </div>
-    `;
-    grid.appendChild(div);
-  });
-}
-
-async function initPage(){
-  await loadPeopleFromSheet();
-
-  renderExecutives();
-  renderHonorary();
-  renderMembers();
-
-  document.getElementById('searchInput').addEventListener('input', (e) => {
-    currentSearch = e.target.value;
-    renderExecutives();
-    renderHonorary();
-    renderMembers();
-  });
-}
-
-initPage();
-</script>
-  
-
-
-  
   document.title = `บุคลากรและสมาชิก | ${site.name}`;
   document.getElementById('brandName').textContent = site.name;
   document.getElementById('brandSub').textContent = site.subtitle;
   document.getElementById('footerTitle').textContent = site.footer_title || site.name;
   document.getElementById('footerCopy').textContent = site.copyright;
   document.getElementById('footerRight').innerHTML = (site.footer_text || '').replace(/\\n|\n/g, '<br>');
-  ['brandLogo','footerLogo'].forEach(id => document.getElementById(id).src = site.logo);
+  ['brandLogo','footerLogo'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.src = site.logo;
+  });
+
+  await loadPeopleFromSheet();
 
   document.querySelectorAll('.filter-chip').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -585,7 +450,12 @@ initPage();
   applyView();
 }
 
-initPage().catch(console.error);
+initPage().catch(err => {
+  console.error(err);
+  document.getElementById('executivesEmpty').classList.remove('hidden');
+  document.getElementById('honoraryEmpty').classList.remove('hidden');
+  document.getElementById('membersEmpty').classList.remove('hidden');
+});
 </script>
 </body>
 </html>
