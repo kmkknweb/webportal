@@ -307,6 +307,8 @@ function querySheet(sheetName) {
           last_name: table.getValue(i, 3) || '',
           position: table.getValue(i, 4) || '',
           shop_name: table.getValue(i, 5) || '',
+          photo: table.getValue(i, 6) || ''
+          
           name: `${table.getValue(i, 1) || ''} ${table.getValue(i, 2) || ''} ${table.getValue(i, 3) || ''}`.trim()
         });
       }
