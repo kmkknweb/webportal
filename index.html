@@ -520,6 +520,10 @@ async function loadJSON(path) {
   return await response.json();
 }
 
+
+
+
+  
 function formatThaiDate(dateString) {
   const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
   const date = new Date(dateString);
@@ -600,37 +604,30 @@ async function loadGoogleCalendar(){
     const res = await fetch(proxyUrl);
     const text = await res.text();
 
-    const today = new Date();
-    today.setHours(0,0,0,0);
+<script>
+function formatThaiDate(dateString) {
+  const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const date = new Date(dateString);
+  if (isNaN(date)) return dateString;
+  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear() + 543}`;
+}
 
-    const events = text
-      .replace(/\r/g, "")
-      .replace(/\n /g, "")
-      .split("BEGIN:VEVENT")
-      .slice(1)
-      .map(block => {
-        const summaryMatch = block.match(/SUMMARY:(.+)/);
-        const descMatch = block.match(/DESCRIPTION:(.+)/);
-        const locationMatch = block.match(/LOCATION:(.+)/);
-        const startMatch = block.match(/DTSTART[^:]*:(\d{8})(T\d{6}Z?)?/);
+function formatThaiTime(dateString) {
+  const date = new Date(dateString);
+  if (isNaN(date)) return '';
+  return date.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+}
 
-        if (!summaryMatch || !startMatch) return null;
+async function loadGoogleCalendar(){
+  const el = document.getElementById("calendarList");
+  if (!el) return;
 
-        const title = summaryMatch[1].trim();
-        const desc = (descMatch ? descMatch[1] : '').replace(/\\n/g, ' ').trim();
-        const location = (locationMatch ? locationMatch[1] : '').trim();
+  el.innerHTML = "กำลังโหลดปฏิทิน...";
 
-        const dateOnly = startMatch[1];
-        const y = dateOnly.substring(0,4);
-        const m = dateOnly.substring(4,6);
-        const d = dateOnly.substring(6,8);
-        const startDate = new Date(`${y}-${m}-${d}T00:00:00`);
-
-        return { title, desc, startRaw: dateOnly, startDate, location };
-      })
-      .filter(item => item && item.startDate >= today)
-      .sort((a,b) => a.startDate - b.startDate)
-      .slice(0,3);
+  try{
+    const apiUrl = "https://script.google.com/macros/s/AKfycbzUab3crS4iMEDdrVQnbgEUKYn1fkrX7TGDRUF9eL9emcWx15RkwETTwhmc6S9AeDwz/exec";
+    const res = await fetch(apiUrl + "?t=" + Date.now());
+    const events = await res.json();
 
     if (!events.length){
       el.innerHTML = '<div class="empty-note">ยังไม่มีกำหนดการในปฏิทิน</div>';
@@ -643,10 +640,10 @@ async function loadGoogleCalendar(){
       const card = document.createElement("div");
       card.className = "calendar-item";
       card.innerHTML = `
-        <div class="calendar-date">${formatCalendarDateFromICS(item.startRaw)}</div>
-        <div class="calendar-time">${formatCalendarTimeFromICS(item.startRaw)}${item.location ? ' • ' + item.location : ''}</div>
-        <h3>${item.title}</h3>
-        <p>${item.desc || 'รายละเอียดเพิ่มเติมอยู่ในปฏิทินกลางของศาลเจ้า'}</p>
+        <div class="calendar-date">${formatThaiDate(item.start)}</div>
+        <div class="calendar-time">${formatThaiTime(item.start)}${item.location ? ' • ' + item.location : ''}</div>
+        <h3>${item.title || ''}</h3>
+        <p>${item.description || 'รายละเอียดเพิ่มเติมอยู่ในปฏิทินกลางของศาลเจ้า'}</p>
       `;
       el.appendChild(card);
     });
@@ -656,7 +653,11 @@ async function loadGoogleCalendar(){
     console.error(err);
   }
 }
+</script>
 
+
+
+  
 async function initPage() {
   let site = {
     name: 'สมาคมปึงเถ่ากงม่าขอนแก่น',
