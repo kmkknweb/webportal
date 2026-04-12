@@ -610,10 +610,15 @@ tr:last-child td{border-bottom:none}
 
 <script>
 const SHEET_ID = "1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE";
-const EXEC_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=executives`;
-const HONO_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=honorary`;
-const ADVISOR_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=advisor`;
-const MEMBER_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=members`;
+const EXEC_URL = "https://docs.google.com/spreadsheets/d/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/gviz/tq?tqx=out:json&sheet=executives";
+
+const HONO_URL = "https://docs.google.com/spreadsheets/d/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/gviz/tq?tqx=out:json&sheet=honorary";
+
+const ADVISOR_URL = "https://docs.google.com/spreadsheets/d/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/gviz/tq?tqx=out:json&sheet=advisor";
+
+const MEMBER_URL = "https://docs.google.com/spreadsheets/d/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/gviz/tq?tqx=out:json&sheet=members";
+
+
 
 async function loadJSON(path) {
   const response = await fetch(path);
