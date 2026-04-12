@@ -224,7 +224,7 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <script>
-const SHEET_URL = "https://opensheet.elk.sh/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/people";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/1IGwKiasKljTsOUqP44mEuywJuOrt5c6C_bSK1xvedIE/gviz/tq?tqx=out:json";
 
 async function loadJSON(path) {
   const response = await fetch(path);
@@ -370,15 +370,37 @@ function applyView() {
 }
 
 async function loadPeopleFromSheet() {
-  const res = await fetch(SHEET_URL + '?t=' + Date.now(), { cache: 'no-store' });
-  if (!res.ok) throw new Error('โหลดข้อมูลจาก Google Sheet ไม่สำเร็จ');
-  const raw = await res.json();
-  const data = mapData(raw);
+  const res = await fetch(SHEET_URL);
+  const text = await res.text();
 
-  executives = data.filter(x => x.group === 'committee');
-  honorary = data.filter(x => x.group === 'honorary');
-  members = data.filter(x => x.group === 'member');
+  const json = JSON.parse(text.substring(47).slice(0, -2));
+  const rows = json.table.rows;
+
+  const data = rows.map(r => ({
+    person_id: r.c[0]?.v || '',
+    member_no: r.c[1]?.v || '',
+    group_type: (r.c[2]?.v || '').toLowerCase(),
+    prefix: r.c[3]?.v || '',
+    first_name: r.c[4]?.v || '',
+    last_name: r.c[5]?.v || '',
+    business_name: r.c[6]?.v || '',
+    association_role: r.c[7]?.v || '',
+    term: r.c[8]?.v || '',
+    phone: r.c[9]?.v || '',
+    status: r.c[10]?.v || '',
+    sort_order: r.c[11]?.v || ''
+  }));
+
+  const mapped = mapData(data);
+
+  executives = mapped.filter(x => x.group === 'committee');
+  honorary = mapped.filter(x => x.group === 'honorary');
+  members = mapped.filter(x => x.group === 'member');
 }
+  
+
+
+  
 
 async function initPage() {
   let site = {
