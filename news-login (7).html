@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>เข้าสู่ระบบ | กระดานข่าวสมาชิก</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Sans Thai',sans-serif;
+  min-height:100vh;
+  background:#f4f1ee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.wrap{
+  width:100%;
+  max-width:400px;
+}
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:40px 36px;
+  box-shadow:0 4px 40px rgba(0,0,0,0.08);
+}
+.logo-area{
+  text-align:center;
+  margin-bottom:28px;
+}
+.logo-area img{
+  width:60px;
+  height:60px;
+  object-fit:contain;
+  margin-bottom:10px;
+}
+.logo-area h1{
+  font-family:'Noto Serif Thai',serif;
+  font-size:20px;
+  font-weight:500;
+  color:#1a1a1a;
+  line-height:1.4;
+}
+.logo-area p{
+  font-size:13px;
+  color:#888;
+  margin-top:4px;
+}
+.divider{
+  height:1px;
+  background:#eee;
+  margin:24px 0;
+}
+label{
+  display:block;
+  font-size:13px;
+  color:#555;
+  margin-bottom:6px;
+  font-weight:500;
+}
+input{
+  width:100%;
+  padding:12px 14px;
+  border:1.5px solid #e0e0e0;
+  border-radius:10px;
+  font-size:14px;
+  font-family:'Noto Sans Thai',sans-serif;
+  color:#1a1a1a;
+  background:#fafafa;
+  transition:border-color .2s;
+  margin-bottom:16px;
+}
+input:focus{
+  outline:none;
+  border-color:#7a0019;
+  background:#fff;
+}
+.btn{
+  width:100%;
+  padding:13px;
+  background:#7a0019;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  font-size:15px;
+  font-family:'Noto Sans Thai',sans-serif;
+  font-weight:500;
+  cursor:pointer;
+  transition:.2s;
+  margin-top:4px;
+}
+.btn:hover{background:#5c0013}
+.btn-skip{
+  width:100%;
+  padding:11px;
+  background:transparent;
+  color:#888;
+  border:1.5px solid #ddd;
+  border-radius:10px;
+  font-size:13px;
+  font-family:'Noto Sans Thai',sans-serif;
+  cursor:pointer;
+  transition:.2s;
+  margin-top:10px;
+}
+.btn-skip:hover{background:#f5f5f5;color:#555}
+#msg{
+  font-size:13px;
+  color:#c0392b;
+  margin-top:10px;
+  text-align:center;
+  min-height:18px;
+}
+.back{
+  text-align:center;
+  margin-top:20px;
+  font-size:13px;
+  color:#888;
+}
+.back a{
+  color:#7a0019;
+  text-decoration:none;
+  font-weight:500;
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="card">
+    <div class="logo-area">
+      <img src="logo.png" alt="โลโก้สมาคม" onerror="this.style.display='none'"/>
+      <h1>กระดานข่าวสมาชิก</h1>
+      <p>สมาคมปึงเถ่ากงม่าขอนแก่น</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="loginForm">
+      <label>อีเมล</label>
+      <input type="email" id="email" placeholder="กรอกอีเมล"/>
+      <label>รหัสผ่าน</label>
+      <input type="password" id="password" placeholder="กรอกรหัสผ่าน"/>
+      <button class="btn" onclick="login()">เข้าสู่ระบบ</button>
+      
+    </div>
+
+    <div id="registerForm" style="display:none;">
+      <label>อีเมล</label>
+      <input type="email" id="regEmail" placeholder="กรอกอีเมล"/>
+      <label>รหัสผ่าน (อย่างน้อย 6 ตัว)</label>
+      <input type="password" id="regPassword" placeholder="ตั้งรหัสผ่าน"/>
+      <label>ยืนยันรหัสผ่าน</label>
+      <input type="password" id="regPassword2" placeholder="กรอกรหัสผ่านอีกครั้ง"/>
+      <button class="btn" onclick="register()">สมัครใช้งาน</button>
+      <button class="btn-skip" onclick="showLogin()">มีบัญชีแล้ว → เข้าสู่ระบบ</button>
+    </div>
+
+    <p id="msg"></p>
+  </div>
+
+  <div class="back">
+    <a href="index.html">← กลับหน้าแรก</a>
+  </div>
+</div>
+
+<script>
+// รันทันทีก่อน module โหลด
+const isReg = new URLSearchParams(location.search).get('register') === '1';
+if (isReg) {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('registerForm').style.display = 'block';
+  document.querySelector('.logo-area h1').textContent = 'สมัครใช้งานครั้งแรก';
+}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDOxCsPNLMCBDR7FH7d0Q-GgUn36ATajwY",
+  authDomain: "news-members.firebaseapp.com",
+  projectId: "news-members",
+  storageBucket: "news-members.firebasestorage.app",
+  messagingSenderId: "611993407080",
+  appId: "1:611993407080:web:f45c27ac9d0995043375dd"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.showLogin = function() {
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('registerForm').style.display = 'none';
+  document.querySelector('.logo-area h1').textContent = 'กระดานข่าวสมาชิก';
+  document.getElementById('msg').innerText = '';
+};
+
+window.login = function() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const msg = document.getElementById('msg');
+  if (!email || !password) { msg.innerText = 'กรุณากรอกอีเมลและรหัสผ่าน'; return; }
+  msg.innerText = 'กำลังเข้าสู่ระบบ...';
+  msg.style.color = '#888';
+  signInWithEmailAndPassword(auth, email, password)
+    .then((result) => {
+      if (!result.user.emailVerified) {
+        msg.style.color = '#c0392b';
+        msg.innerText = 'กรุณายืนยันอีเมลก่อนเข้าใช้งาน (เช็คกล่องจดหมายของคุณ)';
+        auth.signOut();
+        return;
+      }
+      window.location.href = 'news-board.html';
+    })
+    .catch(() => { msg.style.color = '#c0392b'; msg.innerText = 'อีเมลหรือรหัสผ่านไม่ถูกต้อง'; });
+};
+
+window.register = function() {
+  const email = document.getElementById('regEmail').value;
+  const password = document.getElementById('regPassword').value;
+  const password2 = document.getElementById('regPassword2').value;
+  const msg = document.getElementById('msg');
+  if (!email || !password || !password2) { msg.innerText = 'กรุณากรอกข้อมูลให้ครบ'; msg.style.color = '#c0392b'; return; }
+  if (password !== password2) { msg.innerText = 'รหัสผ่านไม่ตรงกัน'; msg.style.color = '#c0392b'; return; }
+  if (password.length < 6) { msg.innerText = 'รหัสผ่านต้องมีอย่างน้อย 6 ตัว'; msg.style.color = '#c0392b'; return; }
+  msg.innerText = 'กำลังสมัคร...';
+  msg.style.color = '#888';
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((result) => {
+      sendEmailVerification(result.user).then(() => {
+        auth.signOut();
+        msg.style.color = '#2e7d32';
+        msg.innerText = '✓ สมัครสำเร็จ! กรุณาเช็คอีเมลเพื่อยืนยัน แล้วค่อย login ครับ';
+        document.getElementById('registerForm').style.display = 'none';
+        document.getElementById('loginForm').style.display = 'block';
+        document.querySelector('.logo-area h1').textContent = 'กระดานข่าวสมาชิก';
+      });
+    })
+    .catch(err => {
+      msg.style.color = '#c0392b';
+      if (err.code === 'auth/email-already-in-use') msg.innerText = 'อีเมลนี้มีบัญชีแล้ว กรุณาเข้าสู่ระบบ';
+      else msg.innerText = 'สมัครไม่สำเร็จ: ' + err.message;
+    });
+};
+
+
+</script>
+</body>
+</html>

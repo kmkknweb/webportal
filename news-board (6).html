@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>กระดานข่าวสมาชิก | สมาคมปึงเถ่ากงม่าขอนแก่น</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;500;600&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Sans Thai',sans-serif;
+  background:#f4f1ee;
+  color:#1a1a1a;
+  min-height:100vh;
+}
+
+/* TOPBAR */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #ebe8e4;
+  padding:0 24px;height:70px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#1a1a1a;}
+.brand img{width:40px;height:40px;object-fit:contain;}
+.brand-name{font-family:'Noto Serif Thai',serif;font-size:16px;font-weight:500;}
+.topbar-right{display:flex;gap:10px;align-items:center;}
+.btn-back{
+  padding:8px 16px;background:transparent;color:#555;
+  border:1.5px solid #ddd;border-radius:999px;
+  text-decoration:none;font-size:13px;transition:.2s;
+}
+.btn-back:hover{background:#f0f0f0;}
+.preview-badge{
+  background:#f0a500;color:#fff;
+  font-size:11px;padding:4px 10px;border-radius:999px;font-weight:500;
+}
+
+/* HERO */
+.hero{
+  background:#fff;
+  border-bottom:1px solid #ebe8e4;
+  padding:28px 24px 24px;
+}
+.hero-inner{max-width:800px;margin:0 auto;}
+.eyebrow{
+  font-size:11px;color:#7a0019;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:500;margin-bottom:8px;
+  display:flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:'';display:block;width:20px;height:1px;background:#7a0019;}
+.hero h1{
+  font-family:'Noto Serif Thai',serif;
+  font-size:clamp(22px,3vw,30px);font-weight:500;
+  line-height:1.4;margin-bottom:6px;
+}
+.hero p{font-size:14px;color:#666;line-height:1.8;}
+
+/* POST FORM */
+.form-wrap{
+  max-width:800px;margin:24px auto;padding:0 24px;
+}
+.form-card{
+  background:#fff;border-radius:18px;
+  border:1px solid #ebe8e4;
+  box-shadow:0 2px 16px rgba(0,0,0,0.05);
+  overflow:hidden;
+}
+.form-header{
+  padding:16px 20px;
+  border-bottom:1px solid #f0ede8;
+  display:flex;align-items:center;gap:10px;
+}
+.form-header-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:#7a0019;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.form-header h2{
+  font-family:'Noto Serif Thai',serif;
+  font-size:16px;font-weight:500;
+}
+.form-body{padding:20px;}
+.form-row{margin-bottom:16px;}
+.form-row label{
+  display:block;font-size:13px;color:#555;
+  margin-bottom:6px;font-weight:500;
+}
+.form-row label span{color:#c0392b;}
+select, input[type="text"], textarea{
+  width:100%;padding:11px 14px;
+  border:1.5px solid #e0ddd9;border-radius:10px;
+  font-size:14px;font-family:'Noto Sans Thai',sans-serif;
+  color:#1a1a1a;background:#fafaf8;
+  transition:border-color .2s;
+}
+select:focus, input[type="text"]:focus, textarea:focus{
+  outline:none;border-color:#7a0019;background:#fff;
+}
+textarea{resize:vertical;min-height:100px;line-height:1.7;}
+.form-footer{
+  padding:16px 20px;
+  border-top:1px solid #f0ede8;
+  display:flex;justify-content:flex-end;gap:10px;
+}
+.btn-submit{
+  padding:10px 24px;background:#7a0019;color:#fff;
+  border:none;border-radius:10px;font-size:14px;
+  font-family:'Noto Sans Thai',sans-serif;font-weight:500;
+  cursor:pointer;transition:.2s;
+}
+.btn-submit:hover{background:#5c0013;}
+.btn-clear{
+  padding:10px 18px;background:transparent;color:#888;
+  border:1.5px solid #ddd;border-radius:10px;font-size:14px;
+  font-family:'Noto Sans Thai',sans-serif;
+  cursor:pointer;transition:.2s;
+}
+.btn-clear:hover{background:#f5f5f5;}
+#formMsg{
+  font-size:13px;padding:10px 20px;
+  color:#2e7d32;background:#f1f8f1;
+  border-top:1px solid #c8e6c9;
+  display:none;
+}
+
+/* FILTER */
+.filter-wrap{
+  max-width:800px;margin:0 auto;padding:0 24px 16px;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.chip{
+  padding:7px 14px;border-radius:999px;font-size:13px;
+  border:1.5px solid #ddd;background:#fff;color:#555;
+  cursor:pointer;transition:.2s;font-family:'Noto Sans Thai',sans-serif;
+}
+.chip:hover{border-color:#7a0019;color:#7a0019;}
+.chip.active{background:#7a0019;color:#fff;border-color:#7a0019;}
+
+/* POSTS */
+.posts-wrap{
+  max-width:800px;margin:0 auto;padding:0 24px 48px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.post-card{
+  background:#fff;border-radius:16px;
+  border:1px solid #ebe8e4;
+  box-shadow:0 2px 12px rgba(0,0,0,0.04);
+  padding:20px;
+  animation:fadeIn .3s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.post-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.post-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;padding:4px 10px;border-radius:999px;
+  font-weight:500;
+}
+.badge-general{background:#e8f4fd;color:#1565c0;}
+.badge-benefit{background:#fff8e1;color:#f57f17;}
+.badge-sell{background:#f3e5f5;color:#6a1b9a;}
+.badge-activity{background:#e8f5e9;color:#2e7d32;}
+.post-date{font-size:11px;color:#aaa;white-space:nowrap;}
+.post-title{
+  font-family:'Noto Serif Thai',serif;
+  font-size:17px;font-weight:500;
+  line-height:1.4;margin-bottom:8px;
+}
+.post-body{font-size:14px;color:#555;line-height:1.8;}
+.post-footer{
+  margin-top:14px;padding-top:12px;
+  border-top:1px solid #f0ede8;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.post-author{font-size:12px;color:#888;display:flex;align-items:center;gap:6px;}
+.author-dot{
+  width:24px;height:24px;border-radius:50%;
+  background:#7a0019;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:600;
+}
+.btn-delete{
+  padding:5px 12px;background:transparent;color:#c0392b;
+  border:1px solid #e0b0b0;border-radius:8px;
+  font-size:12px;font-family:'Noto Sans Thai',sans-serif;
+  cursor:pointer;transition:.2s;
+}
+.btn-delete:hover{background:#fdecea;border-color:#c0392b;}
+.empty{
+  text-align:center;padding:40px;color:#aaa;font-size:14px;
+}
+
+@media(max-width:600px){
+  .topbar{padding:0 16px;}
+  .form-wrap,.filter-wrap,.posts-wrap{padding-left:16px;padding-right:16px;}
+  .hero{padding:20px 16px;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <img src="logo.png" alt="โลโก้" onerror="this.style.display='none'"/>
+    <span class="brand-name">สมาคมปึงเถ่ากงม่าขอนแก่น</span>
+  </a>
+  <div class="topbar-right">
+    <span class="preview-badge" id="previewBadge" style="display:none;">โหมด Preview</span>
+    <a class="btn-back" href="index.html">← กลับหน้าแรก</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Member Board</div>
+    <h1>กระดานข่าวสมาชิก</h1>
+    <p>พื้นที่สำหรับสมาชิกแจ้งข่าวสาร ประกาศสิทธิประโยชน์ และแลกเปลี่ยนข้อมูลระหว่างกัน</p>
+  </div>
+</section>
+
+<!-- FORM -->
+<div class="form-wrap">
+  <div class="form-card">
+    <div class="form-header">
+      <div class="form-header-icon">📢</div>
+      <h2>ประกาศข่าวสาร</h2>
+    </div>
+    <div class="form-body">
+      <div class="form-row">
+        <label>ประเภทประกาศ <span>*</span></label>
+        <select id="category">
+          <option value="">— เลือกประเภท —</option>
+          <option value="general">📋 ข่าวสารทั่วไป</option>
+          <option value="benefit">🎁 สิทธิประโยชน์สมาชิก</option>
+          <option value="sell">🛒 ขาย / บริการ</option>
+          <option value="activity">📅 กิจกรรม / นัดหมาย</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>หัวข้อประกาศ <span>*</span></label>
+        <input type="text" id="title" placeholder="กรอกหัวข้อประกาศ"/>
+      </div>
+      <div class="form-row">
+        <label>เนื้อหาประกาศ <span>*</span></label>
+        <textarea id="body" placeholder="กรอกรายละเอียด..."></textarea>
+      </div>
+      <div class="form-row">
+        <label>ชื่อผู้ประกาศ <span>*</span></label>
+        <input type="text" id="author" placeholder="ชื่อ-นามสกุล หรือชื่อร้าน"/>
+      </div>
+    </div>
+    <div id="formMsg">✓ ประกาศสำเร็จแล้ว!</div>
+    <div class="form-footer">
+      <button class="btn-clear" onclick="clearForm()">ล้างข้อมูล</button>
+      <button class="btn-submit" onclick="submitPost()">ประกาศ</button>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER -->
+<div class="filter-wrap">
+  <button class="chip active" data-cat="all">ทั้งหมด</button>
+  <button class="chip" data-cat="general">📋 ทั่วไป</button>
+  <button class="chip" data-cat="benefit">🎁 สิทธิประโยชน์</button>
+  <button class="chip" data-cat="sell">🛒 ขาย/บริการ</button>
+  <button class="chip" data-cat="activity">📅 กิจกรรม</button>
+</div>
+
+<!-- POSTS -->
+<div class="posts-wrap" id="postsWrap"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDOxCsPNLMCBDR7FH7d0Q-GgUn36ATajwY",
+  authDomain: "news-members.firebaseapp.com",
+  projectId: "news-members",
+  storageBucket: "news-members.firebasestorage.app",
+  messagingSenderId: "611993407080",
+  appId: "1:611993407080:web:f45c27ac9d0995043375dd"
+};
+
+const ADMIN_EMAIL = 'kongmakhonkaen@gmail.com';
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const isPreview = new URLSearchParams(location.search).get('preview') === '1';
+if (isPreview) document.getElementById('previewBadge').style.display = 'inline-flex';
+
+let currentFilter = 'all';
+let isAdmin = false;
+let currentUserEmail = '';
+
+const catConfig = {
+  general:  { label: '📋 ข่าวสารทั่วไป',    cls: 'badge-general' },
+  benefit:  { label: '🎁 สิทธิประโยชน์',     cls: 'badge-benefit' },
+  sell:     { label: '🛒 ขาย / บริการ',       cls: 'badge-sell' },
+  activity: { label: '📅 กิจกรรม / นัดหมาย', cls: 'badge-activity' }
+};
+
+function formatDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
+}
+
+async function loadPosts() {
+  const wrap = document.getElementById('postsWrap');
+  wrap.innerHTML = '<div class="empty">กำลังโหลด...</div>';
+  try {
+    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(10));
+    const snap = await getDocs(q);
+    const posts = [];
+    snap.forEach(doc => posts.push({ id: doc.id, ...doc.data() }));
+    renderPosts(posts);
+  } catch (err) {
+    wrap.innerHTML = '<div class="empty">โหลดข้อมูลไม่สำเร็จ</div>';
+  }
+}
+
+function renderPosts(posts) {
+  const wrap = document.getElementById('postsWrap');
+  const filtered = currentFilter === 'all' ? posts : posts.filter(p => p.category === currentFilter);
+  if (!filtered.length) {
+    wrap.innerHTML = '<div class="empty">ยังไม่มีประกาศในหมวดนี้</div>';
+    return;
+  }
+  wrap.innerHTML = filtered.map(p => {
+    const cat = catConfig[p.category] || { label: p.category, cls: '' };
+    const initial = (p.author || '?').charAt(0);
+    return `
+      <div class="post-card">
+        <div class="post-top">
+          <span class="post-badge ${cat.cls}">${cat.label}</span>
+          <span class="post-date">${formatDate(p.createdAt)}</span>
+        </div>
+        <div class="post-title">${p.title}</div>
+        <div class="post-body">${p.body}</div>
+        <div class="post-footer">
+          <div class="post-author">
+            <div class="author-dot">${initial}</div>
+            <div>
+              <div>${p.author}</div>
+              <div style="font-size:11px;color:#aaa;">${p.email || ''}</div>
+            </div>
+          </div>
+          ${isAdmin ? `<button class="btn-delete" onclick="deletePost('${p.id}')">🗑 ลบโพสต์</button>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+window.submitPost = async function() {
+  const category = document.getElementById('category').value;
+  const title = document.getElementById('title').value.trim();
+  const body = document.getElementById('body').value.trim();
+  const author = document.getElementById('author').value.trim();
+
+  if (!category || !title || !body || !author) {
+    alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
+    return;
+  }
+
+  const btn = document.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'กำลังบันทึก...';
+
+  try {
+    await addDoc(collection(db, 'posts'), {
+      category, title, body, author,
+      email: currentUserEmail,
+      createdAt: serverTimestamp()
+    });
+
+    const msg = document.getElementById('formMsg');
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 3000);
+
+    clearForm();
+    await loadPosts();
+  } catch (err) {
+    alert('บันทึกไม่สำเร็จ: ' + err.message);
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'ประกาศ';
+};
+
+window.deletePost = async function(postId) {
+  if (!confirm('ต้องการลบโพสต์นี้ใช่ไหมครับ?')) return;
+  try {
+    await deleteDoc(doc(db, 'posts', postId));
+    await loadPosts();
+  } catch (err) {
+    alert('ลบไม่สำเร็จ: ' + err.message);
+  }
+};
+
+window.clearForm = function() {
+  document.getElementById('category').value = '';
+  document.getElementById('title').value = '';
+  document.getElementById('body').value = '';
+  document.getElementById('author').value = '';
+};
+
+document.querySelectorAll('.chip').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.cat;
+    await loadPosts();
+  });
+});
+
+// เช็ค login ก่อน (ยกเว้น preview mode)
+if (isPreview) {
+  loadPosts();
+} else {
+  onAuthStateChanged(auth, user => {
+    if (!user) {
+      window.location.href = 'news-login.html';
+    } else {
+      isAdmin = user.email === ADMIN_EMAIL;
+      currentUserEmail = user.email;
+      loadPosts();
+    }
+  });
+}
+</script>
+</body>
+</html>
