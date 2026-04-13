@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ระบบเตรียมใบเบิกงานพัสดุ</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#F5F0E8;--card:#FFFDF8;--border:#D4C9A8;--text:#2C2416;--sub:#6B5B3E;
+  --gold:#8B6914;
+}
+
+/* 🔥 reset กันล้น */
+*,*::before,*::after{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  padding:12px;
+  font-family:'Noto Sans Thai',Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden; /* กันล้นแนวนอน */
+}
+
+/* 🔥 wrapper ใหม่ */
+.wrapper{
+  max-width:900px;
+  width:100%;
+  margin:auto;
+}
+
+/* card */
+.card{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:14px;
+}
+
+/* input fix */
+select,input,textarea{
+  width:100%;
+  max-width:100%;
+  padding:11px 13px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  font-size:14px;
+  font-family:inherit;
+}
+
+/* กัน element ใหญ่ล้น */
+img,button{
+  max-width:100%;
+}
+
+/* layout */
+.row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:end;
+}
+
+/* mobile fix */
+@media(max-width:600px){
+  .row{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<!-- HEADER -->
+<div class="card" style="display:flex;align-items:center;gap:14px">
+  <img src="logogolden.png" style="width:60px;height:60px">
+  <div>
+    <div style="font-size:20px;font-weight:700;color:#8B6914">
+      สมาคมปึงเถ่ากงม่าขอนแก่น
+    </div>
+    <div>ระบบเตรียมใบเบิกงานพัสดุ</div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="card">
+  <h3>เลือกงาน</h3>
+
+  <div class="row">
+    <div>
+      <label>เลือกงาน</label>
+      <select>
+        <option>-- เลือก --</option>
+      </select>
+    </div>
+
+    <button>โหลด</button>
+  </div>
+</div>
+
+<!-- TEST INPUT (กันล้น) -->
+<div class="card">
+  <input type="text" placeholder="Email">
+  <br><br>
+  <input type="password" placeholder="Password">
+  <br><br>
+  <button style="width:100%;background:#8B1E2D;color:#fff;padding:12px;border:none;border-radius:10px;">
+    Login
+  </button>
+</div>
+
+</div>
+
+</body>
+</html>
