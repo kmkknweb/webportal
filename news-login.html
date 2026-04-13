@@ -234,7 +234,7 @@ window.register = function() {
       sendEmailVerification(result.user).then(() => {
         auth.signOut();
         msg.style.color = '#2e7d32';
-        msg.innerText = '✓ สมัครสำเร็จ! กรุณาเช็คอีเมลเพื่อยืนยัน แล้วค่อย login ครับ';
+        msg.innerText = '✓ สมัครสำเร็จ! กรุณาเช็คอีเมลเพื่อยืนยัน แล้วค่อย login ครับ ตรวจสอบอีเมลของท่านหากไม่พบให้ตรวจสอบในกล่อง spam';
         document.getElementById('registerForm').style.display = 'none';
         document.getElementById('loginForm').style.display = 'block';
         document.querySelector('.logo-area h1').textContent = 'กระดานข่าวสมาชิก';
