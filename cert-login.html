@@ -106,11 +106,7 @@ const firebaseConfig = {
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6BOd7OMN_9z0UjIDE9NlEzBGfK0GbaaNFUIaEDD5T4HBNisQBL-p3dPvqXMtv2RQCLQ/exec';
 
-/* ✅ เพิ่ม email ที่มีสิทธิ์ได้ที่นี่ */
-const WHITELIST = [
-  'kongmakhonkaen@gmail.com',
-  /* เพิ่ม email ถัดไปตรงนี้ครับ */
-];
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -124,12 +120,7 @@ window.login = function() {
   msg.style.color = '#888';
   signInWithEmailAndPassword(auth, email, password)
     .then((result) => {
-      if (!WHITELIST.includes(result.user.email)) {
-        msg.style.color = '#c0392b';
-        msg.innerText = 'ไม่มีสิทธิ์เข้าถึงระบบนี้';
-        auth.signOut();
-        return;
-      }
+      
       window.open(APPS_SCRIPT_URL, '_blank');
       msg.style.color = '#2e7d32';
       msg.innerText = '✓ เข้าสู่ระบบสำเร็จ กำลังเปิดระบบสร้างใบประกาศ...';
