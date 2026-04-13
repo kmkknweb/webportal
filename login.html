@@ -3,75 +3,88 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ระบบเตรียมใบเบิกงานพัสดุ</title>
+<title>เข้าสู่ระบบ</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#F5F0E8;--card:#FFFDF8;--border:#D4C9A8;--text:#2C2416;--sub:#6B5B3E;
-  --gold:#8B6914;
-}
-
-/* 🔥 reset กันล้น */
-*,*::before,*::after{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
-  padding:12px;
-  font-family:'Noto Sans Thai',Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden; /* กันล้นแนวนอน */
+  font-family:'Noto Sans Thai',sans-serif;
+  background:#EADADA;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 
-/* 🔥 wrapper ใหม่ */
-.wrapper{
-  max-width:900px;
+/* กล่องหลัก */
+.login-container{
   width:100%;
-  margin:auto;
+  max-width:520px;
+  padding:20px;
 }
 
-/* card */
-.card{
-  background:var(--card);
-  border:1.5px solid var(--border);
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:14px;
+.login-card{
+  background:#F5F5F5;
+  border-radius:28px;
+  padding:40px 35px;
 }
 
-/* input fix */
-select,input,textarea{
+/* title */
+h2{
+  margin-bottom:30px;
+  font-weight:600;
+}
+
+/* input */
+.input{
   width:100%;
-  max-width:100%;
-  padding:11px 13px;
-  border:1.5px solid var(--border);
-  border-radius:10px;
-  background:#fff;
-  font-size:14px;
-  font-family:inherit;
+  padding:16px;
+  border:2px solid #BFBFBF;
+  border-radius:8px;
+  font-size:16px;
+  outline:none;
 }
 
-/* กัน element ใหญ่ล้น */
-img,button{
-  max-width:100%;
+/* password wrapper */
+.input-group{
+  position:relative;
 }
 
-/* layout */
-.row{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:10px;
-  align-items:end;
+.input-group input{
+  padding-right:50px;
 }
 
-/* mobile fix */
-@media(max-width:600px){
-  .row{
-    grid-template-columns:1fr;
+/* eye icon */
+.eye{
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:20px;
+  cursor:pointer;
+}
+
+/* button */
+.login-btn{
+  width:100%;
+  margin-top:25px;
+  padding:15px;
+  background:#8B1E2D;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* mobile */
+@media(max-width:480px){
+  .login-card{
+    padding:30px 20px;
   }
 }
 </style>
@@ -79,47 +92,33 @@ img,button{
 
 <body>
 
-<div class="wrapper">
+<div class="login-container">
 
-<!-- HEADER -->
-<div class="card" style="display:flex;align-items:center;gap:14px">
-  <img src="logogolden.png" style="width:60px;height:60px">
-  <div>
-    <div style="font-size:20px;font-weight:700;color:#8B6914">
-      สมาคมปึงเถ่ากงม่าขอนแก่น
-    </div>
-    <div>ระบบเตรียมใบเบิกงานพัสดุ</div>
-  </div>
-</div>
+  <div class="login-card">
 
-<!-- FORM -->
-<div class="card">
-  <h3>เลือกงาน</h3>
+    <h2>เข้าสู่ระบบ</h2>
 
-  <div class="row">
-    <div>
-      <label>เลือกงาน</label>
-      <select>
-        <option>-- เลือก --</option>
-      </select>
+    <input class="input" type="text" placeholder="Email">
+
+    <br><br>
+
+    <div class="input-group">
+      <input id="password" class="input" type="password" placeholder="Password">
+      <span class="eye" onclick="togglePassword()">👁️</span>
     </div>
 
-    <button>โหลด</button>
+    <button class="login-btn">Login</button>
+
   </div>
-</div>
-
-<!-- TEST INPUT (กันล้น) -->
-<div class="card">
-  <input type="text" placeholder="Email">
-  <br><br>
-  <input type="password" placeholder="Password">
-  <br><br>
-  <button style="width:100%;background:#8B1E2D;color:#fff;padding:12px;border:none;border-radius:10px;">
-    Login
-  </button>
-</div>
 
 </div>
+
+<script>
+function togglePassword(){
+  const p = document.getElementById('password');
+  p.type = p.type === 'password' ? 'text' : 'password';
+}
+</script>
 
 </body>
 </html>
