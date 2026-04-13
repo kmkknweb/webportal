@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ระบบสร้างใบประกาศนียบัตร | สมาคมปึงเถ่ากงม่าขอนแก่น</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;500;600&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Sans Thai',sans-serif;
+  background:#f9eaed;
+  color:#1a1a1a;
+  min-height:100vh;
+}
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(253,246,247,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(211,160,170,.3);
+  padding:0 24px;height:70px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#1a1a1a;}
+.brand img{width:44px;height:44px;object-fit:contain;}
+.brand-text{display:flex;flex-direction:column;}
+.brand-name{font-family:'Noto Serif Thai',serif;font-size:16px;font-weight:500;}
+.brand-sub{font-size:12px;color:#666;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.user-badge{
+  font-size:12px;color:#555;
+  background:#f0ede8;padding:6px 12px;border-radius:999px;
+}
+.btn-back{
+  padding:8px 16px;background:#7a0019;color:#fff;
+  border-radius:999px;text-decoration:none;font-size:13px;
+  font-weight:600;transition:.2s;white-space:nowrap;
+}
+.btn-back:hover{background:#5c0013;}
+.btn-logout{
+  padding:8px 16px;background:transparent;color:#888;
+  border:1.5px solid #ddd;border-radius:999px;font-size:13px;
+  cursor:pointer;transition:.2s;font-family:'Noto Sans Thai',sans-serif;
+}
+.btn-logout:hover{background:#f5f5f5;}
+
+/* Loading / Error */
+.center-box{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:60vh;gap:16px;text-align:center;padding:24px;
+}
+.center-box h2{font-family:'Noto Serif Thai',serif;font-size:20px;color:#1a1a1a;}
+.center-box p{font-size:14px;color:#666;line-height:1.8;}
+.spinner{
+  width:40px;height:40px;border:3px solid #f0cdd3;
+  border-top-color:#7a0019;border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* iframe */
+.frame-wrap{
+  width:100%;
+  padding:0;
+  background:#fff;
+}
+.frame-wrap iframe{
+  width:100%;
+  height:calc(100vh - 70px);
+  border:none;
+  display:block;
+}
+
+/* denied */
+.denied-card{
+  max-width:440px;margin:60px auto;padding:0 24px;
+}
+.denied-inner{
+  background:#fff;border-radius:20px;padding:36px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.08);text-align:center;
+}
+.denied-icon{font-size:48px;margin-bottom:16px;}
+.denied-inner h2{font-family:'Noto Serif Thai',serif;font-size:20px;margin-bottom:8px;}
+.denied-inner p{font-size:13px;color:#666;line-height:1.8;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <img src="logo.png" alt="โลโก้" onerror="this.style.display='none'"/>
+    <div class="brand-text">
+      <span class="brand-name">สมาคมปึงเถ่ากงม่าขอนแก่น</span>
+      <span class="brand-sub">ระบบสร้างใบประกาศนียบัตร</span>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <span class="user-badge" id="userBadge" style="display:none;"></span>
+    <a class="btn-back" href="systems.html">← ระบบงาน</a>
+    <button class="btn-logout" id="btnLogout" style="display:none;" onclick="logout()">ออกจากระบบ</button>
+  </div>
+</header>
+
+<!-- Loading -->
+<div class="center-box" id="loadingBox">
+  <div class="spinner"></div>
+  <p>กำลังตรวจสอบสิทธิ์การเข้าถึง...</p>
+</div>
+
+<!-- ไม่มีสิทธิ์ -->
+<div id="deniedBox" style="display:none;">
+  <div class="denied-card">
+    <div class="denied-inner">
+      <div class="denied-icon">🔒</div>
+      <h2>ไม่มีสิทธิ์เข้าถึง</h2>
+      <p>ระบบนี้สำหรับผู้ที่ได้รับมอบหมายเท่านั้น<br>หากต้องการสิทธิ์ กรุณาติดต่อผู้ดูแลระบบ</p>
+    </div>
+  </div>
+</div>
+
+<!-- iframe Apps Script -->
+<div class="frame-wrap" id="frameBox" style="display:none;">
+  <iframe
+    src="https://script.google.com/macros/s/AKfycbw6BOd7OMN_9z0UjIDE9NlEzBGfK0GbaaNFUIaEDD5T4HBNisQBL-p3dPvqXMtv2RQCLQ/exec"
+    title="ระบบสร้างใบประกาศนียบัตร"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDiOZLBL_3y-Js4rkhsYuvZper1mOhWG6I",
+  authDomain: "webportal-kmkkn.firebaseapp.com",
+  projectId: "webportal-kmkkn"
+};
+
+/* ✅ เพิ่ม email ที่มีสิทธิ์ได้ที่นี่ */
+const WHITELIST = [
+  'kongmakhonkaen@gmail.com',
+  /* เพิ่ม email ถัดไปตรงนี้ครับ */
+];
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.logout = function() {
+  signOut(auth).then(() => { window.location.href = 'login.html'; });
+};
+
+onAuthStateChanged(auth, user => {
+  document.getElementById('loadingBox').style.display = 'none';
+
+  if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  if (!WHITELIST.includes(user.email)) {
+    document.getElementById('deniedBox').style.display = 'block';
+    document.getElementById('userBadge').style.display = 'inline';
+    document.getElementById('userBadge').textContent = user.email;
+    document.getElementById('btnLogout').style.display = 'inline';
+    return;
+  }
+
+  // มีสิทธิ์ → แสดง iframe
+  document.getElementById('frameBox').style.display = 'block';
+  document.getElementById('userBadge').style.display = 'inline';
+  document.getElementById('userBadge').textContent = user.email;
+  document.getElementById('btnLogout').style.display = 'inline';
+});
+</script>
+</body>
+</html>
