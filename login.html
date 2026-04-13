@@ -1,89 +1,125 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>เข้าสู่ระบบ</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ระบบเตรียมใบเบิกงานพัสดุ</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --bg:#F5F0E8;--card:#FFFDF8;--border:#D4C9A8;--text:#2C2416;--sub:#6B5B3E;
+  --gold:#8B6914;
+}
+
+/* 🔥 reset กันล้น */
+*,*::before,*::after{
+  box-sizing:border-box;
+}
+
 body{
-  font-family:'Noto Sans Thai',sans-serif;
-  background:#f9eaed;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
   margin:0;
+  padding:12px;
+  font-family:'Noto Sans Thai',Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden; /* กันล้นแนวนอน */
 }
-.box{
-  background:#fff;
-  padding:30px;
+
+/* 🔥 wrapper ใหม่ */
+.wrapper{
+  max-width:900px;
+  width:100%;
+  margin:auto;
+}
+
+/* card */
+.card{
+  background:var(--card);
+  border:1.5px solid var(--border);
   border-radius:16px;
-  width:300px;
+  padding:18px;
+  margin-bottom:14px;
 }
-input{
+
+/* input fix */
+select,input,textarea{
   width:100%;
-  padding:10px;
-  margin:10px 0;
+  max-width:100%;
+  padding:11px 13px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  font-size:14px;
+  font-family:inherit;
 }
-button{
-  width:100%;
-  padding:10px;
-  background:#8c1d2c;
-  color:#fff;
-  border:none;
+
+/* กัน element ใหญ่ล้น */
+img,button{
+  max-width:100%;
+}
+
+/* layout */
+.row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:end;
+}
+
+/* mobile fix */
+@media(max-width:600px){
+  .row{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h2>เข้าสู่ระบบ</h2>
+<div class="wrapper">
 
-  <input type="email" id="email" placeholder="Email">
-  <div style="position:relative;">
-    <input type="password" id="password" placeholder="Password" style="padding-right:44px;">
-    <span onclick="togglePass()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:18px;user-select:none;">👁</span>
+<!-- HEADER -->
+<div class="card" style="display:flex;align-items:center;gap:14px">
+  <img src="logogolden.png" style="width:60px;height:60px">
+  <div>
+    <div style="font-size:20px;font-weight:700;color:#8B6914">
+      สมาคมปึงเถ่ากงม่าขอนแก่น
+    </div>
+    <div>ระบบเตรียมใบเบิกงานพัสดุ</div>
   </div>
-
-  <button onclick="login()">Login</button>
-
-  <p id="msg"></p>
 </div>
 
-<script>
-function togglePass() {
-  const input = document.getElementById('password');
-  const el = event.target;
-  if (input.type === 'password') { input.type = 'text'; el.textContent = '🙈'; }
-  else { input.type = 'password'; el.textContent = '👁'; }
-}
-</script>
+<!-- FORM -->
+<div class="card">
+  <h3>เลือกงาน</h3>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  <div class="row">
+    <div>
+      <label>เลือกงาน</label>
+      <select>
+        <option>-- เลือก --</option>
+      </select>
+    </div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDiOZLBL_3y-Js4rkhsYuvZper1mOhWG6I",
-  authDomain: "webportal-kmkkn.firebaseapp.com",
-  projectId: "webportal-kmkkn"
-};
+    <button>โหลด</button>
+  </div>
+</div>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+<!-- TEST INPUT (กันล้น) -->
+<div class="card">
+  <input type="text" placeholder="Email">
+  <br><br>
+  <input type="password" placeholder="Password">
+  <br><br>
+  <button style="width:100%;background:#8B1E2D;color:#fff;padding:12px;border:none;border-radius:10px;">
+    Login
+  </button>
+</div>
 
-window.login = function() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => { window.location.href = 'index.html'; })
-    .catch(err => { document.getElementById('msg').innerText = "ผิดพลาด: " + err.message; });
-}
-</script>
+</div>
 
 </body>
 </html>
