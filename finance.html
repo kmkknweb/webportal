@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รายงานการเงิน</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Noto Sans Thai',sans-serif;
+  background:linear-gradient(180deg,#f6efe7 0%,#eee2d3 100%);
+  color:#2f1f1f;
+}
+
+/* HEADER */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 20px;
+  background:#fffaf6;
+  border-bottom:1px solid #eee;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo{
+  width:48px;
+}
+.title{
+  font-size:18px;
+  font-weight:800;
+}
+.sub{
+  font-size:12px;
+  color:#777;
+}
+.back{
+  background:#7a0019;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:999px;
+  text-decoration:none;
+}
+
+/* CONTENT */
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:24px;
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+h2{
+  margin:0;
+  font-size:24px;
+}
+.desc{
+  margin-top:8px;
+  color:#666;
+  font-size:14px;
+  line-height:1.8;
+}
+
+/* LIST */
+.list{
+  margin-top:20px;
+}
+.item{
+  padding:14px;
+  border:1px solid #eee;
+  border-radius:12px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.item span{
+  font-weight:600;
+}
+.btn{
+  background:#b68a52;
+  color:#fff;
+  padding:6px 12px;
+  border-radius:8px;
+  text-decoration:none;
+  font-size:13px;
+}
+.btn:hover{
+  background:#8f6a34;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="logo.png" class="logo">
+    <div>
+      <div class="title">สมาคมปึงเถ่ากงม่าขอนแก่น</div>
+      <div class="sub">รายงานการเงินประจำปี</div>
+    </div>
+  </div>
+  <a href="systemsportal.html" class="back">กลับ</a>
+</div>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>รายงานการเงินประจำปี</h2>
+    <div class="desc">
+      เอกสารรายงานการเงินของสมาคม จัดทำเพื่อใช้ในการประชุมและตรวจสอบย้อนหลัง
+      สามารถเปิดดูเอกสารแต่ละปีได้จากรายการด้านล่าง
+    </div>
+
+    <div class="list">
+
+      <!-- ========================= -->
+      <!-- 🔥 เพิ่มรายการใหม่ตรงนี้ -->
+      <!-- ========================= -->
+
+      <!-- ตัวอย่าง -->
+      <div class="item">
+        <span>รายงานการเงินประจำปี 2569</span>
+        <a href="ใส่ลิงก์ PDF ตรงนี้" target="_blank" class="btn">เปิด</a>
+      </div>
+
+      <!-- เพิ่มอีกก็ copy บรรทัดนี้ -->
+      <!--
+      <div class="item">
+        <span>รายงานการเงินประจำปี 2568</span>
+        <a href="ลิงก์ PDF" target="_blank" class="btn">เปิด</a>
+      </div>
+      -->
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- 🔥 หรือใช้โฟลเดอร์รวม -->
+    <!-- ========================= -->
+
+    <div style="margin-top:20px; text-align:center;">
+      <a href="https://drive.google.com/drive/folders/159IXkosmMWrZ4E-9LBcO_dEUnxeYYwVn"
+         target="_blank"
+         style="text-decoration:none; color:#7a0019; font-weight:600;">
+         เปิดโฟลเดอร์รายงานทั้งหมด →
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
