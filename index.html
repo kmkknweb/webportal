@@ -635,12 +635,23 @@ async function loadNews() {
     container.innerHTML = "";
     data.items.slice(0,3).forEach(item => {
       const html = item.description || "";
-      const imgMatch = html.match(/<img[^>]+src="([^">]+)"/);
-      const image = imgMatch ? imgMatch[1] : "";
+
+      
+// ดึงรูปจากหลายแหล่ง
+const imgMatch = html.match(/<img[^>]+src="([^">]+)"/);
+const image = imgMatch?.[1] 
+  || item.thumbnail 
+  || item.enclosure?.link 
+  || "";
+
+      
       const text = html.replace(/<img[^>]*>/g, "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().substring(0,120);
+      const displayText = text && text.toLowerCase() !== "posted" && text.length > 10 
+  ? text 
+  : (item.title || "คลิกเพื่อดูโพสต์");
       const div = document.createElement("div");
       div.className = "news-card";
-      div.innerHTML = `${image ? `<img src="${image}" style="width:40%;border-radius:10px;margin-bottom:8px;">` : ""}<h3>${item.title || ""}</h3><p>${text}...</p>`;
+      div.innerHTML = `${image ? `<img src="${image}" style="width:40%;border-radius:10px;margin-bottom:8px;">` : ""}<h3>${item.title || ""}</h3><p>${displayText}...</p>`;
       container.appendChild(div);
     });
   } catch (err) {
