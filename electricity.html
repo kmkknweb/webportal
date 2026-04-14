@@ -1,49 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-<meta charset="UTF-8">
-<title>Electrical Plan</title>
-<style>
-.back-btn{
-  position:fixed;
-  top:16px;
-  left:16px;
-  padding:10px 16px;
-  background:rgba(122,0,25,0.9);
-  color:#fff;
-  font-family:'Noto Sans Thai',sans-serif;
-  font-size:13px;
-  border-radius:999px;
-  text-decoration:none;
-  box-shadow:0 4px 15px rgba(0,0,0,0.15);
-  backdrop-filter: blur(6px);
-  transition:0.2s;
-}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ระบบไฟฟ้า</title>
 
-.back-btn:hover{
-  background:#5c0013;
-  transform:translateY(-1px);
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@500&family=Noto+Sans+Thai&display=swap" rel="stylesheet"/>
+
+<style>
+body{
+  font-family:'Noto Sans Thai',sans-serif;
+  margin:0;
+  background:#f5f1ec;
 }
-  
-body{margin:0}
-iframe{width:100%;height:100vh;border:none}
+.top{
+  background:#fff;
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #eee;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:42px}
+h1{font-family:'Noto Serif Thai';font-size:18px;margin:0}
+
+.container{padding:20px}
+button{
+  margin:6px;
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  background:#7a0019;
+  color:#fff;
+  cursor:pointer;
+}
+button:hover{background:#5c0013}
+
+.file{
+  margin:6px 0;
+}
+iframe{
+  width:100%;
+  height:500px;
+  border:none;
+  margin-top:15px;
+}
 </style>
 </head>
+
 <body>
 
-<iframe src="https://drive.google.com/file/d/1FqUmZQJonXrIvu9BERtds-TI4B0V1Z2F/preview"></iframe>
+<div class="top">
+  <div class="brand">
+    <img src="logo.png">
+    <h1>ระบบไฟฟ้า / กล้อง / สื่อสาร</h1>
+  </div>
+  <a href="systemsportal.html">← กลับ</a>
+</div>
 
-<script type="module">
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<div class="container">
 
-const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "system-login.html";
-  }
-});
-</script><a href="systemsportal.html" class="back-btn">
-  ⬅️ กลับหน้าหลัก
-</a>
+<button onclick="load('mainbuilding')">อาคารหลัก</button>
+<button onclick="load('mainpavi')">ศาลาหลัก</button>
+<button onclick="load('Outdoor')">ภายนอก</button>
+<button onclick="load('pavi1')">ศาลา 1</button>
+<button onclick="load('pavi2')">ศาลา 2</button>
+<button onclick="load('storage')">โรงเก็บ</button>
+
+<div id="list"></div>
+<iframe id="viewer"></iframe>
+
+</div>
+
+<script>
+const API="https://script.google.com/macros/s/AKfycbzAD4RuGKahvFRpVHQsRUU1qWbiKRylx3kKwEPrLZY24TF9uKNjCCN52CsLl6OMR4-JEA/exec";
+
+function load(type){
+  fetch(API+"?system=Electric&type="+type)
+  .then(r=>r.json())
+  .then(data=>{
+    let html="";
+    data.forEach((f,i)=>{
+      html+=`<div class="file">
+        <a href="#" onclick="show('${f.viewUrl}')">${f.name}</a>
+      </div>`;
+    });
+    document.getElementById("list").innerHTML=html;
+  });
+}
+
+function show(url){
+  document.getElementById("viewer").src=url;
+}
+</script>
+
 </body>
 </html>
