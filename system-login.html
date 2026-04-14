@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>เข้าสู่ระบบ | ระบบสมาชิก</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Sans Thai',sans-serif;
+  min-height:100vh;
+  background:#f4f1ee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.wrap{width:100%;max-width:400px;}
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:40px 36px;
+  box-shadow:0 4px 40px rgba(0,0,0,0.08);
+}
+.logo-area{text-align:center;margin-bottom:28px;}
+.logo-area h1{
+  font-family:'Noto Serif Thai',serif;
+  font-size:20px;
+  color:#1a1a1a;
+}
+.divider{height:1px;background:#eee;margin:24px 0;}
+
+label{font-size:13px;color:#555;margin-bottom:6px;display:block;}
+input{
+  width:100%;
+  padding:12px;
+  border:1.5px solid #e0e0e0;
+  border-radius:10px;
+  margin-bottom:16px;
+}
+
+.btn{
+  width:100%;
+  padding:13px;
+  background:#7a0019;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+#msg{text-align:center;margin-top:10px;font-size:13px;}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+  <div class="card">
+
+    <div class="logo-area">
+      <h1>ระบบสมาชิก</h1>
+    </div>
+
+    <div class="divider"></div>
+
+    <label>อีเมล</label>
+    <input type="email" id="email"/>
+
+    <label>รหัสผ่าน</label>
+    <input type="password" id="password"/>
+
+    <button class="btn" onclick="login()">เข้าสู่ระบบ</button>
+
+    <p id="msg"></p>
+
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDhwIPDnhgrP8uiMtwqU4T-L_wsdCyRsKs",
+  authDomain: "system-43a32.firebaseapp.com",
+  projectId: "system-43a32",
+  storageBucket: "system-43a32.firebasestorage.app",
+  messagingSenderId: "568575228370",
+  appId: "1:568575228370:web:bc256d7f78c64784a3300b"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = function(){
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const msg = document.getElementById('msg');
+
+  if(!email || !password){
+    msg.innerText = "กรอกข้อมูลให้ครบ";
+    return;
+  }
+
+  msg.innerText = "กำลังเข้าสู่ระบบ...";
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(()=>{
+      window.location.href = "systems.html";
+    })
+    .catch(()=>{
+      msg.innerText = "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
+    });
+}
+</script>
+
+</body>
+</html>
