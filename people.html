@@ -72,6 +72,11 @@ body::before{
 .search-box input{width:100%;border:none;outline:none;background:transparent;font-size:14px;color:#000}
 .search-box input::placeholder{color:#555}
 
+  input,
+input::placeholder {
+  font-family: 'Noto Sans Thai', sans-serif !important;
+}
+
 .filter-wrap{max-width:1180px;margin:0 auto;padding:22px 32px 0;display:flex;gap:10px;flex-wrap:wrap}
 .filter-chip{
   background:var(--maroon);color:#fff;border:1px solid var(--maroon);
@@ -181,7 +186,7 @@ tr:last-child td{border-bottom:none}
     <div class="hero-tools">
       <label class="search-box">
         <span>🔍</span>
-        <input id="searchInput"  font-family="Noto Sans Thai',sans-serif"  type="text"  placeholder="ค้นหาชื่อ / ร้าน / เลขสมาชิก"/>
+        <input id="searchInput" type="text"  placeholder="ค้นหาชื่อ / ร้าน / เลขสมาชิก"/>
       </label>
     </div>
   </section>
