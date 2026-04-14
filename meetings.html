@@ -425,6 +425,12 @@
     }
 
     async function loadFiles() {
+      // reset ก่อนโหลดใหม่ทุกครั้ง
+  allFiles = [];
+  visibleFiles = [];
+  meetingList.innerHTML = '';
+  meetingList.hidden = true;
+  resetViewer();
 if (!API_URL) {
     statusBox.hidden = false;
     meetingList.hidden = true;
