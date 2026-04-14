@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ระบบประปา และสุขาภิบาล</title>
+<title>ระบบประปา และระบบสุขาภิบาล</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -60,6 +60,7 @@ body{
   margin-top:6px;
   color:#666;
   font-size:14px;
+  line-height:1.8;
 }
 
 /* BUTTONS */
@@ -71,13 +72,13 @@ button{
   padding:10px 14px;
   border:none;
   border-radius:12px;
-  background:#7a0019;
+  background:#b68a52;
   color:#fff;
   font-weight:600;
   cursor:pointer;
 }
 button:hover{
-  background:#5c0013;
+  background:#8f6a34;
 }
 
 /* FILE LIST */
@@ -87,12 +88,21 @@ button:hover{
 .file{
   padding:6px 0;
 }
+.file a{
+  color:#7a0019;
+  text-decoration:none;
+  font-weight:500;
+}
+.file a:hover{
+  text-decoration:underline;
+}
 
 /* EMPTY */
 .empty{
   text-align:center;
   padding:40px;
   color:#777;
+  font-size:14px;
 }
 
 /* PDF */
@@ -101,6 +111,7 @@ iframe{
   height:500px;
   border:none;
   margin-top:10px;
+  background:#fff;
 }
 </style>
 </head>
@@ -109,31 +120,29 @@ iframe{
 
 <div class="header">
   <div class="brand">
-    <img src="logo.png">
+    <img src="logo.png" alt="logo">
     <div>
       <div class="title">สมาคมปึงเถ่ากงม่าขอนแก่น</div>
-      <div class="sub">ระบบไฟฟ้า ระบบสื่อสาร และระบบรักษาความปลอดภัย</div>
+      <div class="sub">ระบบประปา และระบบสุขาภิบาล</div>
     </div>
   </div>
   <a href="systemsportal.html" class="back">กลับ</a>
 </div>
 
 <div class="hero">
-  <h2>ระบบไฟฟ้า ระบบสื่อสาร และระบบรักษาความปลอดภัย</h2>
-  <p>เลือกพื้นที่เพื่อดูแบบแปลนไฟฟ้า กล้องวงจรปิด และระบบสื่อสาร</p>
+  <h2>ระบบประปา และระบบสุขาภิบาล</h2>
+  <p>เลือกหมวดที่ต้องการเพื่อดูเอกสารระบบน้ำดี ระบบระบายน้ำ ระบบน้ำเสีย และระบบบำบัดสุขาภิบาลภายในศาลเจ้า</p>
 </div>
 
-<div class="buttons">
-  <button onclick="load('mainbuilding')">อาคารหลัก</button>
-  <button onclick="load('mainpavi')">ศาลาหลัก</button>
-  <button onclick="load('Outdoor')">ภายนอก</button>
-  <button onclick="load('pavi1')">ศาลา 1</button>
-  <button onclick="load('pavi2')">ศาลา 2</button>
-  <button onclick="load('storage')">โรงเก็บ</button>
+<div class="buttons" font-family:'Noto Sans Thai',sans-serif;>
+  <button onclick="load('water')">ระบบน้ำดี</button>
+  <button onclick="load('drainage')">ระบบระบายน้ำ</button>
+  <button onclick="load('wastewater')">ระบบน้ำเสีย</button>
+  <button onclick="load('septic')">ระบบบำบัด</button>
 </div>
 
 <div id="list"></div>
-<div id="empty" class="empty">เลือกพื้นที่เพื่อเริ่มใช้งาน</div>
+<div id="empty" class="empty">เลือกหมวดเพื่อเริ่มใช้งาน</div>
 <iframe id="viewer"></iframe>
 
 <script>
