@@ -77,25 +77,89 @@ button{
   font-weight:600;
   cursor:pointer;
   font-family:'Noto Sans Thai',sans-serif;
+  font-size:13px;
 }
 button:hover{
   background:#8f6a34;
 }
 
 /* FILE LIST */
+.file-summary{
+  padding:10px 18px 0;
+  color:#7a6d66;
+  font-size:13px;
+  font-family:'Noto Sans Thai',sans-serif;
+}
+
 #list{
   padding:10px 20px;
 }
-.file{
-  padding:6px 0;
+
+.file-table-wrap{
+  overflow-x:auto;
+  margin-top:4px;
 }
-.file a{
-  color:#7a0019;
-  text-decoration:none;
+
+.file-table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  border:1px solid #eadfd5;
+  border-radius:14px;
+  overflow:hidden;
+  font-family:'Noto Sans Thai',sans-serif;
+}
+
+.file-table thead th{
+  background:#faf4ef;
+  color:#5c0013;
+  font-size:13px;
+  font-weight:700;
+  text-align:left;
+  padding:12px 14px;
+  border-bottom:1px solid #eadfd5;
+}
+
+.file-table tbody td{
+  font-size:14px;
+  padding:12px 14px;
+  border-bottom:1px solid #f1e7de;
+  vertical-align:middle;
+}
+
+.file-table tbody tr:last-child td{
+  border-bottom:none;
+}
+
+.file-table tbody tr:hover{
+  background:#fffaf6;
+}
+
+.file-no{
+  width:72px;
+  color:#7a6d66;
+}
+
+.file-name{
+  color:#2f1f1f;
   font-weight:500;
+  word-break:break-word;
 }
-.file a:hover{
-  text-decoration:underline;
+
+.file-action a{
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:10px;
+  background:#7a0019;
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  font-family:'Noto Sans Thai',sans-serif;
+}
+
+.file-action a:hover{
+  background:#5c0013;
 }
 
 /* EMPTY */
@@ -135,13 +199,14 @@ iframe{
   <p>เลือกหมวดที่ต้องการเพื่อดูเอกสารระบบน้ำดี ระบบระบายน้ำ ระบบน้ำเสีย และระบบบำบัดสุขาภิบาลภายในศาลเจ้า</p>
 </div>
 
-<div class="buttons" font-family:'Noto Sans Thai',sans-serif;>
+<div class="buttons">
   <button onclick="load('water')">ระบบน้ำดี</button>
   <button onclick="load('drainage')">ระบบระบายน้ำ</button>
   <button onclick="load('wastewater')">ระบบน้ำเสีย</button>
   <button onclick="load('septic')">ระบบบำบัด</button>
 </div>
 
+<div class="file-summary" id="fileCount">จำนวนไฟล์: -</div>
 <div id="list"></div>
 <div id="empty" class="empty">เลือกหมวดเพื่อเริ่มใช้งาน</div>
 <iframe id="viewer"></iframe>
@@ -155,20 +220,43 @@ function load(type){
   .then(data=>{
     if(data.length===0){
       document.getElementById("list").innerHTML="";
+      document.getElementById("fileCount").innerHTML="จำนวนไฟล์: 0 ไฟล์";
       document.getElementById("empty").innerHTML="❗ ไม่มีแบบแปลนในหมวดนี้";
       document.getElementById("viewer").src="";
       return;
     }
 
     document.getElementById("empty").innerHTML="";
-    let html="";
-    data.forEach(f=>{
-      html+=`<div class="file">
-        <a href="#" onclick="show('${f.viewUrl}')">${f.name}</a>
-      </div>`;
-    });
-    document.getElementById("list").innerHTML=html;
+    document.getElementById("fileCount").innerHTML="จำนวนไฟล์: " + data.length + " ไฟล์";
 
+    let html = `
+      <div class="file-table-wrap">
+        <table class="file-table">
+          <thead>
+            <tr>
+              <th class="file-no">ลำดับ</th>
+              <th>ชื่อไฟล์</th>
+              <th style="width:120px;">เปิดเอกสาร</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+
+    data.forEach((f,index)=>{
+      html += `
+        <tr>
+          <td class="file-no">${index + 1}</td>
+          <td class="file-name">${f.name}</td>
+          <td class="file-action"><a href="#" onclick="show('${f.viewUrl}');return false;">เปิด</a></td>
+        </tr>`;
+    });
+
+    html += `
+          </tbody>
+        </table>
+      </div>`;
+
+    document.getElementById("list").innerHTML=html;
     show(data[0].viewUrl);
   });
 }
