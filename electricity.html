@@ -1,77 +1,140 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ระบบไฟฟ้า</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@500&family=Noto+Sans+Thai&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 body{
-  font-family:'Noto Sans Thai',sans-serif;
   margin:0;
-  background:#f5f1ec;
+  font-family:'Noto Sans Thai',sans-serif;
+  background:linear-gradient(180deg,#f6efe7,#eee2d3);
 }
-.top{
-  background:#fff;
-  padding:14px 20px;
+
+/* HEADER */
+.header{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  padding:14px 20px;
+  background:#fffaf6;
   border-bottom:1px solid #eee;
 }
-.brand{display:flex;align-items:center;gap:10px}
-.brand img{width:42px}
-h1{font-family:'Noto Serif Thai';font-size:18px;margin:0}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.brand img{
+  width:48px;
+}
+.title{
+  font-size:18px;
+  font-weight:800;
+}
+.sub{
+  font-size:12px;
+  color:#777;
+}
+.back{
+  background:#7a0019;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:999px;
+  text-decoration:none;
+}
 
-.container{padding:20px}
+/* HERO */
+.hero{
+  padding:20px;
+  background:#fff;
+}
+.hero h2{
+  margin:0;
+  font-size:24px;
+}
+.hero p{
+  margin-top:6px;
+  color:#666;
+  font-size:14px;
+}
+
+/* BUTTONS */
+.buttons{
+  padding:15px;
+}
 button{
   margin:6px;
   padding:10px 14px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
   background:#7a0019;
   color:#fff;
+  font-weight:600;
   cursor:pointer;
 }
-button:hover{background:#5c0013}
-
-.file{
-  margin:6px 0;
+button:hover{
+  background:#5c0013;
 }
+
+/* FILE LIST */
+#list{
+  padding:10px 20px;
+}
+.file{
+  padding:6px 0;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  padding:40px;
+  color:#777;
+}
+
+/* PDF */
 iframe{
   width:100%;
   height:500px;
   border:none;
-  margin-top:15px;
+  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top">
+<div class="header">
   <div class="brand">
     <img src="logo.png">
-    <h1>ระบบไฟฟ้า / กล้อง / สื่อสาร</h1>
+    <div>
+      <div class="title">สมาคมปึงเถ่ากงม่าขอนแก่น</div>
+      <div class="sub">ระบบไฟฟ้า ระบบสื่อสาร และระบบรักษาความปลอดภัย</div>
+    </div>
   </div>
-  <a href="systemsportal.html">← กลับ</a>
+  <a href="systemsportal.html" class="back">กลับ</a>
 </div>
 
-<div class="container">
+<div class="hero">
+  <h2>ระบบไฟฟ้า ระบบสื่อสาร และระบบรักษาความปลอดภัย</h2>
+  <p>เลือกพื้นที่เพื่อดูแบบแปลนไฟฟ้า กล้องวงจรปิด และระบบสื่อสาร</p>
+</div>
 
-<button onclick="load('mainbuilding')">อาคารหลัก</button>
-<button onclick="load('mainpavi')">ศาลาหลัก</button>
-<button onclick="load('Outdoor')">ภายนอก</button>
-<button onclick="load('pavi1')">ศาลา 1</button>
-<button onclick="load('pavi2')">ศาลา 2</button>
-<button onclick="load('storage')">โรงเก็บ</button>
+<div class="buttons">
+  <button onclick="load('mainbuilding')">อาคารหลัก</button>
+  <button onclick="load('mainpavi')">ศาลาหลัก</button>
+  <button onclick="load('Outdoor')">ภายนอก</button>
+  <button onclick="load('pavi1')">ศาลา 1</button>
+  <button onclick="load('pavi2')">ศาลา 2</button>
+  <button onclick="load('storage')">โรงเก็บ</button>
+</div>
 
 <div id="list"></div>
+<div id="empty" class="empty">เลือกพื้นที่เพื่อเริ่มใช้งาน</div>
 <iframe id="viewer"></iframe>
-
-</div>
 
 <script>
 const API="https://script.google.com/macros/s/AKfycbzAD4RuGKahvFRpVHQsRUU1qWbiKRylx3kKwEPrLZY24TF9uKNjCCN52CsLl6OMR4-JEA/exec";
@@ -80,13 +143,23 @@ function load(type){
   fetch(API+"?system=Electric&type="+type)
   .then(r=>r.json())
   .then(data=>{
+    if(data.length===0){
+      document.getElementById("list").innerHTML="";
+      document.getElementById("empty").innerHTML="❗ ไม่มีแบบแปลนในหมวดนี้";
+      document.getElementById("viewer").src="";
+      return;
+    }
+
+    document.getElementById("empty").innerHTML="";
     let html="";
-    data.forEach((f,i)=>{
+    data.forEach(f=>{
       html+=`<div class="file">
         <a href="#" onclick="show('${f.viewUrl}')">${f.name}</a>
       </div>`;
     });
     document.getElementById("list").innerHTML=html;
+
+    show(data[0].viewUrl);
   });
 }
 
