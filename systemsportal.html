@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>System Portal | สมาคมปึงเถ่ากงม่าขอนแก่น</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@400;500;600&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Sans Thai',sans-serif;
+  min-height:100vh;
+  background:linear-gradient(180deg,#f5f1ec 0%, #efe7df 100%);
+  color:#2b2b2b;
+}
+.page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px 18px;
+}
+.card{
+  width:100%;
+  max-width:520px;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(122,0,25,.08);
+  border-radius:26px;
+  padding:34px 26px 24px;
+  box-shadow:0 12px 45px rgba(0,0,0,.08);
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto 0;
+  height:6px;
+  background:linear-gradient(90deg,#7a0019,#b68a52,#7a0019);
+}
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-bottom:14px;
+}
+.logo-box{
+  width:86px;
+  height:86px;
+  border-radius:50%;
+  background:#fff9f2;
+  border:1px solid #ead7bf;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 18px rgba(122,0,25,.08);
+}
+.logo-box img{
+  width:62px;
+  height:62px;
+  object-fit:contain;
+}
+.title{
+  text-align:center;
+  margin-bottom:6px;
+  font-family:'Noto Serif Thai',serif;
+  font-size:24px;
+  line-height:1.45;
+  color:#4c1020;
+}
+.subtitle{
+  text-align:center;
+  font-size:14px;
+  color:#7a6d66;
+  line-height:1.7;
+  margin-bottom:18px;
+}
+.badge{
+  margin:0 auto 22px;
+  width:max-content;
+  padding:8px 14px;
+  border-radius:999px;
+  background:#faf4ef;
+  border:1px solid #eadfd5;
+  font-size:12px;
+  color:#7a0019;
+}
+.notice{
+  background:linear-gradient(180deg,#fffaf6 0%, #fff 100%);
+  border:1px solid #efdfd4;
+  border-radius:18px;
+  padding:16px 16px 14px;
+  margin-bottom:22px;
+}
+.notice h3{
+  font-size:14px;
+  color:#7a0019;
+  margin-bottom:6px;
+}
+.notice p{
+  font-size:13px;
+  color:#6c625c;
+  line-height:1.7;
+}
+.section-title{
+  text-align:center;
+  font-size:15px;
+  font-weight:600;
+  color:#4c1020;
+  margin-bottom:14px;
+}
+.menu{
+  display:grid;
+  gap:14px;
+}
+.btn{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  text-decoration:none;
+  padding:16px 18px;
+  border-radius:18px;
+  border:1px solid #eadfd5;
+  background:#fff;
+  box-shadow:0 4px 16px rgba(0,0,0,.04);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 24px rgba(0,0,0,.07);
+  border-color:#d6b48a;
+}
+.btn-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.icon{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  flex:none;
+}
+.icon.elec{background:#fff4da}
+.icon.water{background:#e9f5ff}
+.texts strong{
+  display:block;
+  font-size:16px;
+  color:#341018;
+}
+.texts span{
+  display:block;
+  font-size:12px;
+  color:#7b716b;
+  margin-top:3px;
+}
+.arrow{
+  font-size:20px;
+  color:#9a8d85;
+}
+.footer{
+  margin-top:22px;
+  padding-top:16px;
+  border-top:1px solid #f0e6dd;
+  text-align:center;
+}
+.footer .copyright{
+  font-size:12px;
+  color:#7a0019;
+  font-weight:600;
+  margin-bottom:8px;
+}
+.footer .assoc{
+  font-size:12px;
+  color:#7b716b;
+  line-height:1.7;
+}
+.mini-logo{
+  margin:14px auto 0;
+  width:34px;
+  height:34px;
+  opacity:.9;
+}
+@media (max-width:480px){
+  .card{padding:28px 18px 22px}
+  .title{font-size:21px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div class="logo-wrap">
+      <div class="logo-box">
+        <img src="logogolden.png" alt="โลโก้สมาคม" onerror="this.style.display='none'">
+      </div>
+    </div>
+
+    <h1 class="title">สมาคมปึงเถ่ากงม่าขอนแก่น</h1>
+    <p class="subtitle">ศูนย์รวมเอกสารระบบภายในสำหรับการดูแบบแปลนและข้อมูลประกอบงานของสมาคม</p>
+    <div class="badge">SYSTEM PORTAL</div>
+
+    <div class="notice">
+      <h3>ประกาศการใช้งาน</h3>
+      <p>เอกสารและข้อมูลภายในหน้านี้จัดทำขึ้นเพื่อการใช้งานภายในเท่านั้น กรุณาใช้งานอย่างเหมาะสม และไม่นำไปเผยแพร่ต่อโดยไม่ได้รับอนุญาตจากสมาคม</p>
+    </div>
+
+    <div class="section-title">เลือกระบบที่ต้องการใช้งาน</div>
+
+    <div class="menu">
+      <a class="btn" href="electricity.html">
+        <div class="btn-left">
+          <div class="icon elec">⚡</div>
+          <div class="texts">
+            <strong>ระบบไฟฟ้า</strong>
+            <span>Electrical Plan & Documents</span>
+          </div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+
+      <a class="btn" href="water.html">
+        <div class="btn-left">
+          <div class="icon water">💧</div>
+          <div class="texts">
+            <strong>ระบบประปา</strong>
+            <span>Water Supply Plan & Documents</span>
+          </div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+    </div>
+
+    <div class="footer">
+      <div class="copyright">สงวนลิขสิทธิ์โดย สมาคมปึงเถ่ากงม่าขอนแก่น</div>
+      <div class="assoc">Copyright reserved by<br>Khon Kaen Pung Tao Kong Ma Association</div>
+      <img class="mini-logo" src="logogolden.png" alt="โลโก้สมาคม" onerror="this.style.display='none'">
+    </div>
+  </div>
+</div>
+</body>
+</html>
