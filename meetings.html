@@ -82,8 +82,28 @@
     .control-title { margin:0 0 14px; font-size:1rem; font-weight:800; }
     .field { display:flex; flex-direction:column; gap:8px; padding:14px 15px; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,248,238,0.88)); border:1px solid var(--line); margin-bottom:12px; }
     .field label { font-size:.84rem; font-weight:800; color:var(--red); }
-    .field select, .field input { width:100%; border:none; outline:none; background:transparent; font:inherit; color:var(--text); }
-    .field select { cursor:pointer; font-weight:700; }
+    .field select,
+.field input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 16px;
+}
+    .field select option {
+  font-family: 'Noto Sans Thai', sans-serif;
+    }
+     .field select {
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Noto Sans Thai', sans-serif;
+}
+    
+    
+
+    
     .btn-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px; }
     .action-btn,.ghost-btn,.btn { border:none; border-radius:16px; min-height:52px; font:inherit; font-weight:800; cursor:pointer; transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease; }
     .action-btn:hover,.ghost-btn:hover,.meeting-card:hover,.btn:hover { transform: translateY(-1px); }
