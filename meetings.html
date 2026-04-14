@@ -425,15 +425,16 @@
     }
 
     async function loadFiles() {
-      if (!API_URL || API_URL.includes('https://script.google.com/macros/s/AKfycbwU14b4EwLNr3Zh_zlroT6gQ9FXRUBh9kZxds389tykev30_mcuatKdsRp8IX6TujLzqA/exec')) {
-        statusBox.hidden = false;
-        meetingList.hidden = true;
-        statusBox.className = 'status';
-        statusBox.innerHTML = '<strong>ยังไม่ได้ตั้งค่า API</strong>กรุณานำ URL ของ Google Apps Script มาใส่ในตัวแปร API_URL ก่อนใช้งาน';
-        heroStatus.textContent = 'ยังไม่ตั้งค่า';
-        return;
-      }
+if (!API_URL) {
+    statusBox.hidden = false;
+    meetingList.hidden = true;
+    statusBox.className = 'status';
+    statusBox.innerHTML = '<strong>ยังไม่ได้ตั้งค่า API</strong>กรุณานำ URL ของ Google Apps Script มาใส่ในตัวแปร API_URL ก่อนใช้งาน';
+    heroStatus.textContent = 'ยังไม่ตั้งค่า';
+    return;
+}
 
+      
       const type = meetingType.value;
       const label = typeLabelMap[type] || 'รายการประชุม';
       selectedTypeLabel.textContent = label;
