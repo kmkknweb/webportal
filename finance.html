@@ -3,64 +3,175 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Finance</title>
+<title>รายงานการเงิน</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:'Noto Sans Thai',sans-serif;
-  background:linear-gradient(180deg,#f6efe7,#eee2d3);
+  background:linear-gradient(180deg,#f6efe7 0%,#eee2d3 100%);
+  color:#2f1f1f;
 }
 
-/* HEADER */
-.header{
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:20;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:22px 24px;
-  background:#fffaf6;
-  border-bottom:1px solid #eee;
+  gap:14px;
+  padding:12px 18px;
+  background:rgba(255,250,246,.95);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(182,138,82,.18);
 }
 .brand{
   display:flex;
   align-items:center;
   gap:12px;
 }
-.brand img{width:80px}
-.title{font-weight:1200}
-.back{
-  background:#7a0019;
-  color:#fff;
-  padding:8px 14px;
-  border-radius:999px;
+.logo{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:#fff8f0;
+  border:1px solid #ead7bf;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.logo img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+}
+.brand-title{
+  font-size:20px;
+  font-weight:800;
+  line-height:1.3;
+}
+.brand-sub{
+  font-size:13px;
+  color:#7a6d66;
+  margin-top:2px;
+}
+.back-btn{
   text-decoration:none;
+  color:#fff;
+  background:linear-gradient(135deg,#7a0019,#5c0013);
+  padding:10px 16px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:700;
+  box-shadow:0 6px 18px rgba(122,0,25,.16);
+  font-family:'Noto Sans Thai',sans-serif;
 }
 
-/* CONTENT */
 .wrap{
   max-width:1100px;
   margin:auto;
-  padding:20px;
+  padding:22px 16px 32px;
 }
 
-/* LIST */
+.hero{
+  background:#fffdfa;
+  border:1px solid rgba(122,0,25,.08);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 12px 35px rgba(0,0,0,.05);
+  margin-bottom:18px;
+}
+.hero-bar{
+  height:6px;
+  background:linear-gradient(90deg,#7a0019,#b68a52,#7a0019);
+}
+.hero-inner{
+  padding:22px;
+}
+.hero-title{
+  margin:0 0 8px;
+  font-size:28px;
+  font-weight:800;
+  line-height:1.4;
+}
+.hero-text{
+  margin:0;
+  color:#7a6d66;
+  line-height:1.8;
+  font-size:14px;
+}
+
+.panel{
+  background:#fffdfa;
+  border:1px solid rgba(122,0,25,.08);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 12px 35px rgba(0,0,0,.05);
+  margin-bottom:18px;
+}
+.panel-head{
+  padding:18px 18px 14px;
+  background:linear-gradient(180deg,#fffaf6 0%,#fff 100%);
+  border-bottom:1px solid #f0e6dd;
+}
+.panel-head h2{
+  margin:0 0 4px;
+  font-size:20px;
+  font-weight:800;
+}
+.panel-head p{
+  margin:0;
+  color:#7a6d66;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.file-count{
+  padding:14px 18px 0;
+  color:#7a0019;
+  font-size:13px;
+  font-weight:700;
+}
+
+.list{
+  padding:14px 18px 18px;
+}
+
 .item{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:16px;
   background:#fff;
   border-radius:14px;
-  padding:14px;
+  padding:14px 16px;
   margin-bottom:10px;
   border:1px solid #eee;
   transition:.2s;
 }
+.item:last-child{
+  margin-bottom:0;
+}
 .item.active{
   border:2px solid #7a0019;
   background:#fff7f7;
+}
+.item-title{
+  font-size:15px;
+  font-weight:600;
+  color:#2f1f1f;
+  line-height:1.7;
+  word-break:break-word;
+}
+.item-sub{
+  font-size:12px;
+  color:#7a6d66;
+  margin-top:4px;
 }
 .btn{
   background:#7a0019;
@@ -69,133 +180,218 @@ body{
   padding:8px 12px;
   border-radius:8px;
   cursor:pointer;
-    font-family:'Noto Sans Thai',sans-serif;
+  font-family:'Noto Sans Thai',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.btn:hover{
+  background:#5c0013;
 }
 
-/* PREVIEW */
 .preview{
-  margin-top:20px;
-  background:#fff;
-  border-radius:20px;
+  background:#fffdfa;
+  border:1px solid rgba(122,0,25,.08);
+  border-radius:24px;
   overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  box-shadow:0 12px 35px rgba(0,0,0,.05);
 }
-
 .preview-top{
   display:flex;
   justify-content:space-between;
-  padding:12px 16px;
+  padding:18px 20px;
   background:#faf4ef;
   border-bottom:1px solid #eee;
 }
-
+#fileName{
+  font-size:18px;
+  font-weight:700;
+}
 .preview-actions button{
-  margin-left:6px;
+  margin-left:8px;
   border:none;
   background:#7a0019;
   color:#fff;
-  padding:6px 10px;
+  padding:8px 14px;
   border-radius:6px;
   cursor:pointer;
   font-family:'Noto Sans Thai',sans-serif;
+  font-size:13px;
 }
-
+.preview-actions button:hover{
+  background:#5c0013;
+}
 #viewer{
   width:100%;
-  height:600px;
+  height:620px;
   border:none;
 }
-
 .empty{
   padding:40px;
   text-align:center;
   color:#777;
+  line-height:1.8;
+}
+.status{
+  padding:0 20px 18px;
+  color:#777;
+  font-size:13px;
+}
+
+@media (max-width:760px){
+  .topbar{
+    padding:12px 14px;
+  }
+  .brand-title{
+    font-size:17px;
+  }
+  .hero-title{
+    font-size:23px;
+  }
+  .item{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .preview-top{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+  #viewer{
+    height:70vh;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
+<header class="topbar">
   <div class="brand">
-    <img src="logo.png">
+    <div class="logo">
+      <img src="logo.png" alt="logo" onerror="this.style.display='none'">
+    </div>
     <div>
-      <div class="title">สมาคมปึงเถ่ากงม่าขอนแก่น</div>
-      <div style="font-size:12px;color:#777">รายงานการเงิน</div>
+      <div class="brand-title">สมาคมปึงเถ่ากงม่าขอนแก่น</div>
+      <div class="brand-sub">รายงานการเงิน</div>
     </div>
   </div>
-  <a href="index.html" class="back">กลับ</a>
-</div>
+  <a href="systems.html" class="back-btn">กลับหน้าระบบ</a>
+</header>
 
 <div class="wrap">
-
-  <!-- LIST -->
-  <div id="fileList">
-
-    <!-- ===== เพิ่มไฟล์ตรงนี้ ===== -->
-    <div class="item" onclick="openPDF(this,'https://drive.google.com/file/d/1YBcPflWWuBwBHbnT50zal63QwLPU6HVw/preview')">
-      <div>รายงานการเงิน 2568</div>
-      <button class="btn">เปิด</button>
+  <section class="hero">
+    <div class="hero-bar"></div>
+    <div class="hero-inner">
+      <h1 class="hero-title">รายงานการเงินประจำปี</h1>
+      <p class="hero-text">
+        หน้านี้ใช้สำหรับเปิดดูรายงานการเงินของสมาคมในรูปแบบเอกสาร PDF
+        โดยระบบจะดึงชื่อไฟล์จาก Google Drive อัตโนมัติ และสามารถเปิดดูตัวอย่างเอกสารได้ทันทีในหน้านี้
+      </p>
     </div>
-      <div class="item" onclick="openPDF(this,'https://drive.google.com/file/d/1rg90kS4DsxsJalyEO6I7z5Q9Z1TN1-O3/preview')">
-      <div>รายงานการเงิน 2567</div>
-      <button class="btn">เปิด</button>
-      </div>
-    <div class="item" onclick="openPDF(this,'https://drive.google.com/file/d/1qthOFB1rQ_U1coRVK3IC-k39FPYZnZ6Q/preview')">
-      <div>รายงานการเงิน 2566</div>
-      <button class="btn">เปิด</button>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>รายการเอกสาร</h2>
+      <p>ระบบจะแสดงชื่อไฟล์จากโฟลเดอร์ Google Drive โดยอัตโนมัติ</p>
     </div>
 
-  </div>
+    <div class="file-count" id="fileCount">จำนวนไฟล์: -</div>
+    <div class="list" id="fileList">
+      <div class="empty">กำลังโหลดรายการเอกสาร...</div>
+    </div>
+  </section>
 
-  <!-- PREVIEW -->
-  <div class="preview">
+  <section class="preview">
     <div class="preview-top">
       <div id="fileName">ยังไม่ได้เลือกเอกสาร</div>
-
       <div class="preview-actions">
-    
-        <button onclick="fullscreen()">เต็มจอ</button>
+        <button onclick="openNewTab()">เปิดใหม่</button>
+        <button onclick="fullscreenViewer()">เต็มจอ</button>
       </div>
     </div>
 
-    <div id="empty" class="empty">เลือกเอกสารเพื่อแสดงตัวอย่าง</div>
-
+    <div id="emptyState" class="empty">เลือกเอกสารจากรายการด้านบนเพื่อแสดงตัวอย่าง</div>
     <iframe id="viewer" hidden></iframe>
-  </div>
-
+    <div class="status" id="status">สถานะ: กำลังโหลดข้อมูล...</div>
+  </section>
 </div>
 
 <script>
+const API = "https://script.google.com/macros/s/AKfycbzAD4RuGKahvFRpVHQsRUU1qWbiKRylx3kKwEPrLZY24TF9uKNjCCN52CsLl6OMR4-JEA/exec";
 let currentURL = null;
 
-function openPDF(el,url){
+function openPDF(el, title, url){
   currentURL = url;
 
-  // highlight
-  document.querySelectorAll('.item').forEach(i=>i.classList.remove('active'));
-  el.classList.add('active');
+  document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
 
-  // set name
-  document.getElementById('fileName').innerText = el.innerText;
-
-  // show pdf
+  document.getElementById('fileName').innerText = title;
   document.getElementById('viewer').src = url;
   document.getElementById('viewer').hidden = false;
-  document.getElementById('empty').style.display='none';
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('status').innerText = "สถานะ: เปิดไฟล์ " + title;
 
-  // scroll ลง
   document.querySelector('.preview').scrollIntoView({behavior:'smooth'});
 }
 
 function openNewTab(){
-  if(currentURL) window.open(currentURL);
+  if(currentURL) window.open(currentURL, '_blank');
 }
 
-function fullscreen(){
-  let iframe = document.getElementById("viewer");
-  if (iframe.requestFullscreen) iframe.requestFullscreen();
+function fullscreenViewer(){
+  const iframe = document.getElementById('viewer');
+  if(iframe.requestFullscreen){
+    iframe.requestFullscreen();
+  }
 }
+
+function loadFiles(){
+  fetch(API + "?system=finance&type=main")
+    .then(r => r.json())
+    .then(data => {
+      if(!Array.isArray(data)){
+        throw new Error("รูปแบบข้อมูลไม่ถูกต้อง");
+      }
+
+      document.getElementById('fileCount').innerText = "จำนวนไฟล์: " + data.length + " ไฟล์";
+
+      if(data.length === 0){
+        document.getElementById('fileList').innerHTML = '<div class="empty">ไม่มีเอกสารในโฟลเดอร์นี้</div>';
+        document.getElementById('status').innerText = "สถานะ: ไม่พบไฟล์";
+        return;
+      }
+
+      let html = '';
+      data.forEach((f, i) => {
+        const safeName = String(f.name).replace(/'/g, "\\'");
+        html += `
+          <div class="item" onclick="openPDF(this, '${safeName}', '${f.viewUrl}')">
+            <div>
+              <div class="item-title">${f.name}</div>
+              <div class="item-sub">ลำดับที่ ${i + 1}</div>
+            </div>
+            <button class="btn" onclick="event.stopPropagation(); openPDF(this.closest('.item'), '${safeName}', '${f.viewUrl}')">เปิดเอกสาร</button>
+          </div>
+        `;
+      });
+
+      document.getElementById('fileList').innerHTML = html;
+      document.getElementById('status').innerText = "สถานะ: พบ " + data.length + " ไฟล์";
+
+      openPDF(document.querySelector('.item'), data[0].name, data[0].viewUrl);
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById('fileList').innerHTML = '<div class="empty">โหลดข้อมูลไม่สำเร็จ กรุณาตรวจสอบ Apps Script หรือสิทธิ์การแชร์โฟลเดอร์</div>';
+      document.getElementById('fileCount').innerText = "จำนวนไฟล์: -";
+      document.getElementById('status').innerText = "สถานะ: โหลดข้อมูลไม่สำเร็จ";
+    });
+}
+
+window.onload = loadFiles;
 </script>
 
 </body>
