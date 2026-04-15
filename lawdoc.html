@@ -281,6 +281,26 @@ body{
             </td>
           </tr>
 
+          <tr onclick="openPDF(this,'ใบจดทะเบียนคณะกรรมการบริหารสมาคม','https://drive.google.com/file/d/16aH-NMgkpe57SG7OEMl10a5OT4N5cxuo/preview')">
+            <td class="col-no">1</td>
+            <td>ใบจดทะเบียนสมาคม</td>
+            <td class="col-action">
+              <button class="open-btn" onclick="event.stopPropagation(); openPDF(this.closest('tr'),'ใบจดทะเบียนคณะกรรมการบริหารสมาคม','https://drive.google.com/file/d/16aH-NMgkpe57SG7OEMl10a5OT4N5cxuo/preview')">
+                เปิด
+              </button>
+            </td>
+          </tr>
+
+          <tr onclick="openPDF(this,'โฉนดที่ดิน','https://drive.google.com/file/d/1S9QWIy4BEOrhChKw3vndulBPISO3pSEj/preview')">
+            <td class="col-no">1</td>
+            <td>ใบจดทะเบียนสมาคม</td>
+            <td class="col-action">
+              <button class="open-btn" onclick="event.stopPropagation(); openPDF(this.closest('tr'),'โฉนดที่ดิน','https://drive.google.com/file/d/1S9QWIy4BEOrhChKw3vndulBPISO3pSEj/preview')">
+                เปิด
+              </button>
+            </td>
+          </tr>
+
           <!-- ตัวอย่างเพิ่มรายการ
           <tr onclick="openPDF(this,'รายชื่อกรรมการ','https://drive.google.com/file/d/FILE_ID/preview')">
             <td class="col-no">2</td>
@@ -302,7 +322,6 @@ body{
     <div class="preview-top">
       <div id="fileName">ยังไม่ได้เลือกเอกสาร</div>
       <div class="preview-actions">
-        <button onclick="openNewTab()">เปิดใหม่</button>
         <button onclick="fullscreenViewer()">เต็มจอ</button>
       </div>
     </div>
