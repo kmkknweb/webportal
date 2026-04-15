@@ -130,6 +130,9 @@ iframe{width:100%;height:560px;border:none;background:#fff;}
 <body>
 <div class="wrap">
   <div class="header">
+    <div style="display:flex;justify-content:center;align-items:center;margin-bottom:10px;">
+      <img src="logo.png" alt="โลโก้สมาคม" style="width:72px;height:72px;object-fit:contain;" onerror="this.style.display='none'"/>
+    </div>
     <h1>🏆 ระบบสร้างใบประกาศแบบหลายรายชื่อ</h1>
     <p>สมาคมปึงเถ่ากงม่าขอนแก่น</p>
   </div>
@@ -253,12 +256,24 @@ google.script.run
   .withSuccessHandler(function(templates) {
     const sel = document.getElementById('templateId');
     sel.innerHTML = '<option value="">-- กรุณาเลือก --</option>';
+
+    if (!templates || !templates.length) {
+      sel.innerHTML = '<option value="">ไม่พบประเภทเอกสาร</option>';
+      showError('ไม่พบข้อมูลประเภทเอกสาร กรุณาตรวจสอบตัวแปร TEMPLATES ใน Code.gs');
+      return;
+    }
+
     templates.forEach(function(t) {
       const opt = document.createElement('option');
       opt.value = t.id;
       opt.textContent = t.name;
       sel.appendChild(opt);
     });
+  })
+  .withFailureHandler(function(err) {
+    const sel = document.getElementById('templateId');
+    sel.innerHTML = '<option value="">โหลดประเภทเอกสารไม่สำเร็จ</option>';
+    showError('โหลดประเภทเอกสารไม่สำเร็จ: ' + (err && err.message ? err.message : err));
   })
   .getTemplates();
 
