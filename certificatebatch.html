@@ -15,20 +15,9 @@
       padding:24px 16px 48px;
     }
     .wrap{max-width:980px;margin:0 auto}
-    .header{
-      text-align:center;
-      margin-bottom:28px;
-    }
-    .logo{
-      display:flex;
-      justify-content:center;
-      margin-bottom:12px;
-    }
-    .logo img{
-      width:84px;
-      height:84px;
-      object-fit:contain;
-    }
+    .header{text-align:center;margin-bottom:28px}
+    .logo{display:flex;justify-content:center;margin-bottom:12px}
+    .logo img{width:84px;height:84px;object-fit:contain}
     .header h1{
       font-family:'Noto Serif Thai',serif;
       font-size:28px;
@@ -78,11 +67,13 @@
       display:inline-block;
       width:100%;
       text-align:center;
-      text-decoration:none;
       padding:14px 18px;
       border-radius:14px;
       font-size:15px;
+      border:none;
+      cursor:pointer;
       transition:.2s;
+      font-family:'Noto Sans Thai',sans-serif;
     }
     .btn-primary{
       background:#7a0019;
@@ -109,7 +100,7 @@
       color:#666;
       line-height:1.8;
     }
-    @media (max-width: 760px){
+    @media (max-width:760px){
       .grid{grid-template-columns:1fr}
       .card p{min-height:auto}
     }
@@ -136,9 +127,9 @@
           สำหรับกรอกหลายรายชื่อในครั้งเดียว โดยพิมพ์ 1 บรรทัดต่อ 1 ชื่อ
           มีระบบพรีวิวทีละรายชื่อ พร้อมลูกศรซ้าย-ขวาและ dropdown เลือกชื่อ
         </p>
-        <a class="btn btn-primary" href="https://script.google.com/macros/s/AKfycbxVFgKLdMWomfRPLGR1KY-Kz-xw8OrAdPz7MOvmftVMM110FBGY-S94l7jnoRDhco6w/exec" target="_blank">
+        <button class="btn btn-primary" onclick="goBatch()">
           เปิดโหมดสร้างหลายใบ
-        </a>
+        </button>
       </div>
 
       <div class="card">
@@ -148,15 +139,28 @@
           สำหรับกรณีที่ต้องการปรับรายละเอียดเฉพาะรายชื่อ เช่น
           ชื่อยาวมากหรืออยากตั้งค่าขนาดตัวอักษรเองแบบละเอียด
         </p>
-        <a class="btn btn-secondary" href="https://script.google.com/macros/s/AKfycbw6BOd7OMN_9z0UjIDE9NlEzBGfK0GbaaNFUIaEDD5T4HBNisQBL-p3dPvqXMtv2RQCLQ/exec" target="_blank">
+        <button class="btn btn-secondary" onclick="goSingle()">
           เปิดโหมดสร้างทีละใบ
-        </a>
+        </button>
       </div>
     </div>
 
     <div class="note">
-      หมายเหตุ: หน้านี้เป็นหน้าเมนูสำหรับเข้าสู่ระบบใช้งานจริง โดยระบบสร้างใบประกาศจะทำงานผ่าน Google Apps Script
+      หมายเหตุ: หน้านี้เป็นหน้าเมนูเข้าสู่ระบบใช้งานจริง โดยระบบสร้างใบประกาศจะทำงานผ่าน Google Apps Script
     </div>
   </div>
+
+  <script>
+    const BATCH_URL = 'https://script.google.com/macros/s/AKfycbxVFgKLdMWomfRPLGR1KY-Kz-xw8OrAdPz7MOvmftVMM110FBGY-S94l7jnoRDhco6w/exec';
+    const SINGLE_URL = 'https://script.google.com/macros/s/AKfycbw6BOd7OMN_9z0UjIDE9NlEzBGfK0GbaaNFUIaEDD5T4HBNisQBL-p3dPvqXMtv2RQCLQ/exec';
+
+    function goBatch() {
+      window.location.href = BATCH_URL;
+    }
+
+    function goSingle() {
+      window.location.href = SINGLE_URL;
+    }
+  </script>
 </body>
 </html>
