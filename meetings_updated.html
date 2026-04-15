@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>รายงานการประชุม | ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7efe3;
+      --bg-2: #fbf7f0;
+      --paper: rgba(255, 252, 247, 0.94);
+      --text: #4e2f1f;
+      --muted: #8c6c58;
+      --line: rgba(143, 109, 81, 0.16);
+      --gold: #bd8a3c;
+      --gold-deep: #8c6428;
+      --gold-soft: rgba(189, 138, 60, 0.1);
+      --red: #8f1f1f;
+      --red-deep: #681414;
+      --red-soft: rgba(143, 31, 31, 0.08);
+      --shadow-xl: 0 28px 80px rgba(84, 52, 26, 0.15);
+      --shadow-lg: 0 18px 46px rgba(84, 52, 26, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Sans Thai", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 8%, rgba(189,138,60,0.12), transparent 24%),
+        radial-gradient(circle at 88% 10%, rgba(143,31,31,0.09), transparent 20%),
+        radial-gradient(circle at 50% 100%, rgba(189,138,60,0.08), transparent 26%),
+        linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+    }
+
+    .page { max-width: 1360px; margin: 0 auto; padding: 22px 16px 28px; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 28px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.94), rgba(255,248,238,0.92)), linear-gradient(90deg, rgba(189,138,60,0.10), rgba(143,31,31,0.06));
+      border: 1px solid rgba(189,138,60,0.22);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .hero::before,.hero::after {
+      content:"";
+      position:absolute;
+      border-radius:999px;
+      pointer-events:none;
+    }
+
+    .hero::before {
+      width:260px;
+      height:260px;
+      right:-90px;
+      top:-80px;
+      background: radial-gradient(circle, rgba(189,138,60,0.18), transparent 68%);
+    }
+
+    .hero::after {
+      width:280px;
+      height:280px;
+      left:-90px;
+      bottom:-120px;
+      background: radial-gradient(circle, rgba(143,31,31,0.12), transparent 68%);
+    }
+
+    .hero-grid {
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .brand-row { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+
+    .logo-mark {
+      width:100px;
+      height:100px;
+      border-radius:50%;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:white;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+
+    .logo-mark img {
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .brand-text small {
+      display:block;
+      margin-bottom:4px;
+      color:var(--red);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-weight:800;
+      font-size:.76rem;
+    }
+
+    .brand-text h1 {
+      margin:0;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      line-height:1.16;
+      font-weight:800;
+    }
+
+    .subtitle {
+      margin:12px 0 0;
+      max-width:780px;
+      color:var(--muted);
+      line-height:1.78;
+      font-size:.98rem;
+    }
+
+    .summary-cards { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:12px; margin-top:22px; }
+
+    .summary-card {
+      padding:16px;
+      border-radius:20px;
+      background:rgba(255,255,255,0.74);
+      border:1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .summary-label { color:var(--muted); font-size:.83rem; margin-bottom:8px; font-weight:700; }
+    .summary-value { font-size:1.34rem; font-weight:800; line-height:1.15; margin-bottom:6px; word-break:break-word; }
+    .summary-note { color:var(--muted); font-size:.84rem; }
+
+    .control-panel {
+      border-radius:28px;
+      padding:18px;
+      background:rgba(255,255,255,0.80);
+      border:1px solid rgba(189,138,60,0.18);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(10px);
+    }
+
+    .control-title { margin:0 0 14px; font-size:1rem; font-weight:800; }
+
+    .field {
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding:14px 15px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,248,238,0.88));
+      border:1px solid var(--line);
+      margin-bottom:12px;
+    }
+
+    .field label { font-size:.84rem; font-weight:800; color:var(--red); }
+
+    .field select,
+    .field input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 16px;
+    }
+
+    .field select { cursor: pointer; font-weight: 700; }
+
+    .btn-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px; }
+
+    .action-btn,.ghost-btn,.btn {
+      border:none;
+      border-radius:16px;
+      min-height:52px;
+      font:inherit;
+      font-weight:800;
+      cursor:pointer;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+
+    .action-btn:hover,.ghost-btn:hover,.meeting-card:hover,.btn:hover { transform: translateY(-1px); }
+    .action-btn { color:#fff; background:linear-gradient(135deg, var(--red), var(--red-deep)); box-shadow: 0 14px 28px rgba(143,31,31,.22); }
+    .ghost-btn { color:var(--text); background:rgba(255,255,255,.88); border:1px solid var(--line); }
+
+    .main-grid { display:grid; grid-template-columns:minmax(320px, 450px) minmax(0, 1fr); gap:18px; margin-top:18px; }
+
+    .panel {
+      background:var(--paper);
+      border:1px solid rgba(189,138,60,.18);
+      border-radius:28px;
+      box-shadow: var(--shadow-lg);
+      overflow:hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .panel-head {
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      padding:20px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,248,238,.96), rgba(255,255,255,.72));
+    }
+
+    .panel-head h2 { margin:0; font-size:1.05rem; font-weight:800; }
+    .panel-head p { margin:4px 0 0; color:var(--muted); font-size:.9rem; }
+
+    .pill {
+      white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:96px;
+      padding:9px 12px;
+      border-radius:999px;
+      background:var(--gold-soft);
+      border:1px solid rgba(189,138,60,.18);
+      color:var(--gold-deep);
+      font-weight:800;
+      font-size:.84rem;
+    }
+
+    .list-wrap { padding:16px; }
+    .meeting-list { display:grid; gap:12px; max-height:76vh; overflow:auto; padding-right:4px; }
+    .meeting-list::-webkit-scrollbar { width:8px; }
+    .meeting-list::-webkit-scrollbar-thumb { background:rgba(189,138,60,.28); border-radius:999px; }
+
+    .meeting-card {
+      border-radius:20px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, #fffdfa, #fff8ef);
+      padding:16px;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+      cursor:pointer;
+    }
+
+    .meeting-card:hover { border-color:rgba(189,138,60,.35); box-shadow:0 12px 28px rgba(84,52,26,.08); }
+    .meeting-card.active { border-color:rgba(143,31,31,.34); box-shadow:0 14px 30px rgba(143,31,31,.12); background:linear-gradient(180deg, #fff9f5, #fff2ea); }
+    .meeting-title { margin:0 0 8px; font-size:1rem; font-weight:800; line-height:1.5; word-break:break-word; }
+    .meeting-meta { display:flex; gap:8px; flex-wrap:wrap; color:var(--muted); font-size:.88rem; align-items:center; }
+    .meta-badge { display:inline-flex; align-items:center; padding:6px 10px; border-radius:999px; background:var(--red-soft); border:1px solid rgba(143,31,31,.10); color:var(--red); font-weight:800; font-size:.8rem; }
+
+    .status,.empty-state {
+      padding:28px 18px;
+      text-align:center;
+      border:1px dashed rgba(189,138,60,.32);
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(255,253,250,.94), rgba(255,248,238,.94));
+      color:var(--muted);
+    }
+
+    .status strong,.empty-state strong { display:block; color:var(--text); margin-bottom:6px; }
+    .viewer-shell { display:grid; grid-template-rows:auto auto 1fr; min-height:78vh; }
+    .viewer-top { padding:18px 20px 14px; border-bottom:1px solid var(--line); background:linear-gradient(180deg, rgba(255,248,238,.96), rgba(255,255,255,.72)); }
+    .viewer-top h3 { margin:0; font-size:1.08rem; font-weight:800; line-height:1.5; word-break:break-word; }
+    .viewer-sub { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; color:var(--muted); font-size:.9rem; align-items:center; }
+    .viewer-actions { display:flex; flex-wrap:wrap; gap:10px; padding:14px 20px; border-bottom:1px solid var(--line); background:rgba(255,255,255,.7); }
+
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      min-height:46px;
+      padding:0 16px;
+      border-radius:14px;
+      font-size:.92rem;
+    }
+
+    .btn-primary { color:#fff; background:linear-gradient(135deg, var(--gold), var(--gold-deep)); box-shadow:0 12px 24px rgba(189,138,60,.20); }
+    .btn-secondary { color:var(--text); background:rgba(255,255,255,.90); border:1px solid var(--line); }
+
+    .preview-wrap { position:relative; background:#f7f0e6; min-height:320px; }
+    .pdf-frame { width:100%; height:100%; min-height:450px; border:none; background:#fff; }
+
+    .viewer-empty {
+      display:grid;
+      place-items:center;
+      min-height:280px;
+      padding:24px;
+      text-align:center;
+      color:var(--muted);
+      background:radial-gradient(circle at top right, rgba(189,138,60,.08), transparent 24%), linear-gradient(180deg, #fffdf9, #fbf4ea);
+    }
+
+    .viewer-empty-box {
+      max-width:350px;
+      padding:28px 22px;
+      border-radius:24px;
+      background:rgba(255,255,255,.82);
+      border:1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .viewer-empty-box strong { display:block; color:var(--text); margin-bottom:8px; font-size:1rem; }
+    .footer-note { text-align:center; margin-top:14px; color:var(--muted); font-size:.9rem; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--red), var(--red-deep));
+      color: #fff;
+      font-family: "Noto Sans Thai", sans-serif;
+      font-weight: 800;
+      font-size: .92rem;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(143,31,31,.25);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(143,31,31,.32);
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      padding: 12px 0 8px;
+    }
+
+    @media (max-width:1080px) {
+      .hero-grid,.main-grid { grid-template-columns:1fr; }
+      .meeting-list { max-height:none; }
+      .viewer-shell { min-height:62vh; }
+    }
+
+    @media (max-width:720px) {
+      .page { padding:14px 12px 22px; }
+      .hero { padding:20px 16px; border-radius:24px; }
+      .summary-cards,.btn-row { grid-template-columns:1fr; }
+      .panel-head,.viewer-actions { flex-direction:column; align-items:flex-start; }
+      .pdf-frame,.preview-wrap,.viewer-empty { min-height:68vh; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="top-bar">
+      <a href="index.html" class="back-btn">← กลับหน้าหลัก</a>
+    </div>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="brand-row">
+            <div class="logo-mark">
+              <img src="logo.png" alt="logo">
+            </div>
+            <div class="brand-text">
+              <small>Meeting Archive System</small>
+              <h1>รายงานการประชุม<br>ศาลเจ้าปึงเถ่ากงม่า ขอนแก่น</h1>
+            </div>
+          </div>
+          <p class="subtitle">ระบบแสดงรายงานการประชุม</p>
+
+          <div class="summary-cards">
+            <div class="summary-card">
+              <div class="summary-label">หมวดที่เลือก</div>
+              <div class="summary-value" id="selectedTypeLabel">คณะกรรมการบริหาร</div>
+              <div class="summary-note">เปลี่ยนได้จากแผงควบคุมด้านขวา</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-label">จำนวนเอกสารที่พบ</div>
+              <div class="summary-value" id="heroCount">0</div>
+              <div class="summary-note">ปรับตามผลการค้นหาอัตโนมัติ</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-label">สถานะระบบ</div>
+              <div class="summary-value" id="heroStatus">พร้อมใช้งาน</div>
+              <div class="summary-note">เชื่อมต่อเอกสารจาก Google Drive</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="control-panel">
+          <h2 class="control-title">แผงควบคุมเอกสาร</h2>
+          <div class="field">
+            <label for="meetingType">เลือกประเภทการประชุม</label>
+            <select id="meetingType">
+              <option value="boardmeeting">คณะกรรมการบริหารสมาคม</option>
+              <option value="honormeeting">คณะกรรมการกิตติมศักดิ์</option>
+              <option value="workpartymeeting">คณะทำงานสมาคม</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="sortOrder">การเรียงลำดับ</label>
+            <select id="sortOrder">
+              <option value="date-desc">วันที่ใหม่ไปเก่า</option>
+              <option value="date-asc">วันที่เก่าไปใหม่</option>
+              <option value="name-asc">ชื่อไฟล์ A-Z</option>
+              <option value="name-desc">ชื่อไฟล์ Z-A</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="searchInput">ค้นหาจากชื่อไฟล์</label>
+            <input id="searchInput" type="text" placeholder="พิมพ์คำที่ต้องการค้นหา" />
+          </div>
+
+          <div class="btn-row">
+            <button id="loadBtn" class="action-btn">โหลดรายการ</button>
+            <button id="clearBtn" class="ghost-btn">ล้างคำค้น</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="main-grid">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="sectionTitle">รายการเอกสาร</h2>
+            <p id="sectionDesc">เลือกประเภทการประชุมแล้วระบบจะแสดงรายการเอกสารจาก Google Drive</p>
+          </div>
+          <div class="pill" id="resultCount">0 รายการ</div>
+        </div>
+        <div class="list-wrap">
+          <div id="statusBox" class="status">
+            <strong>พร้อมใช้งาน</strong>
+            กรุณาเลือกประเภทการประชุม แล้วกด “โหลดรายการ”
+          </div>
+          <div id="meetingList" class="meeting-list" hidden></div>
+        </div>
+      </section>
+
+      <section class="panel viewer-shell">
+        <div class="viewer-top">
+          <h3 id="viewerTitle">ตัวอย่างเอกสาร</h3>
+          <div class="viewer-sub" id="viewerMeta">
+            <span class="meta-badge">ยังไม่ได้เลือกเอกสาร</span>
+          </div>
+        </div>
+
+        <div class="viewer-actions">
+          <a id="openBtn" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">เปิดในแท็บใหม่</a>
+          <a id="downloadBtn" class="btn btn-secondary" href="#" target="_blank" rel="noopener noreferrer">ดาวน์โหลด PDF</a>
+          <button id="copyBtn" class="btn btn-secondary" type="button">คัดลอกลิงก์</button>
+        </div>
+
+        <div class="preview-wrap">
+          <div class="viewer-empty" id="viewerEmpty">
+            <div class="viewer-empty-box">
+              <strong>ยังไม่ได้เลือกเอกสาร</strong>
+              เลือกไฟล์จากรายการด้านซ้าย แล้วระบบจะแสดงตัวอย่าง PDF ในพื้นที่นี้ทันที
+            </div>
+          </div>
+          <iframe id="pdfFrame" class="pdf-frame" hidden></iframe>
+        </div>
+      </section>
+    </section>
+
+    <div class="footer-note">เอกสารทั้งหมดถูกดึงจาก Google Drive อัตโนมัติผ่าน Google Apps Script</div>
+  </main>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzVOtdZKJa-RoZe15inf1ecaYTzZBPlOLA8OZjLvQTYlX3EYTzA2EV5BV8C8OD2i3aqBQ/exec";
+
+    const typeLabelMap = {
+      boardmeeting: "คณะกรรมการบริหาร",
+      honormeeting: "คณะกรรมการกิตติมศักดิ์",
+      workpartymeeting: "คณะทำงาน"
+    };
+
+    const meetingType = document.getElementById("meetingType");
+    const sortOrder = document.getElementById("sortOrder");
+    const searchInput = document.getElementById("searchInput");
+    const loadBtn = document.getElementById("loadBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const meetingList = document.getElementById("meetingList");
+    const statusBox = document.getElementById("statusBox");
+    const resultCount = document.getElementById("resultCount");
+    const sectionTitle = document.getElementById("sectionTitle");
+    const sectionDesc = document.getElementById("sectionDesc");
+    const selectedTypeLabel = document.getElementById("selectedTypeLabel");
+    const heroCount = document.getElementById("heroCount");
+    const heroStatus = document.getElementById("heroStatus");
+    const viewerTitle = document.getElementById("viewerTitle");
+    const viewerMeta = document.getElementById("viewerMeta");
+    const pdfFrame = document.getElementById("pdfFrame");
+    const viewerEmpty = document.getElementById("viewerEmpty");
+    const openBtn = document.getElementById("openBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const copyBtn = document.getElementById("copyBtn");
+
+    let allFiles = [];
+    let visibleFiles = [];
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function extractDisplayDate(filename) {
+      const text = String(filename || "").trim();
+      const thaiMonths = {
+        "มกราคม": 1, "กุมภาพันธ์": 2, "มีนาคม": 3, "เมษายน": 4, "พฤษภาคม": 5, "มิถุนายน": 6,
+        "กรกฎาคม": 7, "สิงหาคม": 8, "กันยายน": 9, "ตุลาคม": 10, "พฤศจิกายน": 11, "ธันวาคม": 12,
+        "ม.ค.": 1, "ก.พ.": 2, "มี.ค.": 3, "เม.ย.": 4, "พ.ค.": 5, "มิ.ย.": 6,
+        "ก.ค.": 7, "ส.ค.": 8, "ก.ย.": 9, "ต.ค.": 10, "พ.ย.": 11, "ธ.ค.": 12
+      };
+
+      let match = text.match(/(\d{1,2})\s+([ก-๙\.]+)\s+(\d{4})/);
+      if (match) {
+        const day = parseInt(match[1], 10);
+        const month = thaiMonths[match[2]];
+        let year = parseInt(match[3], 10);
+        if (year > 2400) year -= 543;
+        if (month) {
+          const d = new Date(year, month - 1, day);
+          if (isValidDateParts(d, year, month, day)) {
+            return formatThaiDate(day, month, year + 543);
+          }
+        }
+      }
+
+      match = text.match(/(\d{4})[-_](\d{1,2})[-_](\d{1,2})/);
+      if (match) {
+        let year = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10);
+        const day = parseInt(match[3], 10);
+        if (year > 2400) year -= 543;
+        const d = new Date(year, month - 1, day);
+        if (isValidDateParts(d, year, month, day)) {
+          return formatThaiDate(day, month, year + 543);
+        }
+      }
+
+      match = text.match(/(\d{1,2})[-_](\d{1,2})[-_](\d{4})/);
+      if (match) {
+        const day = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10);
+        let year = parseInt(match[3], 10);
+        if (year > 2400) year -= 543;
+        const d = new Date(year, month - 1, day);
+        if (isValidDateParts(d, year, month, day)) {
+          return formatThaiDate(day, month, year + 543);
+        }
+      }
+
+      return "ไม่ระบุวันที่";
+    }
+
+    function formatThaiDate(day, month, beYear) {
+      const thaiMonthNames = [
+        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+      ];
+      return `${day} ${thaiMonthNames[month - 1]} ${beYear}`;
+    }
+
+    function isValidDateParts(d, year, month, day) {
+      return d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day;
+    }
+
+    function normalizeFiles(data) {
+      const source = Array.isArray(data) ? data : (Array.isArray(data.files) ? data.files : []);
+      return source.map((file) => {
+        const possibleUrl = file.url || file.viewUrl || file.openUrl || "";
+        const idMatch = String(possibleUrl).match(/[-\w]{25,}/);
+        const fileId = file.id || (idMatch ? idMatch[0] : "");
+        const timestamp = Number(file.timestamp || 0);
+        return {
+          id: fileId,
+          name: file.name || "ไม่ทราบชื่อไฟล์",
+          displayDate: file.dateText || file.displayDate || extractDisplayDate(file.name || ""),
+          sortDate: file.sortDate || "",
+          timestamp,
+          viewUrl: file.viewUrl || (fileId ? `https://drive.google.com/file/d/${fileId}/preview` : possibleUrl || "#"),
+          openUrl: file.openUrl || (fileId ? `https://drive.google.com/file/d/${fileId}/view` : possibleUrl || "#"),
+          downloadUrl: file.downloadUrl || (fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : possibleUrl || "#")
+        };
+      });
+    }
+
+    function resetViewer() {
+      viewerTitle.textContent = "ตัวอย่างเอกสาร";
+      viewerMeta.innerHTML = '<span class="meta-badge">ยังไม่ได้เลือกเอกสาร</span>';
+      openBtn.href = "#";
+      downloadBtn.href = "#";
+      pdfFrame.removeAttribute("src");
+      pdfFrame.hidden = true;
+      viewerEmpty.hidden = false;
+      document.querySelectorAll('.meeting-card').forEach(card => card.classList.remove('active'));
+    }
+
+    function selectVisibleFile(index) {
+      const file = visibleFiles[index];
+      if (!file) return;
+
+      document.querySelectorAll('.meeting-card').forEach((card, i) => {
+        card.classList.toggle('active', i === index);
+      });
+
+      viewerTitle.textContent = file.name;
+      viewerMeta.innerHTML = `
+        <span class="meta-badge">${typeLabelMap[meetingType.value] || 'เอกสาร'}</span>
+        <span>${escapeHtml(file.displayDate)}</span>
+      `;
+      openBtn.href = file.openUrl;
+      downloadBtn.href = file.downloadUrl;
+      pdfFrame.src = file.viewUrl;
+      pdfFrame.hidden = false;
+      viewerEmpty.hidden = true;
+    }
+
+    function buildVisibleFiles() {
+      const keyword = searchInput.value.trim().toLowerCase();
+
+      const sorted = [...allFiles].sort((a, b) => {
+        switch (sortOrder.value) {
+          case "date-asc":
+            if (a.timestamp !== b.timestamp) return a.timestamp - b.timestamp;
+            return a.name.localeCompare(b.name, 'th');
+
+          case "date-desc":
+            if (b.timestamp !== a.timestamp) return b.timestamp - a.timestamp;
+            return a.name.localeCompare(b.name, 'th');
+
+          case "name-asc":
+            return a.name.localeCompare(b.name, 'th');
+
+          case "name-desc":
+          default:
+            return b.name.localeCompare(a.name, 'th');
+        }
+      });
+
+      visibleFiles = sorted.filter(file => file.name.toLowerCase().includes(keyword));
+    }
+
+    function renderList() {
+      const label = typeLabelMap[meetingType.value] || "รายการประชุม";
+      selectedTypeLabel.textContent = label;
+      sectionTitle.textContent = `รายงานการประชุม: ${label}`;
+      sectionDesc.textContent = `แสดงเอกสารทั้งหมดในหมวด ${label}`;
+
+      buildVisibleFiles();
+      heroCount.textContent = String(visibleFiles.length);
+      resultCount.textContent = `${visibleFiles.length} รายการ`;
+
+      if (!visibleFiles.length) {
+        meetingList.hidden = true;
+        statusBox.hidden = false;
+        statusBox.className = 'empty-state';
+        statusBox.innerHTML = '<strong>ไม่พบเอกสาร</strong>ลองเปลี่ยนประเภทการประชุม หรือเปลี่ยนคำค้นหา';
+        resetViewer();
+        return;
+      }
+
+      meetingList.innerHTML = visibleFiles.map((file, index) => `
+        <article class="meeting-card" data-index="${index}">
+          <h3 class="meeting-title">${escapeHtml(file.name)}</h3>
+          <div class="meeting-meta">
+            <span class="meta-badge">${escapeHtml(label)}</span>
+            <span>${escapeHtml(file.displayDate)}</span>
+          </div>
+        </article>
+      `).join('');
+
+      statusBox.hidden = true;
+      meetingList.hidden = false;
+
+      meetingList.querySelectorAll('.meeting-card').forEach((card) => {
+        card.addEventListener('click', () => {
+          const index = Number(card.dataset.index);
+          selectVisibleFile(index);
+        });
+      });
+
+      selectVisibleFile(0);
+    }
+
+    async function loadFiles() {
+      allFiles = [];
+      visibleFiles = [];
+      meetingList.innerHTML = '';
+      meetingList.hidden = true;
+      resetViewer();
+
+      if (!API_URL) {
+        statusBox.hidden = false;
+        meetingList.hidden = true;
+        statusBox.className = 'status';
+        statusBox.innerHTML = '<strong>ยังไม่ได้ตั้งค่า API</strong>กรุณานำ URL ของ Google Apps Script มาใส่ในตัวแปร API_URL ก่อนใช้งาน';
+        heroStatus.textContent = 'ยังไม่ตั้งค่า';
+        return;
+      }
+
+      const type = meetingType.value;
+      const label = typeLabelMap[type] || 'รายการประชุม';
+      selectedTypeLabel.textContent = label;
+      sectionTitle.textContent = `กำลังโหลด ${label}`;
+      sectionDesc.textContent = 'กรุณารอสักครู่';
+      resultCount.textContent = '...';
+      heroCount.textContent = '...';
+      statusBox.hidden = false;
+      meetingList.hidden = true;
+      statusBox.className = 'status';
+      statusBox.innerHTML = '<strong>กำลังดึงข้อมูล</strong>ระบบกำลังโหลดรายชื่อไฟล์จาก Google Drive';
+      heroStatus.textContent = 'กำลังเชื่อมต่อ';
+      resetViewer();
+
+      try {
+        const res = await fetch(`${API_URL}?type=${encodeURIComponent(type)}`);
+        if (!res.ok) throw new Error('โหลดข้อมูลไม่สำเร็จ');
+
+        const data = await res.json();
+        allFiles = normalizeFiles(data);
+        renderList();
+        heroStatus.textContent = 'อัปเดตแล้ว';
+      } catch (error) {
+        console.error(error);
+        allFiles = [];
+        visibleFiles = [];
+        meetingList.hidden = true;
+        statusBox.hidden = false;
+        statusBox.className = 'status';
+        statusBox.innerHTML = '<strong>เกิดข้อผิดพลาด</strong>ไม่สามารถดึงข้อมูลไฟล์ได้ กรุณาตรวจสอบ Apps Script, การ Deploy และสิทธิ์โฟลเดอร์ใน Google Drive';
+        resultCount.textContent = '0 รายการ';
+        heroCount.textContent = '0';
+        heroStatus.textContent = 'เชื่อมต่อไม่ได้';
+        resetViewer();
+      }
+    }
+
+    loadBtn.addEventListener('click', loadFiles);
+
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      renderList();
+    });
+
+    searchInput.addEventListener('input', () => renderList());
+    sortOrder.addEventListener('change', () => renderList());
+
+    meetingType.addEventListener('change', () => {
+      selectedTypeLabel.textContent = typeLabelMap[meetingType.value] || 'รายการประชุม';
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      const url = openBtn.href;
+      if (!url || url === '#') return;
+
+      try {
+        await navigator.clipboard.writeText(url);
+        copyBtn.textContent = 'คัดลอกแล้ว';
+        setTimeout(() => { copyBtn.textContent = 'คัดลอกลิงก์'; }, 1200);
+      } catch {
+        copyBtn.textContent = 'คัดลอกไม่ได้';
+        setTimeout(() => { copyBtn.textContent = 'คัดลอกลิงก์'; }, 1200);
+      }
+    });
+  </script>
+</body>
+</html>
