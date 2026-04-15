@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ภ<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8"/>
@@ -54,6 +54,136 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
 #msg{font-size:13px;color:#c0392b;margin-top:10px;text-align:center;min-height:18px;}
 .back{text-align:center;margin-top:20px;font-size:13px;color:#888;}
 .back a{color:#7a0019;text-decoration:none;font-weight:500;}
+  .access-notice{
+  margin-top:22px;
+  background:linear-gradient(180deg,#fffdfa 0%, #fff8f2 100%);
+  border:1px solid rgba(122,0,25,.10);
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 14px 32px rgba(0,0,0,.06);
+  font-family:'Noto Sans Thai',sans-serif;
+}
+
+.access-notice-bar{
+  height:6px;
+  background:linear-gradient(90deg,#7a0019,#b68a52,#7a0019);
+}
+
+.access-notice-head{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:18px 18px 10px;
+}
+
+.access-notice-icon{
+  width:52px;
+  height:52px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fff1f3,#fff7ea);
+  border:1px solid #eadfd5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  flex-shrink:0;
+  box-shadow:0 6px 16px rgba(122,0,25,.08);
+}
+
+.access-notice-kicker{
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#9a7f67;
+  font-weight:700;
+  margin-bottom:3px;
+}
+
+.access-notice-title{
+  margin:0;
+  font-size:18px;
+  line-height:1.4;
+  color:#4c1020;
+  font-weight:800;
+}
+
+.access-notice-body{
+  padding:0 18px 18px;
+}
+
+.access-notice-text{
+  margin:0 0 10px;
+  font-size:13px;
+  line-height:1.85;
+  color:#5f5650;
+}
+
+.access-email{
+  color:#7a0019;
+  font-weight:800;
+}
+
+.access-password{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  background:#faf0f2;
+  color:#7a0019;
+  font-weight:800;
+  border:1px solid rgba(122,0,25,.10);
+}
+
+.access-notice-warning{
+  margin-top:14px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#fff4f4 0%, #fffafa 100%);
+  border:1px solid rgba(160,0,0,.12);
+  color:#9f1111;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.7;
+}
+
+.access-notice-actions{
+  margin-top:16px;
+}
+
+.access-mail-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:0 16px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#7a0019,#5c0013);
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:800;
+  box-shadow:0 10px 22px rgba(122,0,25,.18);
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.access-mail-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 14px 26px rgba(122,0,25,.24);
+  background:linear-gradient(135deg,#8a0020,#680017);
+}
+
+@media (max-width:640px){
+  .access-notice-head{
+    align-items:flex-start;
+  }
+
+  .access-notice-title{
+    font-size:16px;
+  }
+
+  .access-mail-btn{
+    width:100%;
+  }
+}
 </style>
 </head>
 <body>
@@ -76,6 +206,44 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
     </div>
     <button class="btn" onclick="login()">เข้าสู่ระบบ</button>
     <p id="msg"></p>
+<div class="access-notice">
+  <div class="access-notice-bar"></div>
+
+  <div class="access-notice-head">
+    <div class="access-notice-icon">✉️</div>
+    <div class="access-notice-title-wrap">
+      <div class="access-notice-kicker">Access Request</div>
+      <h3 class="access-notice-title">แจ้งการขอใช้งานระบบ</h3>
+    </div>
+  </div>
+
+  <div class="access-notice-body">
+    <p class="access-notice-text">
+      หากต้องการใช้งานระบบ กรุณาส่งอีเมลที่ต้องการสมัครไปที่
+      <span class="access-email">kongmakhonkaen@gmail.com</span>
+    </p>
+
+    <p class="access-notice-text">
+      หลังจากสมัครแล้ว หากท่านได้รับการอนุมัติ จะมีอีเมลแจ้งให้ท่านดำเนินการรีเซ็ตรหัสผ่าน
+      โดยรหัสผ่านเริ่มต้นของระบบคือ
+      <span class="access-password">123456</span>
+    </p>
+
+    <div class="access-notice-warning">
+      *** สงวนสิทธิ์ในการอนุมัติเฉพาะผู้ที่เกี่ยวข้องจำเป็นเท่านั้น ***
+    </div>
+
+    <div class="access-notice-actions">
+      <a
+        class="access-mail-btn"
+        href="mailto:kongmakhonkaen@gmail.com?subject=ขอสมัครใช้งานระบบ&body=ชื่อ-นามสกุล:%0Aอีเมลที่ต้องการสมัคร:%0Aระบบที่ต้องการใช้งาน:%0Aหมายเหตุ:"
+      >
+        ส่งอีเมลสมัครใช้งาน
+      </a>
+    </div>
+  </div>
+</div>จ
+
   </div>
   <div class="back">
     <a href="index.html">← กลับหน้าแรก</a>
