@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เอกสารสำคัญ</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Noto Sans Thai',sans-serif;
+  background:linear-gradient(180deg,#f6efe7,#eee2d3);
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 20px;
+  background:#fffaf6;
+  border-bottom:1px solid #eee;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.brand img{width:48px}
+.title{font-weight:800}
+.back{
+  background:#7a0019;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:999px;
+  text-decoration:none;
+}
+
+/* CONTENT */
+.wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+/* HERO */
+.hero{
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.06);
+  margin-bottom:18px;
+}
+.hero h2{
+  margin:0;
+  font-size:28px;
+}
+.hero p{
+  margin:8px 0 0;
+  color:#666;
+  line-height:1.8;
+  font-size:14px;
+}
+
+/* LIST */
+.list-wrap{
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  margin-bottom:20px;
+}
+
+.list-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 16px;
+  background:#faf4ef;
+  border-bottom:1px solid #eee;
+}
+.list-head-title{
+  font-size:18px;
+  font-weight:700;
+}
+.list-head-sub{
+  font-size:12px;
+  color:#777;
+  margin-top:2px;
+}
+.file-count{
+  font-size:13px;
+  color:#7a0019;
+  font-weight:700;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+.file-table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+}
+
+.file-table th{
+  background:#fffaf6;
+  color:#5c0013;
+  font-size:13px;
+  font-weight:700;
+  text-align:left;
+  padding:12px 14px;
+  border-bottom:1px solid #eadfd5;
+}
+
+.file-table td{
+  padding:12px 14px;
+  border-bottom:1px solid #f1e7de;
+  font-size:14px;
+  vertical-align:middle;
+}
+
+.file-table tr:hover{
+  background:#fffaf6;
+}
+
+.file-table tr.active{
+  background:#fff3f4;
+}
+
+.col-no{
+  width:70px;
+  color:#777;
+}
+
+.col-action{
+  width:140px;
+}
+
+.open-btn{
+  background:#7a0019;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-family:'Noto Sans Thai',sans-serif;
+  font-size:13px;
+  font-weight:700;
+}
+.open-btn:hover{
+  background:#5c0013;
+}
+
+/* PREVIEW */
+.preview{
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.preview-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 20px;
+  background:#faf4ef;
+  border-bottom:1px solid #eee;
+}
+#fileName{
+  font-size:18px;
+  font-weight:700;
+}
+.preview-actions button{
+  margin-left:8px;
+  border:none;
+  background:#7a0019;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  font-family:'Noto Sans Thai',sans-serif;
+  font-size:13px;
+}
+
+#viewer{
+  width:100%;
+  height:620px;
+  border:none;
+}
+
+.empty{
+  padding:40px;
+  text-align:center;
+  color:#777;
+  line-height:1.8;
+}
+
+@media (max-width:760px){
+  .header{
+    gap:10px;
+  }
+  .title{
+    font-size:16px;
+  }
+  .hero h2{
+    font-size:23px;
+  }
+  .preview-top{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+  #viewer{
+    height:70vh;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="brand">
+    <img src="logo.png" alt="logo">
+    <div>
+      <div class="title">สมาคมปึงเถ่ากงม่าขอนแก่น</div>
+      <div style="font-size:12px;color:#777">เอกสารสำคัญ</div>
+    </div>
+  </div>
+  <a href="systems.html" class="back">กลับ</a>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h2>เอกสารสำคัญ</h2>
+    <p>
+      หน้านี้ใช้สำหรับจัดเก็บและเปิดดูเอกสารสำคัญของสมาคม เช่น ใบจดทะเบียนสมาคม
+      รายชื่อคณะกรรมการ เอกสารแต่งตั้ง เอกสารสิทธิ์ และเอกสารทางการอื่น ๆ
+      โดยสามารถเลือกเอกสารจากรายการด้านบนและดูตัวอย่างได้ทันทีในหน้านี้
+    </p>
+  </div>
+
+  <div class="list-wrap">
+    <div class="list-head">
+      <div>
+        <div class="list-head-title">รายการเอกสาร</div>
+        <div class="list-head-sub">เลือกเอกสารที่ต้องการจากรายการด้านล่าง</div>
+      </div>
+      <div class="file-count" id="fileCount">จำนวนไฟล์: 1 ไฟล์</div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="file-table" id="fileTable">
+        <thead>
+          <tr>
+            <th class="col-no">ลำดับ</th>
+            <th>ชื่อเอกสาร</th>
+            <th class="col-action">เปิดเอกสาร</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ================================================== -->
+          <!-- เพิ่มรายการใหม่ตรงนี้ โดย copy <tr> ทั้งแถวเพิ่มเอง -->
+          <!-- ลิงก์ควรใช้แบบ /preview -->
+          <!-- ================================================== -->
+
+          <tr onclick="openPDF(this,'ใบจดทะเบียนสมาคม','https://drive.google.com/file/d/1ePdjH9CkeZl8mWsZ9l9TYK-Qo_9TzsMn/preview')">
+            <td class="col-no">1</td>
+            <td>ใบจดทะเบียนสมาคม</td>
+            <td class="col-action">
+              <button class="open-btn" onclick="event.stopPropagation(); openPDF(this.closest('tr'),'ใบจดทะเบียนสมาคม','https://drive.google.com/file/d/1ePdjH9CkeZl8mWsZ9l9TYK-Qo_9TzsMn/preview')">
+                เปิด
+              </button>
+            </td>
+          </tr>
+
+          <!-- ตัวอย่างเพิ่มรายการ
+          <tr onclick="openPDF(this,'รายชื่อกรรมการ','https://drive.google.com/file/d/FILE_ID/preview')">
+            <td class="col-no">2</td>
+            <td>รายชื่อกรรมการ</td>
+            <td class="col-action">
+              <button class="open-btn" onclick="event.stopPropagation(); openPDF(this.closest('tr'),'รายชื่อกรรมการ','https://drive.google.com/file/d/FILE_ID/preview')">
+                เปิด
+              </button>
+            </td>
+          </tr>
+          -->
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="preview">
+    <div class="preview-top">
+      <div id="fileName">ยังไม่ได้เลือกเอกสาร</div>
+      <div class="preview-actions">
+        <button onclick="openNewTab()">เปิดใหม่</button>
+        <button onclick="fullscreenViewer()">เต็มจอ</button>
+      </div>
+    </div>
+
+    <div id="empty" class="empty">
+      เลือกเอกสารจากรายการด้านบนเพื่อแสดงตัวอย่างในพื้นที่นี้
+    </div>
+
+    <iframe id="viewer" hidden></iframe>
+  </div>
+
+</div>
+
+<script>
+let currentURL = null;
+
+function openPDF(row, title, url){
+  currentURL = url;
+
+  document.querySelectorAll('#fileTable tbody tr').forEach(tr => tr.classList.remove('active'));
+  row.classList.add('active');
+
+  document.getElementById('fileName').innerText = title;
+  document.getElementById('viewer').src = url;
+  document.getElementById('viewer').hidden = false;
+  document.getElementById('empty').style.display = 'none';
+
+  document.querySelector('.preview').scrollIntoView({behavior:'smooth'});
+}
+
+function openNewTab(){
+  if(currentURL){
+    window.open(currentURL, '_blank');
+  }
+}
+
+function fullscreenViewer(){
+  const iframe = document.getElementById('viewer');
+  if(iframe.requestFullscreen){
+    iframe.requestFullscreen();
+  }
+}
+</script>
+
+</body>
+</html>
