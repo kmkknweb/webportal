@@ -54,7 +54,8 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
 #msg{font-size:13px;color:#c0392b;margin-top:10px;text-align:center;min-height:18px;}
 .back{text-align:center;margin-top:20px;font-size:13px;color:#888;}
 .back a{color:#7a0019;text-decoration:none;font-weight:500;}
-  .access-notice{
+
+.access-notice{
   margin-top:22px;
   background:linear-gradient(180deg,#fffdfa 0%, #fff8f2 100%);
   border:1px solid rgba(122,0,25,.10);
@@ -63,19 +64,16 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
   box-shadow:0 14px 32px rgba(0,0,0,.06);
   font-family:'Noto Sans Thai',sans-serif;
 }
-
 .access-notice-bar{
   height:6px;
   background:linear-gradient(90deg,#7a0019,#b68a52,#7a0019);
 }
-
 .access-notice-head{
   display:flex;
   align-items:center;
   gap:14px;
   padding:18px 18px 10px;
 }
-
 .access-notice-icon{
   width:52px;
   height:52px;
@@ -89,7 +87,6 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
   flex-shrink:0;
   box-shadow:0 6px 16px rgba(122,0,25,.08);
 }
-
 .access-notice-kicker{
   font-size:11px;
   letter-spacing:.08em;
@@ -98,7 +95,6 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
   font-weight:700;
   margin-bottom:3px;
 }
-
 .access-notice-title{
   margin:0;
   font-size:18px;
@@ -106,33 +102,19 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
   color:#4c1020;
   font-weight:800;
 }
-
 .access-notice-body{
   padding:0 18px 18px;
 }
-
 .access-notice-text{
   margin:0 0 10px;
   font-size:13px;
   line-height:1.85;
   color:#5f5650;
 }
-
 .access-email{
   color:#7a0019;
   font-weight:800;
 }
-
-.access-password{
-  display:inline-block;
-  padding:2px 8px;
-  border-radius:999px;
-  background:#faf0f2;
-  color:#7a0019;
-  font-weight:800;
-  border:1px solid rgba(122,0,25,.10);
-}
-
 .access-notice-warning{
   margin-top:14px;
   padding:12px 14px;
@@ -144,11 +126,9 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
   font-weight:800;
   line-height:1.7;
 }
-
 .access-notice-actions{
   margin-top:16px;
 }
-
 .access-mail-btn{
   display:inline-flex;
   align-items:center;
@@ -164,22 +144,18 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
   box-shadow:0 10px 22px rgba(122,0,25,.18);
   transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
-
 .access-mail-btn:hover{
   transform:translateY(-1px);
   box-shadow:0 14px 26px rgba(122,0,25,.24);
   background:linear-gradient(135deg,#8a0020,#680017);
 }
-
 @media (max-width:640px){
   .access-notice-head{
     align-items:flex-start;
   }
-
   .access-notice-title{
     font-size:16px;
   }
-
   .access-mail-btn{
     width:100%;
   }
@@ -194,71 +170,81 @@ input:focus{outline:none;border-color:#7a0019;background:#fff;}
       <h1>ระบบใบประกาศนียบัตร</h1>
       <p>สมาคมปึงเถ่ากงม่าขอนแก่น</p>
     </div>
+
     <div class="divider"></div>
+
     <label>อีเมล</label>
     <div class="input-wrap">
       <input type="email" id="email" placeholder="กรอกอีเมล"/>
     </div>
+
     <label>รหัสผ่าน</label>
     <div class="input-wrap">
       <input type="password" id="password" placeholder="กรอกรหัสผ่าน"/>
-      <span class="eye" onclick="togglePass()">👁</span>
+      <span class="eye" onclick="togglePass(event)">👁</span>
     </div>
+
     <button class="btn" onclick="login()">เข้าสู่ระบบ</button>
     <p id="msg"></p>
-<div class="access-notice">
-  <div class="access-notice-bar"></div>
 
-  <div class="access-notice-head">
-    <div class="access-notice-icon">✉️</div>
-    <div class="access-notice-title-wrap">
-      <div class="access-notice-kicker">Access Request</div>
-      <h3 class="access-notice-title">แจ้งการขอใช้งานระบบ</h3>
+    <div class="access-notice">
+      <div class="access-notice-bar"></div>
+
+      <div class="access-notice-head">
+        <div class="access-notice-icon">✉️</div>
+        <div class="access-notice-title-wrap">
+          <div class="access-notice-kicker">Access Request</div>
+          <h3 class="access-notice-title">แจ้งการขอใช้งานระบบ</h3>
+        </div>
+      </div>
+
+      <div class="access-notice-body">
+        <p class="access-notice-text">
+          หากต้องการใช้งานระบบ กรุณาส่งอีเมลที่ต้องการสมัครไปที่
+          <span class="access-email">kongmakhonkaen@gmail.com</span>
+        </p>
+
+        <p class="access-notice-text">
+          หากต้องการใช้งานระบบ กรุณาส่งอีเมลที่ต้องการสมัครไปที่
+          kongmakhonkaen@gmail.com
+          ภายหลังการพิจารณาอนุมัติ หากท่านได้รับสิทธิ์เข้าใช้งานระบบ
+          จะมีอีเมลแจ้งให้ท่านดำเนินการตั้งรหัสผ่านใหม่ด้วยตนเอง
+          <br><br>
+          *** กรุณาตรวจสอบ Spam box ในอีเมลของท่าน ***
+        </p>
+
+        <div class="access-notice-warning">
+          *** สงวนสิทธิ์ในการอนุมัติเฉพาะผู้ที่เกี่ยวข้องจำเป็นเท่านั้น ***
+        </div>
+
+        <div class="access-notice-actions">
+          <a
+            class="access-mail-btn"
+            href="mailto:kongmakhonkaen@gmail.com?subject=ขอสมัครใช้งานระบบ&body=ชื่อ-นามสกุล:%0Aอีเมลที่ต้องการสมัคร:%0Aระบบที่ต้องการใช้งาน:%0Aหมายเหตุ:"
+          >
+            ส่งอีเมลสมัครใช้งาน
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="access-notice-body">
-    <p class="access-notice-text">
-      หากต้องการใช้งานระบบ กรุณาส่งอีเมลที่ต้องการสมัครไปที่
-      <span class="access-email">kongmakhonkaen@gmail.com</span>
-    </p>
-
-    <p class="access-notice-text">
-      หากต้องการใช้งานระบบ กรุณาส่งอีเมลที่ต้องการสมัครไปที่
-kongmakhonkaen@gmail.com
-ภายหลังการพิจารณาอนุมัติ หากท่านได้รับสิทธิ์เข้าใช้งานระบบ
-จะมีอีเมลแจ้งให้ท่านดำเนินการตั้งรหัสผ่านใหม่ด้วยตนเอง
-
-*** กรุณาตรวจสอบ Spam box ในอีเมลของท่าน ***
-    </p>
-
-    <div class="access-notice-warning">
-      *** สงวนสิทธิ์ในการอนุมัติเฉพาะผู้ที่เกี่ยวข้องจำเป็นเท่านั้น ***
-    </div>
-
-    <div class="access-notice-actions">
-      <a
-        class="access-mail-btn"
-        href="mailto:kongmakhonkaen@gmail.com?subject=ขอสมัครใช้งานระบบ&body=ชื่อ-นามสกุล:%0Aอีเมลที่ต้องการสมัคร:%0Aระบบที่ต้องการใช้งาน:%0Aหมายเหตุ:"
-      >
-        ส่งอีเมลสมัครใช้งาน
-      </a>
-    </div>
-  </div>
-</div>
-
-  </div>
   <div class="back">
     <a href="index.html">← กลับหน้าแรก</a>
   </div>
 </div>
 
 <script>
-function togglePass() {
+function togglePass(event) {
   const input = document.getElementById('password');
   const el = event.target;
-  if (input.type === 'password') { input.type = 'text'; el.textContent = '🙈'; }
-  else { input.type = 'password'; el.textContent = '👁'; }
+  if (input.type === 'password') {
+    input.type = 'text';
+    el.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    el.textContent = '👁';
+  }
 }
 </script>
 
@@ -275,28 +261,39 @@ const firebaseConfig = {
   appId: "1:970100893986:web:021ce443e4534ffe751d7b"
 };
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6BOd7OMN_9z0UjIDE9NlEzBGfK0GbaaNFUIaEDD5T4HBNisQBL-p3dPvqXMtv2RQCLQ/exec';
-
-
+// เปลี่ยนลิงก์นี้เป็นหน้าเมนูรวมใน GitHub ของคุณ
+const MENU_URL = 'CertificateBatch.html';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 window.login = function() {
-  const email = document.getElementById('email').value;
+  const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
   const msg = document.getElementById('msg');
-  if (!email || !password) { msg.innerText = 'กรุณากรอกอีเมลและรหัสผ่าน'; return; }
+
+  if (!email || !password) {
+    msg.innerText = 'กรุณากรอกอีเมลและรหัสผ่าน';
+    msg.style.color = '#c0392b';
+    return;
+  }
+
   msg.innerText = 'กำลังเข้าสู่ระบบ...';
   msg.style.color = '#888';
+
   signInWithEmailAndPassword(auth, email, password)
-    .then((result) => {
-      
-      window.open(APPS_SCRIPT_URL, '_blank');
+    .then(() => {
       msg.style.color = '#2e7d32';
-      msg.innerText = '✓ เข้าสู่ระบบสำเร็จ กำลังเปิดระบบสร้างใบประกาศ...';
+      msg.innerText = '✓ เข้าสู่ระบบสำเร็จ กำลังเข้าสู่หน้าเลือกโหมด...';
+
+      setTimeout(() => {
+        window.location.href = MENU_URL;
+      }, 500);
     })
-    .catch(() => { msg.style.color = '#c0392b'; msg.innerText = 'อีเมลหรือรหัสผ่านไม่ถูกต้อง'; });
+    .catch(() => {
+      msg.style.color = '#c0392b';
+      msg.innerText = 'อีเมลหรือรหัสผ่านไม่ถูกต้อง';
+    });
 };
 </script>
 </body>
