@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>กระดานติดตามกิจกรรมศาลเจ้า</title>
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --card: #ffffff;
+      --text: #242424;
+      --muted: #777;
+      --line: #e7dfd4;
+      --primary: #9f1d1d;
+      --gold: #c79a37;
+      --blue: #2563eb;
+      --red: #d84343;
+      --yellow: #e0a800;
+      --green: #2e9d62;
+      --shadow: 0 10px 28px rgba(0,0,0,.08);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+    header, main { max-width: 1180px; margin: auto; padding: 18px; }
+    .hero { background: linear-gradient(135deg, var(--primary), var(--gold)); color: white; border-radius: 28px; padding: 26px; box-shadow: var(--shadow); }
+    .hero h1 { margin: 0 0 8px; font-size: clamp(26px, 5vw, 42px); }
+    .hero p { margin: 0; opacity: .92; line-height: 1.6; }
+    .toolbar { display: grid; grid-template-columns: 1.4fr .8fr .8fr auto; gap: 10px; margin-bottom: 16px; }
+    input, select, textarea, button { width: 100%; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; font: inherit; background: white; }
+    textarea { min-height: 92px; resize: vertical; }
+    button { border: 0; background: var(--blue); color: white; font-weight: 700; cursor: pointer; }
+    .layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--line); padding: 18px; }
+    .card h2 { margin: 0 0 12px; font-size: 20px; }
+    .activity { border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin-bottom: 12px; background: #fffdf9; }
+    .activity-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .activity h3 { margin: 0 0 6px; font-size: 18px; }
+    .meta { color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .badge { display: inline-flex; white-space: nowrap; padding: 6px 10px; border-radius: 999px; font-size: 13px; font-weight: 700; color: white; }
+    .รอดำเนินการ { background: var(--red); }
+    .กำลังดำเนินการ { background: var(--yellow); color: #222; }
+    .เสร็จแล้ว { background: var(--green); }
+    .support-list { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+    .support-item { padding: 8px 0; border-bottom: 1px solid #f0ece6; font-size: 14px; line-height: 1.55; }
+    .support-item:last-child { border-bottom: 0; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .full { grid-column: 1 / -1; }
+    .empty, .loading { color: var(--muted); padding: 18px; text-align: center; border: 1px dashed var(--line); border-radius: 16px; }
+    @media (max-width: 850px) { .toolbar, .layout, .form-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <section class="hero">
+      <h1>กระดานติดตามกิจกรรมศาลเจ้า</h1>
+      <p>บันทึกกิจกรรม เจ้าของงาน ทีมสนับสนุน สถานะ และสิ่งที่ต้องประสานงานร่วมกัน</p>
+    </section>
+  </header>  <main>
+    <section class="toolbar">
+      <input id="searchInput" placeholder="ค้นหากิจกรรม / ทีม / ผู้รับผิดชอบ" oninput="renderBoard()" />
+      <select id="statusFilter" onchange="renderBoard()">
+        <option value="">ทุกสถานะ</option>
+        <option>รอดำเนินการ</option>
+        <option>กำลังดำเนินการ</option>
+        <option>เสร็จแล้ว</option>
+      </select>
+      <select id="teamFilter" onchange="renderBoard()"><option value="">ทุกทีม</option></select>
+      <button onclick="loadData()">รีเฟรช</button>
+    </section><section class="layout">
+  <div class="card">
+    <h2>รายการกิจกรรม</h2>
+    <div id="activityBoard" class="loading">กำลังโหลดข้อมูล...</div>
+  </div>
+  <div class="card">
+    <h2>เพิ่มคำขอสนับสนุน</h2>
+    <form id="supportForm" onsubmit="submitSupport(event)">
+      <div class="form-grid">
+        <select id="activityId" required><option value="">เลือกกิจกรรม</option></select>
+        <select id="requestTeam" required><option value="">ทีมที่ต้องการให้ช่วย</option></select>
+        <input id="requestTitle" class="full" placeholder="หัวข้อที่ต้องการให้ช่วย เช่น จัดโต๊ะ / ทำป้าย / ประสานเสียง" required />
+        <textarea id="requestDetail" class="full" placeholder="รายละเอียดงานที่ต้องการให้ช่วย" required></textarea>
+        <input id="responsible" placeholder="ผู้รับผิดชอบ / ผู้ประสานงาน" />
+        <input id="deadline" type="date" />
+        <select id="requestStatus">
+          <option>รอดำเนินการ</option>
+          <option>กำลังดำเนินการ</option>
+          <option>เสร็จแล้ว</option>
+        </select>
+        <button type="submit">บันทึกคำขอ</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+  </main>  <script>
+    let activities = [];
+    let supportRequests = [];
+    let teams = [];
+    document.addEventListener('DOMContentLoaded', loadData);
+
+    function loadData() {
+      document.getElementById('activityBoard').innerHTML = '<div class="loading">กำลังโหลดข้อมูล...</div>';
+      google.script.run
+        .withSuccessHandler((data) => {
+          activities = data.activities || [];
+          supportRequests = data.supportRequests || [];
+          teams = data.teams || [];
+          fillDropdowns();
+          renderBoard();
+        })
+        .withFailureHandler((err) => {
+          document.getElementById('activityBoard').innerHTML = '<div class="empty">โหลดข้อมูลไม่สำเร็จ: ' + err.message + '</div>';
+        })
+        .getBoardData();
+    }
+
+    function fillDropdowns() {
+      const teamFilter = document.getElementById('teamFilter');
+      const requestTeam = document.getElementById('requestTeam');
+      const activityId = document.getElementById('activityId');
+      teamFilter.innerHTML = '<option value="">ทุกทีม</option>';
+      requestTeam.innerHTML = '<option value="">ทีมที่ต้องการให้ช่วย</option>';
+      activityId.innerHTML = '<option value="">เลือกกิจกรรม</option>';
+      teams.forEach(team => {
+        teamFilter.innerHTML += `<option>${team.teamName}</option>`;
+        requestTeam.innerHTML += `<option>${team.teamName}</option>`;
+      });
+      activities.forEach(a => {
+        activityId.innerHTML += `<option value="${a.activityId}">${a.activityName}</option>`;
+      });
+    }
+
+    function renderBoard() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const status = document.getElementById('statusFilter').value;
+      const team = document.getElementById('teamFilter').value;
+      const board = document.getElementById('activityBoard');
+      const filtered = activities.filter(a => {
+        const related = supportRequests.filter(s => s.activityId === a.activityId);
+        const haystack = [a.activityName, a.ownerTeam, a.ownerName, a.status, ...related.flatMap(s => [s.requestTeam, s.requestTitle, s.responsible, s.status])].join(' ').toLowerCase();
+        return (!q || haystack.includes(q)) && (!status || a.status === status || related.some(s => s.status === status)) && (!team || a.ownerTeam === team || related.some(s => s.requestTeam === team));
+      });
+      if (!filtered.length) {
+        board.innerHTML = '<div class="empty">ยังไม่พบข้อมูลที่ตรงกับเงื่อนไข</div>';
+        return;
+      }
+      board.innerHTML = filtered.map(a => {
+        const related = supportRequests.filter(s => s.activityId === a.activityId);
+        const supportHtml = related.length ? related.map(s => `
+          <div class="support-item">
+            <strong>${s.requestTeam}</strong> — ${s.requestTitle}<br>
+            ${s.requestDetail || ''}<br>
+            <span class="meta">ผู้รับผิดชอบ: ${s.responsible || '-'} | กำหนด: ${s.deadline || '-'} | สถานะ: ${s.status}</span>
+          </div>`).join('') : '<div class="support-item meta">ยังไม่มีคำขอสนับสนุน</div>';
+        return `
+          <article class="activity">
+            <div class="activity-top">
+              <div>
+                <h3>${a.activityName}</h3>
+                <div class="meta">รหัส: ${a.activityId}<br>เจ้าของกิจกรรม: ${a.ownerTeam || '-'} / ${a.ownerName || '-'}<br>วันที่กิจกรรม: ${a.eventDate || '-'}</div>
+              </div>
+              <span class="badge ${a.status}">${a.status || 'รอดำเนินการ'}</span>
+            </div>
+            <div class="support-list">${supportHtml}</div>
+          </article>`;
+      }).join('');
+    }
+
+    function submitSupport(e) {
+      e.preventDefault();
+      const payload = {
+        activityId: document.getElementById('activityId').value,
+        requestTeam: document.getElementById('requestTeam').value,
+        requestTitle: document.getElementById('requestTitle').value,
+        requestDetail: document.getElementById('requestDetail').value,
+        responsible: document.getElementById('responsible').value,
+        deadline: document.getElementById('deadline').value,
+        status: document.getElementById('requestStatus').value
+      };
+      google.script.run
+        .withSuccessHandler(() => {
+          document.getElementById('supportForm').reset();
+          loadData();
+          alert('บันทึกคำขอสนับสนุนเรียบร้อยแล้ว');
+        })
+        .withFailureHandler((err) => alert('บันทึกไม่สำเร็จ: ' + err.message))
+        .addSupportRequest(payload);
+    }
+  </script></body>
+</html>
