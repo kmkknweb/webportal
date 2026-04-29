@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>กระดานติดตามกิจกรรม | สมาคมปึงเถ่ากงม่าขอนแก่น</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f7f1e7;--card:#fff;--text:#2b211a;--muted:#7d7167;--line:#eadfce;--primary:#9f1d1d;--primary-dark:#741313;--gold:#c79a37;--red:#d84343;--yellow:#e0a51a;--green:#2e9d62;--shadow:0 14px 34px rgba(94,43,18,.11);--radius:22px}*{box-sizing:border-box;font-family:'Kanit',sans-serif!important}body{margin:0;background:radial-gradient(circle at top left,rgba(199,154,55,.18),transparent 34%),linear-gradient(180deg,#fff8ed 0%,var(--bg) 100%);color:var(--text);min-height:100vh}header,main{width:min(1220px,100%);margin:0 auto;padding:16px}.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;background:linear-gradient(135deg,var(--primary-dark),var(--primary) 52%,#b88223);color:#fff;border-radius:30px;padding:24px;box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;right:-70px;top:-90px;width:250px;height:250px;border-radius:50%;background:rgba(255,255,255,.11)}.logo-wrap{position:relative;z-index:1;width:92px;height:92px;border-radius:24px;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(0,0,0,.16);overflow:hidden}.logo-wrap img{width:78px;height:78px;object-fit:contain}.hero-text{position:relative;z-index:1}.org-name{font-size:clamp(18px,3.8vw,30px);font-weight:700;line-height:1.25;margin:0 0 4px}.hero h1{margin:0 0 8px;font-size:clamp(26px,5vw,44px);line-height:1.18;font-weight:700}.hero p{margin:0;opacity:.94;font-weight:300;line-height:1.7}.toolbar{display:grid;grid-template-columns:1.4fr .8fr .8fr auto;gap:10px;margin:18px 0}input,select,textarea,button{width:100%;border:1px solid var(--line);border-radius:16px;padding:12px 14px;font-size:15px;background:#fff;color:var(--text);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(199,154,55,.16)}textarea{min-height:92px;resize:vertical}button{border:0;color:white;background:linear-gradient(135deg,var(--primary),var(--primary-dark));font-weight:600;cursor:pointer;transition:.12s;box-shadow:0 8px 18px rgba(159,29,29,.18)}button:hover{transform:translateY(-1px);box-shadow:0 12px 22px rgba(159,29,29,.24)}button:disabled{opacity:.55;cursor:not-allowed;transform:none}.btn-gold{background:linear-gradient(135deg,#d3a13a,#a86f16);box-shadow:0 8px 18px rgba(168,111,22,.18)}.layout{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}.card{background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid rgba(234,223,206,.9);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}.card-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.card-title h2{margin:0;font-size:22px;font-weight:700}.small-note{color:var(--muted);font-size:13px;line-height:1.5}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}label{display:block;font-size:13px;color:var(--muted);margin:2px 0 6px}.activity{border:1px solid var(--line);border-radius:20px;padding:14px;margin-bottom:12px;background:linear-gradient(180deg,#fffdf9,#fff9ef);box-shadow:0 6px 16px rgba(75,45,16,.05)}.activity-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.activity h3{margin:0 0 7px;font-size:19px;font-weight:700}.meta{color:var(--muted);font-size:14px;line-height:1.65}.badge{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;padding:6px 11px;border-radius:999px;font-size:13px;font-weight:600;color:#fff}.status-todo{background:var(--red)}.status-doing{background:var(--yellow);color:#2d2004}.status-done{background:var(--green)}.support-list{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line)}.support-item{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-bottom:1px solid #f0e8db;font-size:14px;line-height:1.58}.support-item:last-child{border-bottom:0}.support-title{font-weight:600;color:var(--primary-dark)}.support-actions select{min-width:145px;padding:8px 10px;font-size:13px;border-radius:12px}.activity-actions{margin-top:10px;display:grid;grid-template-columns:1fr 150px;gap:8px;align-items:center}.activity-actions select{padding:9px 10px;font-size:13px;border-radius:12px}.empty,.loading,.error-box{color:var(--muted);padding:20px;text-align:center;border:1px dashed var(--line);border-radius:18px;background:#fffdf8;line-height:1.7}.error-box{color:var(--red);border-color:rgba(216,67,67,.35);background:#fff4f4}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);background:#222;color:#fff;padding:12px 18px;border-radius:999px;box-shadow:0 10px 25px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:.2s;z-index:999;font-size:14px}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}@media(max-width:900px){.toolbar,.layout,.form-grid,.activity-actions{grid-template-columns:1fr}.hero{grid-template-columns:1fr;text-align:center}.logo-wrap{margin:0 auto}.support-item{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header><section class="hero"><div class="logo-wrap"><img src="logo.png" alt="โลโก้สมาคมปึงเถ่ากงม่าขอนแก่น" onerror="this.style.display='none'"></div><div class="hero-text"><p class="org-name">สมาคมปึงเถ่ากงม่าขอนแก่น</p><h1>กระดานติดตามกิจกรรม</h1><p>บันทึกกิจกรรม แม่งาน ทีมสนับสนุน สถานะ และสิ่งที่ต้องประสานงานร่วมกัน</p></div></section></header>
+  <main>
+    <section class="toolbar"><input id="searchInput" type="search" placeholder="ค้นหากิจกรรม / ทีม / ผู้รับผิดชอบ" oninput="renderBoard()"><select id="statusFilter" onchange="renderBoard()"><option value="">ทุกสถานะ</option></select><select id="teamFilter" onchange="renderBoard()"><option value="">ทุกทีม</option></select><button type="button" onclick="loadData()">ค้นหาใหม่</button></section>
+    <div style="display:flex;gap:10px;margin:0 0 16px 0;flex-wrap:wrap;"><button type="button" id="currentTabBtn" onclick="switchTab('current')" style="width:auto;padding:10px 18px;border-radius:999px;">งานปัจจุบัน</button><button type="button" id="oldTabBtn" onclick="switchTab('old')" style="width:auto;padding:10px 18px;border-radius:999px;background:#7d7167;">งานเก่า</button></div>
+    <section class="layout">
+      <div class="card"><div class="card-title"><h2 id="boardTitle">งานปัจจุบัน</h2><span class="small-note" id="summaryText">-</span></div><div id="activityBoard" class="loading">กำลังโหลดข้อมูล...</div><div id="moreRow" style="text-align:center;margin-top:10px;display:none;"><button type="button" onclick="toggleShowAllCurrent()" id="showAllBtn" style="width:auto;padding:10px 18px;border-radius:999px;background:#7d7167;">ดูทั้งหมด</button></div></div>
+      <div class="card">
+        <div class="card-title"><h2>สร้างกิจกรรม</h2></div>
+        <form id="activityForm" onsubmit="submitActivity(event)"><div class="form-grid"><div class="field full"><label>ชื่อกิจกรรม</label><input id="activityName" placeholder="เช่น งานไหว้เจ้า / งานประจำปี / งานประชุม" required></div><div class="field"><label>ทีมแม่งาน</label><select id="ownerTeam" required><option value="">เลือกทีมแม่งาน</option></select></div><div class="field"><label>ผู้รับผิดชอบหลัก</label><input id="ownerName" placeholder="ชื่อผู้รับผิดชอบ" required></div><div class="field"><label>วันที่กิจกรรม</label><input id="eventDate" type="date"></div><div class="field"><label>สถานะกิจกรรม</label><select id="activityStatus"></select></div><div class="field full"><label>หมายเหตุ</label><textarea id="activityNote" placeholder="รายละเอียดเพิ่มเติมของกิจกรรม"></textarea></div><div class="field full"><button id="activitySubmitBtn" type="submit" class="btn-gold">บันทึกกิจกรรมใหม่</button></div></div></form>
+        <hr style="border:0;border-top:1px solid var(--line);margin:20px 0;">
+        <div class="card-title"><h2>เพิ่มคำขอสนับสนุน</h2></div>
+        <form id="supportForm" onsubmit="submitSupport(event)"><div class="form-grid"><div class="field full"><label>เลือกกิจกรรม</label><select id="activityId" required><option value="">เลือกกิจกรรม</option></select></div><div class="field"><label>ทีมที่ต้องการให้ช่วย</label><select id="requestTeam" required><option value="">เลือกทีม</option></select></div><div class="field"><label>กำหนดเสร็จ</label><input id="deadline" type="date"></div><div class="field full"><label>หัวข้อที่ต้องการให้ช่วย</label><input id="requestTitle" placeholder="เช่น จัดโต๊ะ / ทำป้าย / ประสานเสียง" required></div><div class="field full"><label>รายละเอียด</label><textarea id="requestDetail" placeholder="รายละเอียดงานที่ต้องการให้ทีมอื่นช่วย"></textarea></div><div class="field"><label>ผู้ประสานงาน</label><input id="responsible" placeholder="ชื่อผู้ประสานงาน"></div><div class="field"><label>สถานะคำขอ</label><select id="requestStatus"></select></div><div class="field full"><button id="supportSubmitBtn" type="submit">บันทึกคำขอสนับสนุน</button></div></div></form>
+      </div>
+    </section>
+  </main>
+  <div id="toast" class="toast"></div>
+<script>
+const API_URL='https://script.google.com/macros/s/AKfycbzzQom_VZilScTqaoeor4D6MRIfnxs_knKEr0Jc9dZspSfVxOC8_NhvjpX7spnB2k95Iw/exec';
+let activities=[],supportRequests=[],teams=[],statuses=['รอดำเนินการ','กำลังดำเนินการ','เสร็จแล้ว'];
+let activeTab='current',showAllCurrent=false;
+document.addEventListener('DOMContentLoaded',loadData);
+function apiGet(action){return new Promise((resolve,reject)=>{const cb='jsonpCallback_'+Date.now()+'_'+Math.floor(Math.random()*100000);const script=document.createElement('script');window[cb]=function(json){delete window[cb];script.remove();if(!json.success){reject(new Error(json.message||'เกิดข้อผิดพลาด'));return}resolve(json.data)};script.onerror=function(){delete window[cb];script.remove();reject(new Error('โหลดข้อมูลจาก Apps Script ไม่ได้'))};script.src=API_URL+'?action='+encodeURIComponent(action)+'&callback='+encodeURIComponent(cb)+'&t='+Date.now();document.body.appendChild(script)})}
+async function apiPost(action,payload){const res=await fetch(API_URL+'?action='+encodeURIComponent(action),{method:'POST',body:JSON.stringify(payload)});const json=await res.json();if(!json.success)throw new Error(json.message||'เกิดข้อผิดพลาด');return json.data}
+async function loadData(){const board=document.getElementById('activityBoard');board.innerHTML='<div class="loading">กำลังโหลดข้อมูล...</div>';try{const data=await apiGet('getBoardData');activities=data.activities||[];supportRequests=data.supportRequests||[];teams=data.teams||[];statuses=data.statuses||statuses;fillDropdowns();renderBoard();showToast('โหลดข้อมูลเรียบร้อยแล้ว')}catch(err){board.innerHTML='<div class="error-box">โหลดข้อมูลไม่สำเร็จ<br>'+escapeHtml(err.message)+'</div>'}}
+function fillDropdowns(){fillStatusSelect('statusFilter',true);fillStatusSelect('activityStatus',false);fillStatusSelect('requestStatus',false);fillTeamSelect('teamFilter',true);fillTeamSelect('ownerTeam',false);fillTeamSelect('requestTeam',false);fillActivitySelect()}
+function fillStatusSelect(id,includeAll){const el=document.getElementById(id);el.innerHTML=includeAll?'<option value="">ทุกสถานะ</option>':'';statuses.forEach(s=>el.innerHTML+='<option value="'+escapeAttr(s)+'">'+escapeHtml(s)+'</option>')}
+function fillTeamSelect(id,includeAll){const el=document.getElementById(id);el.innerHTML=includeAll?'<option value="">ทุกทีม</option>':'<option value="">เลือกทีม</option>';teams.forEach(t=>{const name=t.teamName||'';el.innerHTML+='<option value="'+escapeAttr(name)+'">'+escapeHtml(name)+'</option>'})}
+function fillActivitySelect(){const el=document.getElementById('activityId');const selected=el.value;el.innerHTML='<option value="">เลือกกิจกรรม</option>';activities.forEach(a=>{el.innerHTML+='<option value="'+escapeAttr(a.activityId)+'">'+escapeHtml(a.activityName)+'</option>'});if(selected)el.value=selected}
+function renderBoard(){
+  const board=document.getElementById('activityBoard');
+  const moreRow=document.getElementById('moreRow');
+  const showAllBtn=document.getElementById('showAllBtn');
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  const status=document.getElementById('statusFilter').value;
+  const team=document.getElementById('teamFilter').value;
+
+  let base=activeTab==='current'
+    ? activities.filter(a=>a.status!=='เสร็จแล้ว')
+    : activities.filter(a=>a.status==='เสร็จแล้ว');
+
+  const filtered=base.filter(a=>{
+    const related=supportRequests.filter(s=>s.activityId===a.activityId);
+    const text=[a.activityId,a.activityName,a.ownerTeam,a.ownerName,a.status,a.note,...related.flatMap(s=>[s.requestId,s.requestTeam,s.requestTitle,s.requestDetail,s.responsible,s.status])].join(' ').toLowerCase();
+    return(!q||text.includes(q))&&(!status||a.status===status||related.some(s=>s.status===status))&&(!team||a.ownerTeam===team||related.some(s=>s.requestTeam===team));
+  });
+
+  document.getElementById('boardTitle').textContent=activeTab==='current'?'งานปัจจุบัน':'งานเก่า';
+  document.getElementById('summaryText').textContent=filtered.length+' กิจกรรม';
+
+  if(!filtered.length){
+    board.innerHTML='<div class="empty">ยังไม่พบข้อมูลที่ตรงกับเงื่อนไข</div>';
+    if(moreRow)moreRow.style.display='none';
+    return;
+  }
+
+  let visible=filtered;
+  if(activeTab==='current'&&!showAllCurrent){
+    visible=filtered.slice(0,3);
+  }
+
+  board.innerHTML=visible.map(renderActivity).join('');
+
+  if(moreRow&&showAllBtn&&activeTab==='current'&&filtered.length>3){
+    moreRow.style.display='block';
+    showAllBtn.textContent=showAllCurrent?'ย่อเหลือ 3 รายการ':'ดูทั้งหมด';
+  }else if(moreRow){
+    moreRow.style.display='none';
+  }
+
+  const currentBtn=document.getElementById('currentTabBtn');
+  const oldBtn=document.getElementById('oldTabBtn');
+  if(currentBtn&&oldBtn){
+    currentBtn.style.background=activeTab==='current'?'linear-gradient(135deg,var(--primary),var(--primary-dark))':'#7d7167';
+    oldBtn.style.background=activeTab==='old'?'linear-gradient(135deg,var(--primary),var(--primary-dark))':'#7d7167';
+  }
+}
+function renderActivity(a){const related=supportRequests.filter(s=>s.activityId===a.activityId);const supportHtml=related.length?related.map(renderSupportItem).join(''):'<div class="support-item"><div class="meta">ยังไม่มีคำขอสนับสนุน</div></div>';return `<article class="activity"><div class="activity-top"><div><h3>${escapeHtml(a.activityName||'-')}</h3><div class="meta">รหัสระบบ: ${escapeHtml(a.activityId||'-')}<br>แม่งาน: ${escapeHtml(a.ownerTeam||'-')} / ${escapeHtml(a.ownerName||'-')}<br>วันที่กิจกรรม: ${escapeHtml(a.eventDate||'-')}<br>หมายเหตุ: ${escapeHtml(a.note||'-')}</div></div><span class="badge ${statusClass(a.status)}">${escapeHtml(a.status||'รอดำเนินการ')}</span></div><div class="activity-actions"><span class="small-note">ปรับสถานะกิจกรรม</span><select onchange="changeActivityStatus('${escapeAttr(a.activityId)}', this.value)">${statusOptions(a.status)}</select></div><div class="support-list">${supportHtml}</div></article>`}
+function renderSupportItem(s){return `<div class="support-item"><div><div class="support-title">${escapeHtml(s.requestTeam||'-')} — ${escapeHtml(s.requestTitle||'-')}</div><div>${escapeHtml(s.requestDetail||'')}</div><div class="meta">ผู้ประสานงาน: ${escapeHtml(s.responsible||'-')} | กำหนด: ${escapeHtml(s.deadline||'-')} | รหัส: ${escapeHtml(s.requestId||'-')}</div></div><div class="support-actions"><select onchange="changeSupportStatus('${escapeAttr(s.requestId)}', this.value)">${statusOptions(s.status)}</select></div></div>`}
+async function submitActivity(e){e.preventDefault();const btn=document.getElementById('activitySubmitBtn');btn.disabled=true;btn.textContent='กำลังบันทึก...';const payload={activityName:document.getElementById('activityName').value,ownerTeam:document.getElementById('ownerTeam').value,ownerName:document.getElementById('ownerName').value,eventDate:document.getElementById('eventDate').value,status:document.getElementById('activityStatus').value,note:document.getElementById('activityNote').value};try{const result=await apiPost('addActivity',payload);document.getElementById('activityForm').reset();showToast('สร้างกิจกรรมแล้ว: '+(result.activityId||''));await loadData();if(result.activityId)document.getElementById('activityId').value=result.activityId}catch(err){alert(err.message)}finally{btn.disabled=false;btn.textContent='บันทึกกิจกรรมใหม่'}}
+async function submitSupport(e){e.preventDefault();const btn=document.getElementById('supportSubmitBtn');btn.disabled=true;btn.textContent='กำลังบันทึก...';const payload={activityId:document.getElementById('activityId').value,requestTeam:document.getElementById('requestTeam').value,requestTitle:document.getElementById('requestTitle').value,requestDetail:document.getElementById('requestDetail').value,responsible:document.getElementById('responsible').value,deadline:document.getElementById('deadline').value,status:document.getElementById('requestStatus').value};try{const result=await apiPost('addSupportRequest',payload);document.getElementById('supportForm').reset();showToast('บันทึกคำขอแล้ว: '+(result.requestId||''));await loadData()}catch(err){alert(err.message)}finally{btn.disabled=false;btn.textContent='บันทึกคำขอสนับสนุน'}}
+async function changeActivityStatus(activityId,status){try{await apiPost('updateActivityStatus',{activityId,status});showToast('อัปเดตสถานะกิจกรรมแล้ว');await loadData()}catch(err){alert(err.message)}}
+async function changeSupportStatus(requestId,status){try{await apiPost('updateSupportStatus',{requestId,status});showToast('อัปเดตสถานะคำขอแล้ว');await loadData()}catch(err){alert(err.message)}}
+function switchTab(tab){activeTab=tab;showAllCurrent=false;renderBoard()}
+function toggleShowAllCurrent(){showAllCurrent=!showAllCurrent;renderBoard()}
+function statusOptions(current){return statuses.map(s=>'<option value="'+escapeAttr(s)+'" '+(s===current?'selected':'')+'>'+escapeHtml(s)+'</option>').join('')}
+function statusClass(status){if(status==='เสร็จแล้ว')return'status-done';if(status==='กำลังดำเนินการ')return'status-doing';return'status-todo'}
+function showToast(message){const toast=document.getElementById('toast');toast.textContent=message;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2200)}
+function escapeHtml(value){return String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function escapeAttr(value){return escapeHtml(value).replace(/`/g,'&#096;')}
+</script>
+</body>
+</html>
