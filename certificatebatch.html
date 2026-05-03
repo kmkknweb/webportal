@@ -143,8 +143,22 @@
           เปิดโหมดสร้างทีละใบ
         </button>
       </div>
-    </div>
+<div class="card">
+        <div class="badge">สำหรับงานหนังสือราชการ</div>
+        <h2>สร้างจดหมายเวียน</h2>
+        <p>
+          สำหรับสร้างจดหมายเวียนถึงผู้รับหลายคนในครั้งเดียว
+          กรอกเนื้อหาจดหมายครั้งเดียว ระบบสร้าง PDF แยกทีละฉบับได้เลย
+        </p>
+        <button class="btn btn-secondary" onclick="goLetter()">
+          เปิดโหมดสร้างจดหมายเวียน
+        </button>
+</div>
 
+
+      
+    </div>
+     
     <div class="note">
       หมายเหตุ: หน้านี้เป็นหน้าเมนูเข้าสู่ระบบใช้งานจริง โดยระบบสร้างใบประกาศจะทำงานผ่าน Google Apps Script
     </div>
@@ -153,6 +167,11 @@
   <script>
     const BATCH_URL = 'https://script.google.com/macros/s/AKfycbx8soL802havRrzHBrq-6YOdWNbtJyeqKtvpmOyuTH3VcBsL_bPn1mm2ln92o0QKfa3fw/exec';
     const SINGLE_URL = 'https://script.google.com/macros/s/AKfycbzUV_eTnjwS67lN9-T4GhZQa9xqiYIBtUjQerahaX4xqANPpc8M3PQHt7SmkuBIhyuTsA/exec';
+    const LETTER_URL = 'https://script.google.com/macros/s/AKfycbwjn_Z3nLpE9ZlfbS2i_owK_W2NyQL9KcXiPjddgc5fYi1pdTF5BCDrtqkrw8ttcX0eiw/exec';
+
+    function goLetter() {
+      window.location.href = LETTER_URL;
+    }
 
     function goBatch() {
       window.location.href = BATCH_URL;
