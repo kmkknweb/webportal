@@ -26,7 +26,7 @@
     .tab-btn.active{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;box-shadow:0 6px 16px rgba(159,29,29,.22)}
     .tab-btn:hover:not(.active){background:#ddd0c0}
     .tab-pane{display:none}.tab-pane.active{display:block}
-    .card{background:rgba(255,255,255,.93);backdrop-filter:blur(10px);border:1px solid rgba(234,223,206,.9);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    .card{background:rgba(255,255,255,.93);backdrop-filter:blur(10px)i;border:1px solid rgba(234,223,206,.9);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
     .card-title{display:flex;align-items:center;gap:9px;margin-bottom:15px}
     .card-title h2{margin:0;font-size:19px;font-weight:700}
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
@@ -180,7 +180,7 @@
 </main>
 <div id="toast" class="toast"></div>
 <script>
-const GAS_URL='https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+const GAS_URL='https://script.google.com/macros/s/AKfycbyZQurV-VI3wjVoI8il3notWNmBzUVRDauiI5CqYLtypODwB8E_WemiyWUbZbRfGlRMMw/exec';
 const TEAMS=["ฝ่ายสถานที่","ฝ่ายพิธีการ","ฝ่ายประชาสัมพันธ์","ฝ่ายระบบสารสนเทศ","ฝ่ายสื่อสารองค์กร","ฝ่ายกิจกรรมเพื่อสังคม","ฝ่ายสมาชิกสัมพันธ์","ฝ่ายกิจกรรมพิเศษ","ฝ่ายบัญชีและการเงิน"];
 const TEAM_COLORS={"ฝ่ายสถานที่":"#4a90d9","ฝ่ายพิธีการ":"#9f1d1d","ฝ่ายประชาสัมพันธ์":"#e07b1a","ฝ่ายระบบสารสนเทศ":"#5b4fcf","ฝ่ายสื่อสารองค์กร":"#d43a7a","ฝ่ายกิจกรรมเพื่อสังคม":"#2e9d62","ฝ่ายสมาชิกสัมพันธ์":"#c79a37","ฝ่ายกิจกรรมพิเศษ":"#e53935","ฝ่ายบัญชีและการเงิน":"#546e7a"};
 const STATUSES=['รอดำเนินการ','กำลังดำเนินการ','เสร็จแล้ว'];
