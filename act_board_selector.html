@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activity Board Selector</title>
+
+  <style>
+    :root {
+      --bg-main: #fff7ea;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --red-dark: #5a0808;
+      --red-main: #8b1414;
+      --gold: #d6a13a;
+      --text-main: #2b1712;
+      --text-soft: #75534a;
+      --border-soft: rgba(139, 20, 20, 0.18);
+      --shadow: 0 18px 45px rgba(64, 18, 18, 0.18);
+      --radius-xl: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 223, 145, 0.5), transparent 30%),
+        radial-gradient(circle at top right, rgba(139, 20, 20, 0.12), transparent 32%),
+        linear-gradient(180deg, #fff7ea 0%, #fff1dc 100%);
+      color: var(--text-main);
+    }
+
+    body {
+      padding: 14px;
+      overflow-x: hidden;
+    }
+
+    .page-shell {
+      width: min(1280px, 100%);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .top-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-bar {
+      padding: 18px;
+      background:
+        linear-gradient(135deg, rgba(90, 8, 8, 0.96), rgba(128, 15, 15, 0.94)),
+        radial-gradient(circle at top right, rgba(255, 220, 130, 0.35), transparent 35%);
+      color: #fff8e8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 220px;
+    }
+
+    .logo-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #ffe29a, #d49a2a);
+      color: #631010;
+      font-size: 25px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 10px 24px rgba(0, 0, 0, 0.2);
+      flex: 0 0 auto;
+    }
+
+    .title-text h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.15;
+    }
+
+    .title-text p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: rgba(255, 248, 232, 0.82);
+    }
+
+    .mode-switch {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mode-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff8e8;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    .mode-btn.active {
+      color: #5a0808;
+      background: linear-gradient(135deg, #ffe8a5, #d8a238);
+      box-shadow: 0 10px 24px rgba(214, 161, 58, 0.32);
+    }
+
+    .status-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255, 250, 241, 0.96);
+      flex-wrap: wrap;
+    }
+
+    .current-mode {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--text-soft);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22a06b;
+      box-shadow: 0 0 0 5px rgba(34, 160, 107, 0.12);
+      flex: 0 0 auto;
+    }
+
+    .current-mode strong {
+      color: var(--red-dark);
+    }
+
+    .open-link {
+      color: var(--red-main);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(139, 20, 20, 0.07);
+      border: 1px solid rgba(139, 20, 20, 0.1);
+    }
+
+    .viewer-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 760px;
+    }
+
+    .viewer-toolbar {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      background: linear-gradient(180deg, #fffaf1, #fff3df);
+      border-bottom: 1px solid rgba(139, 20, 20, 0.12);
+      flex: 0 0 auto;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .window-dots span {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      display: block;
+      background: #d6a13a;
+      opacity: 0.8;
+    }
+
+    .window-dots span:nth-child(2) {
+      background: #c65d45;
+    }
+
+    .window-dots span:nth-child(3) {
+      background: #7f9f64;
+    }
+
+    .viewer-title {
+      flex: 1;
+      text-align: center;
+      font-weight: 800;
+      color: var(--red-dark);
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .viewer-actions {
+      font-size: 13px;
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+
+    .iframe-wrap {
+      position: relative;
+      flex: 1;
+      background: #fff;
+      min-height: 700px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 700px;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+
+    .loading-cover {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(255, 247, 234, 0.86);
+      backdrop-filter: blur(3px);
+      z-index: 5;
+    }
+
+    .loading-cover.show {
+      display: grid;
+    }
+
+    .loader-box {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: white;
+      border: 1px solid rgba(139, 20, 20, 0.12);
+      box-shadow: 0 12px 30px rgba(64, 18, 18, 0.18);
+      color: var(--red-dark);
+      font-weight: 800;
+    }
+
+    .fallback-note {
+      display: none;
+      padding: 10px 14px;
+      background: #fff7e8;
+      border-top: 1px solid rgba(139, 20, 20, 0.1);
+      color: #75534a;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .fallback-note.show {
+      display: block;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 8px;
+      }
+
+      .top-panel,
+      .viewer-card {
+        border-radius: 20px;
+      }
+
+      .hero-bar {
+        align-items: stretch;
+      }
+
+      .title-group {
+        width: 100%;
+      }
+
+      .mode-switch {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .mode-btn {
+        width: 100%;
+      }
+
+      .status-strip {
+        align-items: stretch;
+      }
+
+      .open-link {
+        text-align: center;
+        width: 100%;
+      }
+
+      .viewer-card {
+        min-height: 78vh;
+      }
+
+      .iframe-wrap,
+      iframe {
+        min-height: 78vh;
+      }
+
+      .viewer-actions {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-shell">
+    <section class="top-panel" aria-label="เลือกโหมด Activity Board">
+      <div class="hero-bar">
+        <div class="title-group">
+          <div class="logo-mark" aria-hidden="true">灯</div>
+          <div class="title-text">
+            <h1>Activity Board</h1>
+            <p>เลือกใช้งานบอร์ดแบบบันทึกเอง หรือบอร์ดแบบ AI</p>
+          </div>
+        </div>
+
+        <div class="mode-switch">
+          <button class="mode-btn active" type="button" data-src="act_board.html" data-title="Activity Board แบบบันทึกเอง">
+            บันทึกเอง
+          </button>
+          <button class="mode-btn" type="button" data-src="act_board_ai.html" data-title="Activity Board แบบ AI">
+            Activity Board AI
+          </button>
+        </div>
+      </div>
+
+      <div class="status-strip">
+        <div class="current-mode">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>กำลังใช้งาน: <strong id="currentMode">Activity Board แบบบันทึกเอง</strong></span>
+        </div>
+        <a id="openNewTab" class="open-link" href="act_board.html" target="_blank" rel="noopener">
+          เปิดหน้านี้แยก →
+        </a>
+      </div>
+    </section>
+
+    <section class="viewer-card" aria-label="พื้นที่แสดง Activity Board">
+      <div class="viewer-toolbar">
+        <div class="window-dots" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div id="viewerTitle" class="viewer-title">Activity Board แบบบันทึกเอง</div>
+        <div class="viewer-actions">แสดงผลในกรอบเดียวกัน</div>
+      </div>
+
+      <div class="iframe-wrap">
+        <div id="loadingCover" class="loading-cover">
+          <div class="loader-box">กำลังโหลด...</div>
+        </div>
+
+        <iframe
+          id="activityFrame"
+          src="act_board.html"
+          title="Activity Board"
+          loading="eager">
+        </iframe>
+      </div>
+
+      <div id="fallbackNote" class="fallback-note">
+        ถ้าพื้นที่นี้ไม่แสดงผล ให้กด “เปิดหน้านี้แยก” ด้านบน
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const buttons = document.querySelectorAll(".mode-btn");
+      const frame = document.getElementById("activityFrame");
+      const currentMode = document.getElementById("currentMode");
+      const viewerTitle = document.getElementById("viewerTitle");
+      const openNewTab = document.getElementById("openNewTab");
+      const loadingCover = document.getElementById("loadingCover");
+      const fallbackNote = document.getElementById("fallbackNote");
+
+      let loadTimer = null;
+
+      function setActiveMode(button) {
+        const src = button.dataset.src;
+        const title = button.dataset.title;
+
+        buttons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        currentMode.textContent = title;
+        viewerTitle.textContent = title;
+        openNewTab.href = src;
+
+        fallbackNote.classList.remove("show");
+        loadingCover.classList.add("show");
+
+        clearTimeout(loadTimer);
+        loadTimer = setTimeout(function () {
+          loadingCover.classList.remove("show");
+          fallbackNote.classList.add("show");
+        }, 6000);
+
+        frame.src = src;
+
+        try {
+          localStorage.setItem("activity_board_selected_src", src);
+        } catch (error) {}
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+          setActiveMode(button);
+        });
+      });
+
+      frame.addEventListener("load", function () {
+        clearTimeout(loadTimer);
+        loadingCover.classList.remove("show");
+        fallbackNote.classList.remove("show");
+      });
+
+      try {
+        const savedSrc = localStorage.getItem("activity_board_selected_src");
+        if (savedSrc) {
+          const savedButton = Array.from(buttons).find((btn) => btn.dataset.src === savedSrc);
+          if (savedButton) {
+            setActiveMode(savedButton);
+          }
+        }
+      } catch (error) {}
+    })();
+  </script>
+</body>
+</html>
