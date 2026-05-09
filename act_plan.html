@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ผังจัดงาน — ศาลเจ้า</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#eeece6;--surf:#fff;--surf2:#f6f5f1;
+  --b1:rgba(0,0,0,0.09);--b2:rgba(0,0,0,0.16);
+  --tx:#1c1c1a;--tx2:#68675f;--tx3:#a09f99;
+  --ac:#b5202e;--acl:#fdf1f2;--r:7px;
+}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--tx);height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+
+/* ── TOPBAR ── */
+#tb{background:var(--surf);border-bottom:0.5px solid var(--b2);padding:0 12px;height:50px;display:flex;align-items:center;gap:7px;flex-shrink:0;z-index:20;}
+#ttl{font-size:14px;font-weight:600;color:var(--ac);display:flex;align-items:center;gap:7px;margin-right:4px;white-space:nowrap;}
+#ttl i{font-size:20px;}
+.sp{width:0.5px;height:26px;background:var(--b2);flex-shrink:0;margin:0 2px;}
+.btn{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:var(--r);border:0.5px solid var(--b2);background:none;color:var(--tx);font-family:'Sarabun',sans-serif;font-size:13px;cursor:pointer;white-space:nowrap;transition:background .12s;}
+.btn:hover{background:var(--surf2);}
+.btn i{font-size:15px;}
+.btn.pr{background:var(--ac);color:#fff;border-color:transparent;}
+.btn.pr:hover{background:#961a25;}
+.btn:disabled{opacity:.35;cursor:default;pointer-events:none;}
+.btn.dn{color:#c0392b;border-color:rgba(192,57,43,.25);}
+.btn.dn:hover{background:#fff5f5;}
+select.sel{padding:5px 10px;border-radius:var(--r);border:0.5px solid var(--b2);background:var(--surf);color:var(--tx);font-family:'Sarabun',sans-serif;font-size:13px;cursor:pointer;}
+#snap-w{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--tx2);cursor:pointer;user-select:none;white-space:nowrap;}
+#snap-w input{accent-color:var(--ac);cursor:pointer;}
+#pos{margin-left:auto;font-size:11px;color:var(--tx3);white-space:nowrap;min-width:180px;text-align:right;}
+
+/* ── MAIN ── */
+#main{display:flex;flex:1;overflow:hidden;}
+
+/* ── SIDEBAR ── */
+#sb{width:220px;min-width:220px;background:var(--surf);border-right:0.5px solid var(--b2);display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0;}
+.ss{padding:10px 12px;border-bottom:0.5px solid var(--b1);}
+.sl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px;}
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.tb2{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px;border-radius:var(--r);border:0.5px solid var(--b1);background:var(--surf2);color:var(--tx2);font-family:'Sarabun',sans-serif;font-size:11px;cursor:pointer;transition:all .12s;}
+.tb2 i{font-size:19px;}
+.tb2:hover{border-color:var(--ac);color:var(--ac);}
+.tb2.on{background:var(--acl);border-color:var(--ac);color:var(--ac);font-weight:600;}
+.dr{display:flex;gap:7px;}
+.dr>div{flex:1;}
+.dl{font-size:11px;color:var(--tx3);margin-bottom:3px;display:block;}
+.di{width:100%;padding:5px 7px;border:0.5px solid var(--b2);border-radius:var(--r);font-family:'Sarabun',sans-serif;font-size:13px;color:var(--tx);background:var(--surf);}
+.di:focus{outline:none;border-color:var(--ac);}
+.swg{display:flex;flex-wrap:wrap;gap:5px;}
+.sw{width:24px;height:24px;border-radius:5px;cursor:pointer;border:2px solid transparent;transition:transform .1s;}
+.sw:hover{transform:scale(1.18);}
+.sw.on{border-color:#1c1c1a;box-shadow:0 0 0 1px #fff inset;}
+#pp{padding:10px 12px;flex:1;}
+.pe{font-size:12px;color:var(--tx3);text-align:center;padding:16px 0;line-height:1.8;}
+#pf{display:none;}
+.pl{font-size:11px;color:var(--tx3);margin:9px 0 3px;display:block;}
+.pi{width:100%;padding:5px 7px;border:0.5px solid var(--b2);border-radius:var(--r);font-family:'Sarabun',sans-serif;font-size:13px;color:var(--tx);background:var(--surf);}
+.pi:focus{outline:none;border-color:var(--ac);}
+.pd{display:flex;gap:6px;}
+.pd>div{flex:1;}
+.pa{display:flex;gap:6px;margin-top:10px;}
+.pa .btn{flex:1;justify-content:center;font-size:12px;padding:5px 6px;}
+#lg{padding:10px 12px;border-top:0.5px solid var(--b1);}
+.li{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--tx2);margin:4px 0;}
+.ld{width:11px;height:11px;border-radius:3px;flex-shrink:0;}
+
+/* ── CANVAS AREA ── */
+#co{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
+#cw{flex:1;position:relative;overflow:hidden;background:#e4e2dc;touch-action:none;}
+
+/* THE CANVAS — fills #cw exactly */
+#cv{
+  position:absolute;
+  top:0;
+  left:0;
+  display:block;
+  will-change:transform;
+  image-rendering:auto;
+  cursor:crosshair;
+}
+
+/* inline editor over canvas */
+#ie{position:absolute;display:none;z-index:50;border:2px solid var(--ac);border-radius:5px;padding:3px 8px;font-family:'Sarabun',sans-serif;font-size:13px;color:var(--tx);background:#fff;outline:none;box-shadow:0 2px 10px rgba(0,0,0,.2);min-width:80px;}
+
+/* zoom badge */
+#zb{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;font-size:11px;font-family:'Sarabun',sans-serif;padding:3px 9px;border-radius:4px;pointer-events:none;}
+
+/* status bar */
+#stb{height:26px;background:var(--surf2);border-top:0.5px solid var(--b1);display:flex;align-items:center;padding:0 12px;font-size:11px;color:var(--tx3);gap:16px;flex-shrink:0;}
+#sm{flex:1;}
+.kbd{display:inline-block;padding:1px 5px;background:var(--surf);border:0.5px solid var(--b2);border-radius:3px;font-size:10px;color:var(--tx2);}
+
+
+/* Keep toolbar/sidebar outside map pan/zoom behavior */
+#sb{
+  position:relative;
+  z-index:5;
+  transform:none !important;
+}
+#co{
+  position:relative;
+  overflow:hidden;
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="tb">
+  <div id="ttl"><i class="ti ti-map-2"></i>ผังจัดงาน — ศาลเจ้า</div>
+  <div class="sp"></div>
+  <!--
+  วิธีเพิ่มแบบแปลนใหม่:
+    1. วางไฟล์รูป JPG/PNG ในโฟลเดอร์เดียวกัน
+    2. เพิ่ม <option value="ชื่อไฟล์.jpg">ชื่อที่แสดง</option>
+    3. บันทึก แล้วเปิดใหม่ในเบราว์เซอร์
+  -->
+  <select class="sel" id="planSel" onchange="loadPlan(this.value)">
+    <option value="">— ไม่แสดงแปลน —</option>
+    <option value="outdoor_plan.jpg" selected>ผังพื้นที่รวม (outdoor)</option>
+    <!-- <option value="indoor_plan.jpg">ผังพื้นที่ภายใน (indoor)</option> -->
+    <!-- เพิ่มแปลนใหม่ที่นี่ -->
+  </select>
+  <div class="sp"></div>
+  <label id="snap-w"><input type="checkbox" id="snapCb" checked> Snap ตาราง</label>
+  <div class="sp"></div>
+  <button class="btn" id="copyBtn" onclick="copySelected()" disabled><i class="ti ti-copy"></i> คัดลอก</button>
+  <button class="btn dn" onclick="clearAll()"><i class="ti ti-trash"></i> ล้างทั้งหมด</button>
+  <button class="btn pr" onclick="exportPDF()"><i class="ti ti-file-type-pdf"></i> Export PDF</button>
+  <div id="pos">ตำแหน่ง: — ม.</div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- SIDEBAR — never zooms, always fixed -->
+  <div id="sb">
+    <div class="ss">
+      <div class="sl">เครื่องมือ</div>
+      <div class="tg">
+        <button class="tb2 on" id="tool-rect"   onclick="setTool('rect')"><i class="ti ti-rectangle"></i>สี่เหลี่ยม</button>
+        <button class="tb2"    id="tool-circle" onclick="setTool('circle')"><i class="ti ti-circle"></i>วงกลม</button>
+        <button class="tb2"    id="tool-select" onclick="setTool('select')"><i class="ti ti-pointer"></i>เลือก/ย้าย</button>
+        <button class="tb2"    id="tool-text"   onclick="setTool('text')"><i class="ti ti-text-size"></i>ข้อความ</button>
+      </div>
+    </div>
+    <div class="ss">
+      <div class="sl">ขนาดเริ่มต้น (เมตร)</div>
+      <div class="dr">
+        <div><span class="dl">กว้าง</span><input class="di" type="number" id="inW" value="3" min="0.5" step="0.5"></div>
+        <div><span class="dl">ยาว</span><input class="di" type="number" id="inH" value="2" min="0.5" step="0.5"></div>
+      </div>
+    </div>
+    <div class="ss">
+      <div class="sl">สี</div>
+      <div class="swg" id="swMain"></div>
+    </div>
+    <div id="pp">
+      <div class="sl">รายละเอียด</div>
+      <div class="pe" id="pEmpty">คลิก object เพื่อแก้ไข<br><span style="font-size:10px">ดับเบิลคลิก = แก้ชื่อ</span></div>
+      <div id="pf">
+        <span class="pl">ชื่อ / label</span>
+        <input class="pi" type="text" id="pName" placeholder="เช่น บูธอาหาร A1">
+        <span class="pl">ขนาด (เมตร)</span>
+        <div class="pd">
+          <div><span class="dl">กว้าง</span><input class="pi" type="number" id="pW" step="0.5" min="0.5"></div>
+          <div><span class="dl">ยาว</span><input class="pi" type="number" id="pH" step="0.5" min="0.5"></div>
+        </div>
+        <span class="pl">สี</span>
+        <div class="swg" id="swProp"></div>
+        <div class="pa">
+          <button class="btn" onclick="copySelected()"><i class="ti ti-copy"></i> คัดลอก</button>
+          <button class="btn dn" onclick="deleteSelected()"><i class="ti ti-trash"></i> ลบ</button>
+        </div>
+      </div>
+    </div>
+    <div id="lg">
+      <div class="sl">คำอธิบาย</div>
+      <div id="lgList"><span style="font-size:11px;color:var(--tx3)">ยังไม่มี object</span></div>
+    </div>
+  </div>
+
+  <!-- CANVAS AREA -->
+  <div id="co">
+    <div id="cw">
+      <canvas id="cv"></canvas>
+      <input id="ie" type="text" placeholder="พิมพ์ชื่อ แล้วกด Enter">
+      <div id="zb">100%</div>
+    </div>
+    <div id="stb">
+      <span id="sm">คลิกบนแผนที่เพื่อวาง | ดับเบิลคลิก object เพื่อแก้ชื่อ | คลิกซ้ายว่างๆ เพื่อเลื่อนแผนที่</span>
+      <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+        <span><span class="kbd">Scroll</span> ซูม</span>
+        <span><span class="kbd">ลากว่างๆ</span> เลื่อน</span>
+        <span><span class="kbd">Ctrl+D</span> คัดลอก</span>
+        <span><span class="kbd">Del</span> ลบ</span>
+        <span><span class="kbd">Ctrl+0</span> reset</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   CONSTANTS
+══════════════════════════════════════════════ */
+const PPM = 9;   // px per metre at scale 1
+const GM  = 1;   // grid metres
+
+const PALETTE = [
+  {hex:'#1565C0',name:'บูธน้ำเงิน'},{hex:'#2E7D32',name:'พื้นที่เขียว'},
+  {hex:'#E65100',name:'เต็นท์ส้ม'},{hex:'#AD1457',name:'บูธชมพู'},
+  {hex:'#6A1B9A',name:'เวที'},{hex:'#00695C',name:'บริการ'},
+  {hex:'#C62828',name:'ห้ามเข้า'},{hex:'#4E342E',name:'อาคาร'},
+  {hex:'#546E7A',name:'ทั่วไป'},{hex:'#F9A825',name:'พื้นที่เหลือง'},
+];
+
+/* ══════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════ */
+let curColor = PALETTE[0].hex;
+let curTool  = 'rect';
+let shapes   = [];
+let selId    = null;
+let uid      = 0;
+let bgImg    = null;
+
+// viewport: pan in CSS pixels, zoom factor
+let vpX = 0, vpY = 0, vpZ = 1;
+
+// mouse interaction
+let mode = 'idle'; // 'idle' | 'pan' | 'drag' | 'resize'
+let panAnchor  = null;   // {bx,by} = base pan at mousedown
+let dragSh     = null;
+let dragAnchor = null;   // world coords at mousedown
+let dragBase   = null;   // shape {x,y} at mousedown
+let resSh      = null;
+let resAnchor  = null;
+let resBase    = null;   // {wM,hM} at mousedown
+let editSh     = null;
+
+/* ══════════════════════════════════════════════
+   CANVAS SETUP
+══════════════════════════════════════════════ */
+const wrap = document.getElementById('cw');
+const cv   = document.getElementById('cv');
+const ctx  = cv.getContext('2d');
+
+function fitCanvas() {
+  cv.width  = wrap.clientWidth;
+  cv.height = wrap.clientHeight;
+  cv.style.width  = cv.width  + 'px';
+  cv.style.height = cv.height + 'px';
+  draw();
+}
+window.addEventListener('resize', fitCanvas);
+
+/* ══════════════════════════════════════════════
+   COORD HELPERS
+══════════════════════════════════════════════ */
+function s2w(sx, sy) { return { x:(sx-vpX)/vpZ, y:(sy-vpY)/vpZ }; }
+function w2s(wx, wy) { return { x:wx*vpZ+vpX,   y:wy*vpZ+vpY   }; }
+function m2p(m) { return m * PPM; }
+function p2m(p) { return p / PPM; }
+function mStr(m){ return (m%1===0?m:m.toFixed(1))+' ม.'; }
+function doSnap(v){
+  if (!document.getElementById('snapCb').checked) return v;
+  const g = GM*PPM; return Math.round(v/g)*g;
+}
+
+/* ══════════════════════════════════════════════
+   DRAW
+══════════════════════════════════════════════ */
+function draw() {
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+
+  ctx.save();
+  ctx.translate(vpX, vpY);
+  ctx.scale(vpZ, vpZ);
+
+  /* background image */
+  if (bgImg && bgImg.complete) {
+    const iw=bgImg.naturalWidth, ih=bgImg.naturalHeight;
+    const fitW=1200, fitH=fitW*(ih/iw);
+    ctx.globalAlpha=0.55;
+    ctx.drawImage(bgImg, 0, 0, fitW, fitH);
+    ctx.globalAlpha=1;
+  }
+
+  /* grid */
+  const step = GM*PPM;
+  const tl = s2w(0,0), br = s2w(W,H);
+  ctx.beginPath();
+  ctx.strokeStyle='rgba(0,0,0,0.08)';
+  ctx.lineWidth=0.5/vpZ;
+  for(let x=Math.floor(tl.x/step)*step; x<=br.x+step; x+=step){
+    ctx.moveTo(x,tl.y-step); ctx.lineTo(x,br.y+step);
+  }
+  for(let y=Math.floor(tl.y/step)*step; y<=br.y+step; y+=step){
+    ctx.moveTo(tl.x-step,y); ctx.lineTo(br.x+step,y);
+  }
+  ctx.stroke();
+
+  /* shapes */
+  shapes.forEach(drawShape);
+
+  ctx.restore();
+
+  /* zoom badge */
+  document.getElementById('zb').textContent = Math.round(vpZ*100)+'%';
+}
+
+function hexRgba(hex,a){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+function drawShape(sh) {
+  const x=sh.x, y=sh.y, ww=m2p(sh.wM), wh=m2p(sh.hM);
+  const isSel = sh.id===selId;
+  ctx.save();
+  if (sh.type==='circle') {
+    ctx.beginPath();
+    ctx.ellipse(x+ww/2, y+wh/2, ww/2, wh/2, 0, 0, Math.PI*2);
+  } else {
+    ctx.beginPath();
+    const r=4/vpZ;
+    ctx.roundRect(x,y,ww,wh,r);
+  }
+  ctx.fillStyle = hexRgba(sh.color, 0.72);
+  ctx.fill();
+  ctx.strokeStyle = sh.color;
+  ctx.lineWidth = 1.5/vpZ;
+  ctx.stroke();
+
+  if (isSel) {
+    ctx.save();
+    ctx.setLineDash([5/vpZ,3/vpZ]);
+    ctx.strokeStyle='rgba(255,255,255,0.9)';
+    ctx.lineWidth=1.5/vpZ;
+    if(sh.type==='circle'){
+      ctx.beginPath();
+      ctx.ellipse(x+ww/2,y+wh/2,ww/2+2/vpZ,wh/2+2/vpZ,0,0,Math.PI*2);
+      ctx.stroke();
+    } else {
+      ctx.beginPath(); ctx.roundRect(x-2/vpZ,y-2/vpZ,ww+4/vpZ,wh+4/vpZ,4/vpZ); ctx.stroke();
+    }
+    ctx.restore();
+    /* resize handle */
+    const hs=7/vpZ;
+    ctx.fillStyle='#fff'; ctx.strokeStyle='#555'; ctx.lineWidth=1/vpZ;
+    ctx.beginPath(); ctx.rect(x+ww-hs,y+wh-hs,hs*2,hs*2); ctx.fill(); ctx.stroke();
+  }
+
+  /* label */
+  const fs = Math.max(8,Math.min(13,wh*0.32))/vpZ;
+  ctx.font=`500 ${fs}px Sarabun,sans-serif`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.shadowColor='rgba(0,0,0,0.8)'; ctx.shadowBlur=3/vpZ;
+  ctx.fillStyle='#fff';
+  const cx2=x+ww/2, cy2=y+wh/2;
+  if (sh.name) {
+    ctx.fillText(sh.name, cx2, cy2-fs*0.55);
+    ctx.fillText(mStr(sh.wM)+'×'+mStr(sh.hM), cx2, cy2+fs*0.65);
+  } else {
+    ctx.fillText(mStr(sh.wM)+'×'+mStr(sh.hM), cx2, cy2);
+  }
+  ctx.shadowBlur=0;
+  ctx.restore();
+}
+
+/* ══════════════════════════════════════════════
+   HIT TESTS
+══════════════════════════════════════════════ */
+function hitShape(wx,wy) {
+  for(let i=shapes.length-1;i>=0;i--){
+    const sh=shapes[i], ww=m2p(sh.wM), wh=m2p(sh.hM);
+    if(sh.type==='circle'){
+      const dx=(wx-sh.x-ww/2)/(ww/2), dy=(wy-sh.y-wh/2)/(wh/2);
+      if(dx*dx+dy*dy<=1) return sh;
+    } else {
+      if(wx>=sh.x&&wx<=sh.x+ww&&wy>=sh.y&&wy<=sh.y+wh) return sh;
+    }
+  }
+  return null;
+}
+
+function hitResizeHandle(sh,wx,wy) {
+  if(sh.type==='circle') return false;
+  const ww=m2p(sh.wM), wh=m2p(sh.hM), hs=8/vpZ;
+  return Math.abs(wx-sh.x-ww)<hs && Math.abs(wy-sh.y-wh)<hs;
+}
+
+/* ══════════════════════════════════════════════
+   MOUSE EVENTS — attached to CANVAS only
+══════════════════════════════════════════════ */
+cv.addEventListener('wheel', e=>{
+  e.preventDefault();
+  e.stopPropagation();
+  const r=cv.getBoundingClientRect();
+  const sx=e.clientX-r.left, sy=e.clientY-r.top;
+  const f=e.deltaY<0?1.1:1/1.1;
+  const nz=Math.min(10,Math.max(0.1,vpZ*f));
+  vpX=sx-(sx-vpX)*(nz/vpZ);
+  vpY=sy-(sy-vpY)*(nz/vpZ);
+  vpZ=nz; draw();
+},{passive:false});
+
+cv.addEventListener('mousedown', e=>{
+  e.preventDefault();
+  const r=cv.getBoundingClientRect();
+  const sx=e.clientX-r.left, sy=e.clientY-r.top;
+  const w=s2w(sx,sy);
+
+  /* middle mouse = pan always */
+  if(e.button===1){ startPan(sx,sy); return; }
+  if(e.button!==0) return;
+
+  if(curTool==='select'){
+    /* check resize handle on selected shape */
+    if(selId){
+      const sel=shapes.find(s=>s.id===selId);
+      if(sel&&hitResizeHandle(sel,w.x,w.y)){
+        mode='resize'; resSh=sel;
+        resAnchor=w; resBase={wM:sel.wM,hM:sel.hM};
+        return;
+      }
+    }
+    const hit=hitShape(w.x,w.y);
+    if(hit){
+      select(hit.id);
+      mode='drag';
+      dragSh=hit;
+      dragAnchor={x:w.x,y:w.y};
+      dragBase={x:hit.x,y:hit.y};
+      cv.style.cursor='grabbing';
+      document.body.style.userSelect='none';
+    } else {
+      deselect();
+      startPan(sx,sy);
+    }
+    return;
+  }
+
+  /* place shape tools */
+  const wx=doSnap(w.x), wy=doSnap(w.y);
+  const wM=+document.getElementById('inW').value||3;
+  const hM=+document.getElementById('inH').value||2;
+  if(curTool==='text'){
+    const sh=addShape('rect',wx,wy,wM,hM,curColor,'');
+    select(sh.id); setTool('select'); openEditor(sh); return;
+  }
+  const sh=addShape(curTool,wx,wy,wM,hM,curColor,'');
+  select(sh.id); setTool('select'); openEditor(sh);
+});
+
+/* All move/up go on document so drag works even if mouse leaves canvas */
+document.addEventListener('mousemove', e=>{
+  const r=cv.getBoundingClientRect();
+  const sx=e.clientX-r.left, sy=e.clientY-r.top;
+  const w=s2w(sx,sy);
+
+  /* position readout — only when inside canvas */
+  if(sx>=0&&sy>=0&&sx<=cv.width&&sy<=cv.height){
+    document.getElementById('pos').textContent=
+      `ตำแหน่ง: ${p2m(w.x).toFixed(1)} × ${p2m(w.y).toFixed(1)} ม.`;
+  }
+
+  if(mode==='pan'){
+    vpX=sx-panAnchor.x; vpY=sy-panAnchor.y;
+    draw(); return;
+  }
+  if(mode==='drag'&&dragSh){
+    const nx=dragBase.x+(w.x-dragAnchor.x);
+    const ny=dragBase.y+(w.y-dragAnchor.y);
+    dragSh.x=doSnap(nx);
+    dragSh.y=doSnap(ny);
+    draw(); return;
+  }
+  if(mode==='resize'&&resSh){
+    const dx=w.x-resAnchor.x, dy=w.y-resAnchor.y;
+    resSh.wM=parseFloat(Math.max(0.5,p2m(doSnap(m2p(resBase.wM)+dx))).toFixed(1));
+    resSh.hM=parseFloat(Math.max(0.5,p2m(doSnap(m2p(resBase.hM)+dy))).toFixed(1));
+    updateProps(); draw(); return;
+  }
+
+  /* cursor hint in select mode */
+  if(curTool==='select'){
+    if(selId){const sel=shapes.find(s=>s.id===selId); if(sel&&hitResizeHandle(sel,w.x,w.y)){cv.style.cursor='se-resize';return;}}
+    cv.style.cursor=hitShape(w.x,w.y)?'move':'default';
+  }
+});
+
+document.addEventListener('mouseup', ()=>{
+  if(mode!=='idle') updateLegend();
+  mode='idle';
+  dragSh=null;
+  resSh=null;
+  document.body.style.userSelect='';
+  if(curTool==='select') cv.style.cursor='default';
+});
+
+cv.addEventListener('dblclick', e=>{
+  const r=cv.getBoundingClientRect();
+  const w=s2w(e.clientX-r.left,e.clientY-r.top);
+  const hit=hitShape(w.x,w.y);
+  if(hit){select(hit.id); openEditor(hit);}
+});
+
+function startPan(sx,sy){
+  mode='pan';
+  panAnchor={x:sx-vpX,y:sy-vpY};
+  cv.style.cursor='grabbing';
+  document.body.style.userSelect='none';
+}
+
+
+
+/* ══════════════════════════════════════════════
+   TOUCH EVENTS — mobile/tablet support, canvas only
+══════════════════════════════════════════════ */
+let touchState=null;
+
+cv.addEventListener('touchstart', e=>{
+  if(!e.touches.length) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const r=cv.getBoundingClientRect();
+
+  if(e.touches.length===2){
+    const a=e.touches[0], b=e.touches[1];
+    const ax=a.clientX-r.left, ay=a.clientY-r.top;
+    const bx=b.clientX-r.left, by=b.clientY-r.top;
+    const cx=(ax+bx)/2, cy=(ay+by)/2;
+    const dist=Math.hypot(ax-bx,ay-by)||1;
+    touchState={type:'pinch',cx,cy,dist,z:vpZ,x:vpX,y:vpY};
+    mode='idle';
+    return;
+  }
+
+  const t=e.touches[0];
+  const sx=t.clientX-r.left, sy=t.clientY-r.top;
+  const w=s2w(sx,sy);
+
+  if(curTool==='select'){
+    const hit=hitShape(w.x,w.y);
+    if(hit){
+      select(hit.id);
+      mode='drag';
+      dragSh=hit;
+      dragAnchor={x:w.x,y:w.y};
+      dragBase={x:hit.x,y:hit.y};
+      cv.style.cursor='grabbing';
+      document.body.style.userSelect='none';
+    }else{
+      deselect();
+      startPan(sx,sy);
+    }
+  }else{
+    const wx=doSnap(w.x), wy=doSnap(w.y);
+    const wM=+document.getElementById('inW').value||3;
+    const hM=+document.getElementById('inH').value||2;
+    const sh=addShape(curTool==='text'?'rect':curTool,wx,wy,wM,hM,curColor,'');
+    select(sh.id); setTool('select'); openEditor(sh);
+  }
+},{passive:false});
+
+cv.addEventListener('touchmove', e=>{
+  if(!e.touches.length) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const r=cv.getBoundingClientRect();
+
+  if(e.touches.length===2 && touchState && touchState.type==='pinch'){
+    const a=e.touches[0], b=e.touches[1];
+    const ax=a.clientX-r.left, ay=a.clientY-r.top;
+    const bx=b.clientX-r.left, by=b.clientY-r.top;
+    const cx=(ax+bx)/2, cy=(ay+by)/2;
+    const dist=Math.hypot(ax-bx,ay-by)||1;
+    const nz=Math.min(10,Math.max(0.1,touchState.z*(dist/touchState.dist)));
+    vpX=cx-(touchState.cx-touchState.x)*(nz/touchState.z);
+    vpY=cy-(touchState.cy-touchState.y)*(nz/touchState.z);
+    vpZ=nz;
+    draw();
+    return;
+  }
+
+  const t=e.touches[0];
+  const sx=t.clientX-r.left, sy=t.clientY-r.top;
+  const w=s2w(sx,sy);
+
+  if(mode==='pan'){
+    vpX=sx-panAnchor.x; vpY=sy-panAnchor.y;
+    draw(); return;
+  }
+  if(mode==='drag'&&dragSh){
+    const nx=dragBase.x+(w.x-dragAnchor.x);
+    const ny=dragBase.y+(w.y-dragAnchor.y);
+    dragSh.x=doSnap(nx);
+    dragSh.y=doSnap(ny);
+    draw(); return;
+  }
+},{passive:false});
+
+cv.addEventListener('touchend', e=>{
+  e.preventDefault();
+  e.stopPropagation();
+  if(mode!=='idle') updateLegend();
+  mode='idle';
+  dragSh=null;
+  resSh=null;
+  touchState=null;
+  document.body.style.userSelect='';
+},{passive:false});
+
+/* ══════════════════════════════════════════════
+   KEYBOARD
+══════════════════════════════════════════════ */
+document.addEventListener('keydown', e=>{
+  if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
+  if((e.key==='Delete'||e.key==='Backspace')&&selId){e.preventDefault();deleteSelected();}
+  if(e.key==='Escape') deselect();
+  if((e.ctrlKey||e.metaKey)&&e.key==='d'){e.preventDefault();copySelected();}
+  if((e.ctrlKey||e.metaKey)&&e.key==='0'){e.preventDefault();vpX=0;vpY=0;vpZ=1;draw();}
+});
+
+/* ══════════════════════════════════════════════
+   INLINE EDITOR
+══════════════════════════════════════════════ */
+const ie=document.getElementById('ie');
+
+function openEditor(sh){
+  editSh=sh;
+  const sc=w2s(sh.x,sh.y);
+  const wPx=m2p(sh.wM)*vpZ;
+  ie.style.left=Math.max(2,sc.x)+'px';
+  ie.style.top=Math.max(2,sc.y-36)+'px';
+  ie.style.width=Math.max(100,wPx)+'px';
+  ie.style.display='block';
+  ie.value=sh.name; ie.focus(); ie.select();
+}
+
+function commitEdit(){
+  if(!editSh) return;
+  editSh.name=ie.value.trim();
+  ie.style.display='none';
+  updateProps(); updateLegend(); draw();
+  editSh=null;
+}
+
+ie.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){e.preventDefault();commitEdit();}
+  if(e.key==='Escape'){ie.style.display='none';editSh=null;draw();}
+});
+ie.addEventListener('blur',()=>{setTimeout(commitEdit,0);});
+
+/* ══════════════════════════════════════════════
+   TOOL SELECT
+══════════════════════════════════════════════ */
+function setTool(t){
+  curTool=t;
+  document.querySelectorAll('.tb2').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tool-'+t).classList.add('on');
+  const curs={select:'default',text:'text',rect:'crosshair',circle:'crosshair'};
+  cv.style.cursor=curs[t]||'crosshair';
+}
+
+/* ══════════════════════════════════════════════
+   SHAPE MANAGEMENT
+══════════════════════════════════════════════ */
+function addShape(type,x,y,wM,hM,color,name){
+  const sh={id:'s'+(++uid),type,x,y,wM,hM,color:color||curColor,name:name||''};
+  shapes.push(sh); draw(); updateLegend(); return sh;
+}
+
+function select(id){
+  selId=id;
+  document.getElementById('copyBtn').disabled=false;
+  updateProps(); draw();
+}
+
+function deselect(){
+  selId=null;
+  document.getElementById('copyBtn').disabled=true;
+  updateProps(); draw();
+}
+
+function copySelected(){
+  const sh=shapes.find(s=>s.id===selId); if(!sh) return;
+  const ns=addShape(sh.type,sh.x+m2p(1),sh.y+m2p(1),sh.wM,sh.hM,sh.color,sh.name);
+  select(ns.id); status('คัดลอกแล้ว — ลากไปวางตำแหน่งที่ต้องการ');
+}
+
+function deleteSelected(){
+  if(!selId) return;
+  shapes=shapes.filter(s=>s.id!==selId); selId=null;
+  document.getElementById('copyBtn').disabled=true;
+  updateProps(); updateLegend(); draw();
+}
+
+function clearAll(){
+  if(!shapes.length) return;
+  if(!confirm('ล้าง object ทั้งหมด?')) return;
+  shapes=[]; selId=null;
+  document.getElementById('copyBtn').disabled=true;
+  updateProps(); updateLegend(); draw();
+}
+
+/* ══════════════════════════════════════════════
+   PROPS FORM
+══════════════════════════════════════════════ */
+function updateProps(){
+  const sh=shapes.find(s=>s.id===selId);
+  document.getElementById('pEmpty').style.display=sh?'none':'block';
+  document.getElementById('pf').style.display=sh?'block':'none';
+  if(!sh) return;
+  document.getElementById('pName').value=sh.name;
+  document.getElementById('pW').value=sh.wM;
+  document.getElementById('pH').value=sh.hM;
+  buildSwatches('swProp',onPropColor);
+}
+
+document.getElementById('pName').addEventListener('input',()=>{
+  const sh=shapes.find(s=>s.id===selId); if(sh){sh.name=document.getElementById('pName').value;draw();updateLegend();}
+});
+document.getElementById('pW').addEventListener('input',()=>{
+  const sh=shapes.find(s=>s.id===selId); if(sh){sh.wM=+document.getElementById('pW').value||1;draw();}
+});
+document.getElementById('pH').addEventListener('input',()=>{
+  const sh=shapes.find(s=>s.id===selId); if(sh){sh.hM=+document.getElementById('pH').value||1;draw();}
+});
+
+/* ══════════════════════════════════════════════
+   SWATCHES
+══════════════════════════════════════════════ */
+function buildSwatches(cid,onPick){
+  const c=document.getElementById(cid); if(!c) return;
+  c.innerHTML='';
+  const sh=shapes.find(s=>s.id===selId);
+  const active=cid==='swProp'?(sh||{}).color:curColor;
+  PALETTE.forEach(col=>{
+    const s=document.createElement('div');
+    s.className='sw'+(col.hex===active?' on':'');
+    s.style.background=col.hex; s.title=col.name;
+    s.onclick=()=>{curColor=col.hex;onPick(col.hex);buildSwatches('swMain',()=>{});buildSwatches('swProp',onPropColor);};
+    c.appendChild(s);
+  });
+}
+function onPropColor(hex){
+  const sh=shapes.find(s=>s.id===selId); if(sh){sh.color=hex;draw();updateLegend();}
+}
+
+/* ══════════════════════════════════════════════
+   LEGEND
+══════════════════════════════════════════════ */
+function updateLegend(){
+  const list=document.getElementById('lgList');
+  const named=shapes.filter(s=>s.name);
+  if(!named.length){list.innerHTML='<span style="font-size:11px;color:var(--tx3)">ยังไม่มีชื่อ object</span>';return;}
+  const seen={};
+  named.forEach(s=>{seen[s.name+'|'+s.color]=s;});
+  list.innerHTML=Object.values(seen).map(s=>
+    `<div class="li"><div class="ld" style="background:${s.color}"></div><span>${s.name} (${mStr(s.wM)}×${mStr(s.hM)})</span></div>`
+  ).join('');
+}
+
+/* ══════════════════════════════════════════════
+   STATUS
+══════════════════════════════════════════════ */
+let stT;
+function status(msg){
+  document.getElementById('sm').textContent=msg;
+  clearTimeout(stT);
+  stT=setTimeout(()=>{document.getElementById('sm').textContent='คลิกบนแผนที่เพื่อวาง | ดับเบิลคลิก object เพื่อแก้ชื่อ | คลิกว่างๆ เพื่อเลื่อนแผนที่';},3000);
+}
+
+/* ══════════════════════════════════════════════
+   BACKGROUND PLAN
+══════════════════════════════════════════════ */
+function loadPlan(src){
+  if(!src){bgImg=null;draw();return;}
+  const img=new Image();
+  img.onload=()=>{bgImg=img;draw();};
+  img.onerror=()=>{bgImg=null;draw();status('⚠️ ไม่พบไฟล์ "'+src+'" — วางไฟล์รูปในโฟลเดอร์เดียวกัน');};
+  img.src=src;
+}
+
+/* ══════════════════════════════════════════════
+   EXPORT PDF
+══════════════════════════════════════════════ */
+async function exportPDF(){
+  status('กำลัง export PDF...');
+  ie.style.display='none';
+  try{
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+    const W=pdf.internal.pageSize.getWidth(),H=pdf.internal.pageSize.getHeight();
+    const img=cv.toDataURL('image/png');
+    pdf.setFontSize(14);
+    pdf.text('ผังจัดงาน — ศาลเจ้า',W/2,11,{align:'center'});
+    pdf.setFontSize(8);
+    pdf.text('มาตราส่วน 1:500  |  '+new Date().toLocaleDateString('th-TH'),W/2,16,{align:'center'});
+    pdf.addImage(img,'PNG',4,19,W-8,H-26);
+    const named=shapes.filter(s=>s.name);
+    if(named.length){
+      pdf.setFontSize(6.5);let tx=6,ty=H-4;
+      named.forEach((s,i)=>{pdf.text(`${i+1}. ${s.name} (${s.wM}×${s.hM} ม.)`,tx,ty);tx+=55;if(tx>W-20){tx=6;ty-=4;}});
+    }
+    pdf.save('ผังจัดงาน-ศาลเจ้า.pdf');
+    status('Export PDF สำเร็จ ✓');
+  }catch(err){status('Export ไม่สำเร็จ: '+err.message);}
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+fitCanvas();
+buildSwatches('swMain',()=>{});
+buildSwatches('swProp',onPropColor);
+loadPlan(document.getElementById('planSel').value);
+</script>
+</body>
+</html>
