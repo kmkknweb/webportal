@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สรุปรายงานการประชุม</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --ink: #1a1a2e;
+    --ink-soft: #2d2d4a;
+    --paper: #f5f3ee;
+    --paper-warm: #ede9e0;
+    --accent: #c17f3b;
+    --accent-light: #e8c48a;
+    --accent-pale: #f7edd8;
+    --success: #3a7d44;
+    --line: #d4cfc6;
+    --shadow: rgba(26,26,46,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sarabun', 'Noto Sans Thai', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image: 
+      radial-gradient(ellipse at 20% 10%, rgba(193,127,59,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(26,26,46,0.04) 0%, transparent 50%);
+  }
+
+  header {
+    background: var(--ink);
+    color: white;
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 3px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(193,127,59,0.08);
+  }
+
+  .logo-icon {
+    width: 48px; height: 48px;
+    background: var(--accent);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  header h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.3px; }
+  header p { font-size: 13px; opacity: 0.6; margin-top: 2px; font-weight: 300; }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    display: grid;
+    gap: 24px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 20px var(--shadow);
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 20px 28px 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-header .step-badge {
+    width: 28px; height: 28px;
+    background: var(--accent-pale);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .card-header h2 { font-size: 16px; font-weight: 600; color: var(--ink); }
+  .card-body { padding: 24px 28px; }
+
+  /* Upload Zone */
+  .upload-zone {
+    border: 2px dashed var(--line);
+    border-radius: 12px;
+    padding: 40px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--paper);
+    position: relative;
+  }
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-pale);
+  }
+  .upload-zone input[type=file] {
+    position: absolute; inset: 0;
+    opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .upload-icon { font-size: 48px; margin-bottom: 12px; }
+  .upload-zone h3 { font-size: 16px; font-weight: 600; color: var(--ink); }
+  .upload-zone p { font-size: 13px; color: #888; margin-top: 6px; }
+
+  .file-preview {
+    display: none;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: var(--accent-pale);
+    border: 1px solid var(--accent-light);
+    border-radius: 10px;
+    margin-top: 16px;
+  }
+  .file-preview.show { display: flex; }
+  .file-icon { font-size: 32px; }
+  .file-info { flex: 1; }
+  .file-name { font-weight: 600; font-size: 14px; }
+  .file-size { font-size: 12px; color: #888; margin-top: 2px; }
+  .file-remove {
+    background: none; border: none; cursor: pointer;
+    font-size: 18px; color: #aaa;
+    transition: color 0.2s;
+  }
+  .file-remove:hover { color: #e55; }
+
+  /* Meeting Info */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1/-1; }
+  label { font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+  input, textarea, select {
+    padding: 10px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: white;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(193,127,59,0.12);
+  }
+  textarea { resize: vertical; min-height: 80px; }
+
+  /* Audio player */
+  audio { width: 100%; margin-top: 8px; }
+
+  /* Process button */
+  .btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 0.3px;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(193,127,59,0.3);
+  }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-secondary {
+    padding: 12px 24px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-secondary:hover { background: #a66d2e; transform: translateY(-1px); }
+
+  /* Progress */
+  .progress-section {
+    display: none;
+    padding: 24px 28px;
+  }
+  .progress-section.show { display: block; }
+
+  .progress-steps {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+  }
+  .p-step {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #bbb;
+    position: relative;
+    padding-bottom: 20px;
+  }
+  .p-step::after {
+    content: '';
+    position: absolute;
+    bottom: 7px; left: 50%;
+    transform: translateX(-50%);
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #ddd;
+    border: 2px solid #ddd;
+  }
+  .p-step::before {
+    content: '';
+    position: absolute;
+    bottom: 13px; left: calc(50% + 7px);
+    width: calc(100% - 14px);
+    height: 2px;
+    background: #ddd;
+  }
+  .p-step:last-child::before { display: none; }
+  .p-step.active { color: var(--accent); font-weight: 600; }
+  .p-step.active::after { background: var(--accent); border-color: var(--accent); }
+  .p-step.done { color: var(--success); }
+  .p-step.done::after { background: var(--success); border-color: var(--success); }
+  .p-step.done::before { background: var(--success); }
+
+  .status-text {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+    min-height: 20px;
+  }
+  .spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(193,127,59,0.3);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Result */
+  .result-section { display: none; }
+  .result-section.show { display: block; }
+
+  .summary-view {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+    min-height: 200px;
+    font-size: 14px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  .summary-view h2 { font-size: 18px; margin-bottom: 12px; color: var(--ink); }
+  .summary-view h3 { font-size: 15px; margin: 16px 0 8px; color: var(--ink-soft); }
+
+  .action-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .transcript-toggle {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  .transcript-body {
+    display: none;
+    margin-top: 8px;
+    padding: 16px;
+    background: var(--paper);
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+    color: #555;
+  }
+  .transcript-body.show { display: block; }
+
+  .alert {
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .alert-warn {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    color: #7a5c00;
+  }
+  .alert-error {
+    background: #ffebee;
+    border: 1px solid #ef9a9a;
+    color: #b71c1c;
+  }
+
+  @media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    header { padding: 20px; }
+    .container { padding: 20px 16px; }
+    .card-body { padding: 18px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-icon">📋</div>
+  <div>
+    <h1>ระบบสรุปรายงานการประชุม</h1>
+    <p>AI-powered Meeting Minutes · Audio → PDF</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- API Key -->
+  <div class="card">
+    <div class="card-header">
+      <div class="step-badge">0</div>
+      <h2>ตั้งค่า API Key</h2>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-warn">
+        🔑 กรอก Anthropic API Key เพื่อใช้งาน AI (ไม่มีการบันทึกข้อมูล)
+      </div>
+      <div class="form-group">
+        <label>Anthropic API Key</label>
+        <input type="password" id="apiKey" placeholder="sk-ant-..." />
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload -->
+  <div class="card">
+    <div class="card-header">
+      <div class="step-badge">1</div>
+      <h2>อัปโหลดไฟล์เสียงการประชุม</h2>
+    </div>
+    <div class="card-body">
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="audioFile" accept="audio/*,video/mp4,video/webm,.m4a,.mp3,.wav,.ogg,.webm,.mp4" />
+        <div class="upload-icon">🎤</div>
+        <h3>ลากไฟล์มาวางหรือคลิกเพื่อเลือก</h3>
+        <p>รองรับ MP3, WAV, M4A, OGG, MP4, WebM (ขนาดสูงสุด 25 MB)</p>
+      </div>
+      <div class="file-preview" id="filePreview">
+        <span class="file-icon">🔊</span>
+        <div class="file-info">
+          <div class="file-name" id="fileName"></div>
+          <div class="file-size" id="fileSize"></div>
+        </div>
+        <button class="file-remove" onclick="removeFile()">✕</button>
+      </div>
+      <audio id="audioPlayer" controls style="display:none; margin-top:16px; width:100%;"></audio>
+    </div>
+  </div>
+
+  <!-- Meeting Info -->
+  <div class="card">
+    <div class="card-header">
+      <div class="step-badge">2</div>
+      <h2>ข้อมูลการประชุม</h2>
+    </div>
+    <div class="card-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>ชื่อการประชุม</label>
+          <input type="text" id="meetingTitle" placeholder="เช่น ประชุมทีมพัฒนา Q2" />
+        </div>
+        <div class="form-group">
+          <label>วันที่ประชุม</label>
+          <input type="date" id="meetingDate" />
+        </div>
+        <div class="form-group">
+          <label>สถานที่/แพลตฟอร์ม</label>
+          <input type="text" id="meetingLocation" placeholder="เช่น ห้องประชุม A / Zoom" />
+        </div>
+        <div class="form-group">
+          <label>ผู้ดำเนินการประชุม</label>
+          <input type="text" id="chairman" placeholder="ชื่อประธาน" />
+        </div>
+        <div class="form-group full">
+          <label>ผู้เข้าร่วมประชุม</label>
+          <input type="text" id="attendees" placeholder="เช่น นาย ก, นาง ข, นาย ค" />
+        </div>
+        <div class="form-group full">
+          <label>บริบทเพิ่มเติม (ถ้ามี)</label>
+          <textarea id="context" placeholder="เช่น การประชุมนี้เกี่ยวกับ... มีวาระสำคัญคือ..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>ภาษาในไฟล์เสียง</label>
+          <select id="language">
+            <option value="th">ไทย</option>
+            <option value="en">English</option>
+            <option value="th-en">ไทย-อังกฤษ (ผสม)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>รูปแบบสรุป</label>
+          <select id="summaryStyle">
+            <option value="formal">ทางการ (Formal)</option>
+            <option value="concise">กระชับ (Concise)</option>
+            <option value="detailed">ละเอียด (Detailed)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Process -->
+  <button class="btn-primary" id="processBtn" onclick="processAudio()">
+    <span>⚡</span> วิเคราะห์และสรุปการประชุม
+  </button>
+
+  <!-- Progress -->
+  <div class="card progress-section" id="progressSection">
+    <div class="card-body">
+      <div class="progress-steps">
+        <div class="p-step" id="step1">แปลงเสียง</div>
+        <div class="p-step" id="step2">วิเคราะห์</div>
+        <div class="p-step" id="step3">สรุปรายงาน</div>
+        <div class="p-step" id="step4">พร้อมส่งออก</div>
+      </div>
+      <div class="status-text" id="statusText">
+        <span class="spinner"></span> กำลังเตรียมการวิเคราะห์...
+      </div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="card result-section" id="resultSection">
+    <div class="card-header">
+      <div class="step-badge">✓</div>
+      <h2>ผลการสรุปการประชุม</h2>
+    </div>
+    <div class="card-body">
+      <div id="errorMsg"></div>
+      <div class="summary-view" id="summaryView"></div>
+      <div class="transcript-toggle" id="transcriptToggle" onclick="toggleTranscript()">
+        <span>📝 ข้อความถอดเสียงต้นฉบับ</span>
+        <span id="toggleIcon">▼</span>
+      </div>
+      <div class="transcript-body" id="transcriptBody"></div>
+      <div class="action-row">
+        <button class="btn-secondary" onclick="downloadPDF()">📄 ดาวน์โหลด PDF</button>
+        <button class="btn-secondary" onclick="copyText()" style="background:#555;">📋 คัดลอกข้อความ</button>
+        <button class="btn-secondary" onclick="resetForm()" style="background:#888;">🔄 เริ่มใหม่</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let audioFile = null;
+  let transcriptText = '';
+  let summaryData = null;
+
+  // Set today's date
+  document.getElementById('meetingDate').value = new Date().toISOString().split('T')[0];
+
+  // File upload handling
+  const uploadZone = document.getElementById('uploadZone');
+  const fileInput = document.getElementById('audioFile');
+
+  uploadZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    uploadZone.classList.add('drag-over');
+  });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+  fileInput.addEventListener('change', e => {
+    if (e.target.files[0]) handleFile(e.target.files[0]);
+  });
+
+  function handleFile(file) {
+    if (file.size > 25 * 1024 * 1024) {
+      alert('ไฟล์ขนาดใหญ่เกิน 25 MB กรุณาลดขนาดไฟล์ก่อน');
+      return;
+    }
+    audioFile = file;
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+    document.getElementById('filePreview').classList.add('show');
+
+    const player = document.getElementById('audioPlayer');
+    player.src = URL.createObjectURL(file);
+    player.style.display = 'block';
+
+    if (!document.getElementById('meetingTitle').value) {
+      const name = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+      document.getElementById('meetingTitle').value = name;
+    }
+  }
+
+  function removeFile() {
+    audioFile = null;
+    fileInput.value = '';
+    document.getElementById('filePreview').classList.remove('show');
+    const player = document.getElementById('audioPlayer');
+    player.style.display = 'none';
+    player.src = '';
+  }
+
+  function setStep(n) {
+    for (let i = 1; i <= 4; i++) {
+      const el = document.getElementById('step' + i);
+      el.className = 'p-step';
+      if (i < n) el.classList.add('done');
+      else if (i === n) el.classList.add('active');
+    }
+  }
+
+  function setStatus(msg) {
+    document.getElementById('statusText').innerHTML = `<span class="spinner"></span> ${msg}`;
+  }
+
+  async function fileToBase64(file) {
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.onload = () => res(reader.result.split(',')[1]);
+      reader.onerror = rej;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function processAudio() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    if (!apiKey) { alert('กรุณากรอก API Key ก่อน'); return; }
+    if (!audioFile) { alert('กรุณาเลือกไฟล์เสียงก่อน'); return; }
+
+    document.getElementById('processBtn').disabled = true;
+    document.getElementById('progressSection').classList.add('show');
+    document.getElementById('resultSection').classList.remove('show');
+
+    const meetingInfo = {
+      title: document.getElementById('meetingTitle').value || 'รายงานการประชุม',
+      date: document.getElementById('meetingDate').value,
+      location: document.getElementById('meetingLocation').value,
+      chairman: document.getElementById('chairman').value,
+      attendees: document.getElementById('attendees').value,
+      context: document.getElementById('context').value,
+      language: document.getElementById('language').value,
+      style: document.getElementById('summaryStyle').value
+    };
+
+    try {
+      // Step 1: Transcribe
+      setStep(1);
+      setStatus('กำลังแปลงเสียงเป็นข้อความ...');
+
+      const base64Audio = await fileToBase64(audioFile);
+      const mediaType = audioFile.type || 'audio/mpeg';
+
+      const langPrompt = meetingInfo.language === 'th' ? 'ภาษาไทย' 
+        : meetingInfo.language === 'en' ? 'English'
+        : 'ไทย-อังกฤษ (ถอดตามที่ได้ยิน)';
+
+      const transcribeResp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 4000,
+          messages: [{
+            role: 'user',
+            content: [
+              {
+                type: 'document',
+                source: {
+                  type: 'base64',
+                  media_type: mediaType,
+                  data: base64Audio
+                }
+              },
+              {
+                type: 'text',
+                text: `กรุณาถอดข้อความจากไฟล์เสียงนี้ให้ครบถ้วนและถูกต้อง ภาษาหลัก: ${langPrompt}
+ถอดคำพูดทุกคำให้ครบ แบ่งย่อหน้าตามเนื้อหา ถ้าระบุผู้พูดได้ให้ใส่ด้วย
+ตอบเฉพาะข้อความที่ถอดออกมาเท่านั้น ไม่ต้องมีคำอธิบายเพิ่มเติม`
+              }
+            ]
+          }]
+        })
+      });
+
+      if (!transcribeResp.ok) {
+        const err = await transcribeResp.json();
+        throw new Error(err.error?.message || 'Transcription failed');
+      }
+
+      const transcribeData = await transcribeResp.json();
+      transcriptText = transcribeData.content[0]?.text || '';
+
+      // Step 2-3: Summarize
+      setStep(2);
+      setStatus('กำลังวิเคราะห์เนื้อหาการประชุม...');
+
+      await new Promise(r => setTimeout(r, 500));
+      setStep(3);
+      setStatus('กำลังสร้างรายงานสรุปการประชุม...');
+
+      const styleGuide = meetingInfo.style === 'formal'
+        ? 'เป็นทางการ ใช้ภาษาราชการ สุภาพ'
+        : meetingInfo.style === 'concise'
+        ? 'กระชับ ตรงประเด็น ใช้หัวข้อย่อยสั้นๆ'
+        : 'ละเอียด ครบถ้วน อธิบายบริบทด้วย';
+
+      const summaryResp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 3000,
+          system: `คุณเป็นผู้เชี่ยวชาญด้านการจดรายงานการประชุมในรูปแบบ${styleGuide}
+ตอบเป็นภาษาไทย ใช้รูปแบบที่เป็นระเบียบ อ่านง่าย`,
+          messages: [{
+            role: 'user',
+            content: `สร้างรายงานการประชุมจากข้อความถอดเสียงต่อไปนี้:
+
+ข้อมูลการประชุม:
+- ชื่อ: ${meetingInfo.title}
+- วันที่: ${meetingInfo.date}
+- สถานที่: ${meetingInfo.location || 'ไม่ระบุ'}
+- ประธาน: ${meetingInfo.chairman || 'ไม่ระบุ'}
+- ผู้เข้าร่วม: ${meetingInfo.attendees || 'ไม่ระบุ'}
+${meetingInfo.context ? `- บริบท: ${meetingInfo.context}` : ''}
+
+ข้อความถอดเสียง:
+${transcriptText}
+
+กรุณาสร้างรายงานในรูปแบบต่อไปนี้:
+
+## สรุปสาระสำคัญ
+[สรุปภาพรวมของการประชุม 2-3 ประโยค]
+
+## วาระการประชุมและการอภิปราย
+[แบ่งตามหัวข้อที่พูดถึง พร้อมสาระสำคัญ]
+
+## มติและข้อตกลง
+[มติที่ที่ประชุมมีหรือข้อตกลงที่ได้]
+
+## ภารกิจและผู้รับผิดชอบ
+[รายการสิ่งที่ต้องทำต่อ ผู้รับผิดชอบ และกำหนดเวลา (ถ้ามี)]
+
+## ประเด็นติดตาม
+[เรื่องที่ยังค้างอยู่หรือต้องติดตามต่อ]`
+          }]
+        })
+      });
+
+      if (!summaryResp.ok) {
+        const err = await summaryResp.json();
+        throw new Error(err.error?.message || 'Summary failed');
+      }
+
+      const summaryRespData = await summaryResp.json();
+      summaryData = {
+        text: summaryRespData.content[0]?.text || '',
+        meetingInfo
+      };
+
+      setStep(4);
+      document.getElementById('statusText').innerHTML = '✅ เสร็จสิ้น พร้อมดาวน์โหลด PDF';
+
+      showResult();
+
+    } catch (err) {
+      document.getElementById('statusText').innerHTML = `❌ เกิดข้อผิดพลาด: ${err.message}`;
+      console.error(err);
+      document.getElementById('processBtn').disabled = false;
+    }
+  }
+
+  function showResult() {
+    document.getElementById('resultSection').classList.add('show');
+
+    const view = document.getElementById('summaryView');
+    // Render markdown-like to HTML
+    let html = summaryData.text
+      .replace(/## (.+)/g, '<h3 style="font-size:15px;font-weight:700;margin:16px 0 8px;color:#1a1a2e;border-bottom:1px solid #e0dbd2;padding-bottom:6px;">$1</h3>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^- (.+)/gm, '<li style="margin:4px 0 4px 16px;">$1</li>')
+      .replace(/\n/g, '<br>');
+    view.innerHTML = html;
+
+    document.getElementById('transcriptBody').textContent = transcriptText;
+    document.getElementById('processBtn').disabled = false;
+  }
+
+  function toggleTranscript() {
+    const body = document.getElementById('transcriptBody');
+    const icon = document.getElementById('toggleIcon');
+    body.classList.toggle('show');
+    icon.textContent = body.classList.contains('show') ? '▲' : '▼';
+  }
+
+  async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+    const info = summaryData.meetingInfo;
+    const pageW = 210, pageH = 297;
+    const margin = 20;
+    const contentW = pageW - margin * 2;
+    let y = margin;
+
+    // Load Thai font support via Google Fonts API fallback
+    // We'll use latin-only jsPDF built-in and handle Thai with a note
+    // For proper Thai: use a custom font. Here we use encoded text approach.
+
+    // Header bar
+    doc.setFillColor(26, 26, 46);
+    doc.rect(0, 0, pageW, 28, 'F');
+    doc.setFillColor(193, 127, 59);
+    doc.rect(0, 28, pageW, 2, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.text('MEETING MINUTES REPORT', margin, 12);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.text('Generated by AI Meeting Summarizer', margin, 19);
+
+    const dateStr = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+    doc.text(`Exported: ${new Date().toLocaleString('en-GB')}`, pageW - margin, 19, { align: 'right' });
+
+    y = 40;
+
+    // Meeting Info Box
+    doc.setFillColor(247, 237, 216);
+    doc.setDrawColor(193, 127, 59);
+    doc.roundedRect(margin, y, contentW, 44, 3, 3, 'FD');
+
+    doc.setTextColor(26, 26, 46);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    const titleText = info.title || 'Meeting Report';
+    doc.text(titleText.substring(0, 60), margin + 6, y + 10);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(100, 80, 40);
+
+    const col1x = margin + 6, col2x = margin + contentW / 2;
+    let iy = y + 20;
+    if (info.date) {
+      doc.text(`Date: ${info.date}`, col1x, iy);
+    }
+    if (info.location) {
+      doc.text(`Location: ${info.location}`, col2x, iy);
+    }
+    iy += 7;
+    if (info.chairman) {
+      doc.text(`Chairman: ${info.chairman}`, col1x, iy);
+    }
+    if (info.attendees) {
+      const atStr = 'Attendees: ' + info.attendees;
+      doc.text(atStr.substring(0, 60), col2x, iy);
+    }
+
+    y += 52;
+
+    // Summary content
+    const lines = summaryData.text.split('\n');
+
+    for (const line of lines) {
+      if (y > pageH - 30) {
+        doc.addPage();
+        y = margin;
+
+        // Page header
+        doc.setFillColor(26, 26, 46);
+        doc.rect(0, 0, pageW, 10, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.text(info.title || 'Meeting Report', margin, 7);
+        y = 18;
+      }
+
+      const trimmed = line.trim();
+      if (!trimmed) { y += 3; continue; }
+
+      if (trimmed.startsWith('## ')) {
+        y += 4;
+        const heading = trimmed.replace('## ', '');
+        doc.setFillColor(26, 26, 46);
+        doc.rect(margin, y, contentW, 8, 'F');
+        doc.setFillColor(193, 127, 59);
+        doc.rect(margin, y, 3, 8, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.text(heading, margin + 6, y + 5.5);
+        y += 13;
+      } else if (trimmed.startsWith('- ')) {
+        doc.setTextColor(60, 60, 80);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        doc.setFillColor(193, 127, 59);
+        doc.circle(margin + 3, y + 1.5, 1, 'F');
+        const bulletText = trimmed.replace('- ', '');
+        const wrapped = doc.splitTextToSize(bulletText, contentW - 10);
+        doc.text(wrapped, margin + 8, y + 3);
+        y += wrapped.length * 5 + 2;
+      } else {
+        doc.setTextColor(40, 40, 60);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        const cleanLine = trimmed.replace(/\*\*/g, '');
+        const wrapped = doc.splitTextToSize(cleanLine, contentW);
+        doc.text(wrapped, margin, y + 3);
+        y += wrapped.length * 5 + 2;
+      }
+    }
+
+    // Transcript section
+    if (transcriptText) {
+      doc.addPage();
+      y = margin;
+
+      doc.setFillColor(26, 26, 46);
+      doc.rect(0, 0, pageW, 16, 'F');
+      doc.setFillColor(193, 127, 59);
+      doc.rect(0, 16, pageW, 2, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text('TRANSCRIPT', margin, 11);
+      y = 26;
+
+      doc.setTextColor(80, 80, 100);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      const tLines = doc.splitTextToSize(transcriptText, contentW);
+      for (const tl of tLines) {
+        if (y > pageH - 20) {
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(tl, margin, y);
+        y += 4.5;
+      }
+    }
+
+    // Footer on all pages
+    const totalPages = doc.getNumberOfPages();
+    for (let p = 1; p <= totalPages; p++) {
+      doc.setPage(p);
+      doc.setFillColor(245, 243, 238);
+      doc.rect(0, pageH - 12, pageW, 12, 'F');
+      doc.setDrawColor(212, 207, 198);
+      doc.line(0, pageH - 12, pageW, pageH - 12);
+      doc.setTextColor(160, 155, 145);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.text('AI Meeting Summarizer · Powered by Claude', margin, pageH - 4);
+      doc.text(`Page ${p} of ${totalPages}`, pageW - margin, pageH - 4, { align: 'right' });
+    }
+
+    const filename = `meeting-report-${info.date || new Date().toISOString().split('T')[0]}.pdf`;
+    doc.save(filename);
+  }
+
+  function copyText() {
+    navigator.clipboard.writeText(summaryData.text).then(() => {
+      alert('คัดลอกข้อความสำเร็จ!');
+    });
+  }
+
+  function resetForm() {
+    removeFile();
+    document.getElementById('resultSection').classList.remove('show');
+    document.getElementById('progressSection').classList.remove('show');
+    document.getElementById('processBtn').disabled = false;
+    document.getElementById('meetingTitle').value = '';
+    transcriptText = '';
+    summaryData = null;
+  }
+</script>
+</body>
+</html>
