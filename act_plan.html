@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ผังจัดงาน — ศาลเจ้า</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #eeece6; --surface: #ffffff; --surface2: #f6f5f1;
+  --border: rgba(0,0,0,0.09); --border2: rgba(0,0,0,0.16);
+  --text: #1c1c1a; --text2: #68675f; --text3: #a09f99;
+  --accent: #b5202e; --accent-light: #fdf1f2; --radius: 7px;
+}
+body { font-family:'Sarabun',sans-serif; background:var(--bg); color:var(--text); height:100vh; display:flex; flex-direction:column; overflow:hidden; }
+
+/* TOP BAR */
+#topbar { background:var(--surface); border-bottom:0.5px solid var(--border2); padding:0 12px; height:50px; display:flex; align-items:center; gap:7px; flex-shrink:0; z-index:20; }
+#app-title { font-size:14px; font-weight:600; color:var(--accent); display:flex; align-items:center; gap:7px; margin-right:6px; white-space:nowrap; }
+#app-title i { font-size:20px; }
+.sep { width:0.5px; height:26px; background:var(--border2); flex-shrink:0; margin:0 2px; }
+.tbtn { display:flex; align-items:center; gap:5px; padding:5px 11px; border-radius:var(--radius); border:0.5px solid var(--border2); background:none; color:var(--text); font-family:'Sarabun',sans-serif; font-size:13px; cursor:pointer; white-space:nowrap; transition:background 0.12s; }
+.tbtn:hover { background:var(--surface2); }
+.tbtn i { font-size:15px; }
+.tbtn.primary { background:var(--accent); color:#fff; border-color:transparent; }
+.tbtn.primary:hover { background:#961a25; }
+.tbtn:disabled { opacity:0.35; cursor:default; pointer-events:none; }
+.tbtn.danger { color:#c0392b; border-color:rgba(192,57,43,0.25); }
+.tbtn.danger:hover { background:#fff5f5; }
+#plan-select { padding:5px 10px; border-radius:var(--radius); border:0.5px solid var(--border2); background:var(--surface); color:var(--text); font-family:'Sarabun',sans-serif; font-size:13px; cursor:pointer; }
+#snap-wrap { display:flex; align-items:center; gap:5px; font-size:13px; color:var(--text2); cursor:pointer; user-select:none; white-space:nowrap; }
+#snap-wrap input { accent-color:var(--accent); cursor:pointer; }
+#pos-info { margin-left:auto; font-size:11px; color:var(--text3); white-space:nowrap; }
+
+/* MAIN */
+#main { display:flex; flex:1; overflow:hidden; }
+
+/* SIDEBAR */
+#sidebar { width:220px; min-width:220px; background:var(--surface); border-right:0.5px solid var(--border2); display:flex; flex-direction:column; overflow-y:auto; }
+.sb-sec { padding:10px 12px; border-bottom:0.5px solid var(--border); }
+.sb-lbl { font-size:10px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:var(--text3); margin-bottom:8px; }
+.tool-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+.tool-btn { display:flex; flex-direction:column; align-items:center; gap:3px; padding:9px 4px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface2); color:var(--text2); font-family:'Sarabun',sans-serif; font-size:11px; cursor:pointer; transition:all 0.12s; }
+.tool-btn i { font-size:19px; }
+.tool-btn:hover { border-color:var(--accent); color:var(--accent); }
+.tool-btn.active { background:var(--accent-light); border-color:var(--accent); color:var(--accent); font-weight:600; }
+.dim-row { display:flex; gap:7px; }
+.dim-row > div { flex:1; }
+.dim-lbl { font-size:11px; color:var(--text3); margin-bottom:3px; display:block; }
+.dim-input { width:100%; padding:5px 7px; border:0.5px solid var(--border2); border-radius:var(--radius); font-family:'Sarabun',sans-serif; font-size:13px; color:var(--text); background:var(--surface); }
+.dim-input:focus { outline:none; border-color:var(--accent); }
+.swatch-grid { display:flex; flex-wrap:wrap; gap:5px; }
+.swatch { width:24px; height:24px; border-radius:5px; cursor:pointer; border:2px solid transparent; transition:transform 0.1s; }
+.swatch:hover { transform:scale(1.18); }
+.swatch.active { border-color:#1c1c1a; box-shadow:0 0 0 1px #fff inset; }
+#props-panel { padding:10px 12px; flex:1; }
+.prop-empty { font-size:12px; color:var(--text3); text-align:center; padding:18px 0; }
+#props-form { display:none; }
+.prop-lbl { font-size:11px; color:var(--text3); margin:9px 0 3px; display:block; }
+.prop-input { width:100%; padding:5px 7px; border:0.5px solid var(--border2); border-radius:var(--radius); font-family:'Sarabun',sans-serif; font-size:13px; color:var(--text); background:var(--surface); }
+.prop-input:focus { outline:none; border-color:var(--accent); }
+.prop-dims { display:flex; gap:6px; }
+.prop-dims > div { flex:1; }
+.props-actions { display:flex; gap:6px; margin-top:10px; }
+.props-actions .tbtn { flex:1; justify-content:center; font-size:12px; padding:5px 6px; }
+#legend-sec { padding:10px 12px; border-top:0.5px solid var(--border); }
+.legend-item { display:flex; align-items:center; gap:7px; font-size:11px; color:var(--text2); margin:4px 0; }
+.legend-dot { width:11px; height:11px; border-radius:3px; flex-shrink:0; }
+.legend-empty { font-size:11px; color:var(--text3); }
+
+/* CANVAS AREA */
+#canvas-outer { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+#canvas-wrap {
+  flex:1; position:relative; overflow:hidden;
+  cursor:crosshair; background:#e4e2dc;
+  /* zoom/pan hint */
+}
+#canvas-wrap.panning { cursor:grabbing !important; }
+#canvas-wrap.space-down { cursor:grab; }
+
+/* The infinite world that gets transformed */
+#world {
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+  transform-origin:0 0;
+}
+#bg-img {
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+  object-fit:contain; opacity:0.55;
+  pointer-events:none; display:none;
+}
+#grid-canvas { position:absolute; top:0; left:0; pointer-events:none; }
+#shapes-layer { position:absolute; top:0; left:0; width:100%; height:100%; }
+
+/* SHAPE ELEMENTS */
+.shape-el { position:absolute; display:flex; align-items:center; justify-content:center; user-select:none; }
+.shape-inner { width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+.shape-label { font-size:10px; font-weight:500; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.75); text-align:center; pointer-events:none; padding:2px 4px; max-width:100%; overflow:hidden; white-space:pre; text-overflow:ellipsis; line-height:1.4; }
+.shape-el.selected .shape-inner { outline:2px dashed rgba(255,255,255,0.9); outline-offset:1px; }
+.resize-handle { position:absolute; bottom:-5px; right:-5px; width:11px; height:11px; background:#fff; border:1.5px solid #777; border-radius:3px; cursor:se-resize; z-index:10; display:none; }
+.shape-el.selected .resize-handle { display:block; }
+
+/* Inline text editor overlay */
+#inline-editor {
+  position:absolute; z-index:100; display:none;
+  background:#fff; border:1.5px solid var(--accent);
+  border-radius:5px; padding:3px 6px;
+  font-family:'Sarabun',sans-serif; font-size:12px; color:var(--text);
+  min-width:80px; outline:none; box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* ZOOM INDICATOR */
+#zoom-indicator { position:absolute; bottom:8px; right:8px; background:rgba(0,0,0,0.45); color:#fff; font-size:11px; padding:3px 8px; border-radius:4px; pointer-events:none; z-index:50; }
+
+/* STATUS BAR */
+#statusbar { height:26px; background:var(--surface2); border-top:0.5px solid var(--border); display:flex; align-items:center; padding:0 12px; font-size:11px; color:var(--text3); gap:16px; }
+#status-msg { flex:1; }
+.kbd { display:inline-block; padding:1px 5px; background:var(--surface); border:0.5px solid var(--border2); border-radius:3px; font-size:10px; color:var(--text2); }
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="app-title"><i class="ti ti-map-2" aria-hidden="true"></i>ผังจัดงาน — ศาลเจ้า</div>
+  <div class="sep"></div>
+  <!--
+  ════════════════════════════════════════════
+  วิธีเพิ่มแบบแปลนใหม่:
+    1. วางไฟล์รูป (JPG/PNG) ในโฟลเดอร์เดียวกับ HTML นี้
+    2. เพิ่ม <option> ด้านล่าง เช่น:
+         <option value="indoor_plan.jpg">ผังภายใน</option>
+    3. บันทึกไฟล์ เปิดใหม่ก็จะเห็นทันที
+  ════════════════════════════════════════════
+  -->
+  <select id="plan-select" title="เลือกแบบแปลน" onchange="changePlan(this.value)">
+    <option value="">— ไม่แสดงแปลน —</option>
+    <option value="outdoor_plan.jpg" selected>ผังพื้นที่รวม (outdoor)</option>
+    <!-- <option value="indoor_plan.jpg">ผังพื้นที่ภายใน (indoor)</option> -->
+    <!-- เพิ่มแปลนใหม่ที่นี่ -->
+  </select>
+  <div class="sep"></div>
+  <label id="snap-wrap"><input type="checkbox" id="snap-cb" checked> Snap ตาราง</label>
+  <div class="sep"></div>
+  <button class="tbtn" id="btn-copy" onclick="copySelected()" disabled title="Ctrl+D"><i class="ti ti-copy"></i> คัดลอก</button>
+  <button class="tbtn danger" onclick="clearAll()"><i class="ti ti-trash"></i> ล้างทั้งหมด</button>
+  <button class="tbtn primary" onclick="exportPDF()"><i class="ti ti-file-type-pdf"></i> Export PDF</button>
+  <div id="pos-info">ตำแหน่ง: — ม.</div>
+</div>
+
+<div id="main">
+  <div id="sidebar">
+    <div class="sb-sec">
+      <div class="sb-lbl">เครื่องมือ</div>
+      <div class="tool-grid">
+        <button class="tool-btn active" id="tool-rect"   onclick="setTool('rect')"><i class="ti ti-rectangle"></i>สี่เหลี่ยม</button>
+        <button class="tool-btn"        id="tool-circle" onclick="setTool('circle')"><i class="ti ti-circle"></i>วงกลม</button>
+        <button class="tool-btn"        id="tool-select" onclick="setTool('select')"><i class="ti ti-pointer"></i>เลือก/ย้าย</button>
+        <button class="tool-btn"        id="tool-text"   onclick="setTool('text')"><i class="ti ti-text-size"></i>ข้อความ</button>
+      </div>
+    </div>
+    <div class="sb-sec">
+      <div class="sb-lbl">ขนาดเริ่มต้น (เมตร)</div>
+      <div class="dim-row">
+        <div><span class="dim-lbl">กว้าง (ม.)</span><input class="dim-input" type="number" id="inp-w" value="3" min="0.5" step="0.5"></div>
+        <div><span class="dim-lbl">ยาว (ม.)</span><input class="dim-input" type="number" id="inp-h" value="2" min="0.5" step="0.5"></div>
+      </div>
+    </div>
+    <div class="sb-sec">
+      <div class="sb-lbl">สี</div>
+      <div class="swatch-grid" id="color-swatches"></div>
+    </div>
+    <div id="props-panel">
+      <div class="sb-lbl">รายละเอียด object</div>
+      <div class="prop-empty" id="prop-empty">คลิก object เพื่อแก้ไข<br><small style="font-size:10px;color:var(--text3);">ดับเบิลคลิก = แก้ชื่อทันที</small></div>
+      <div id="props-form">
+        <span class="prop-lbl">ชื่อ / label</span>
+        <input class="prop-input" type="text" id="prop-name" placeholder="เช่น บูธอาหาร A1">
+        <span class="prop-lbl">ขนาด (เมตร)</span>
+        <div class="prop-dims">
+          <div><span class="dim-lbl">กว้าง</span><input class="prop-input" type="number" id="prop-w" step="0.5" min="0.5"></div>
+          <div><span class="dim-lbl">ยาว</span><input class="prop-input" type="number" id="prop-h" step="0.5" min="0.5"></div>
+        </div>
+        <span class="prop-lbl">สี</span>
+        <div class="swatch-grid" id="prop-swatches"></div>
+        <div class="props-actions">
+          <button class="tbtn" onclick="copySelected()" title="Ctrl+D"><i class="ti ti-copy"></i> คัดลอก</button>
+          <button class="tbtn danger" onclick="deleteSelected()"><i class="ti ti-trash"></i> ลบ</button>
+        </div>
+      </div>
+    </div>
+    <div id="legend-sec">
+      <div class="sb-lbl">คำอธิบายสัญลักษณ์</div>
+      <div id="legend-list"><span class="legend-empty">ยังไม่มี object</span></div>
+    </div>
+  </div>
+
+  <div id="canvas-outer">
+    <div id="canvas-wrap">
+      <div id="world">
+        <img id="bg-img" alt="แบบแปลน">
+        <canvas id="grid-canvas"></canvas>
+        <div id="shapes-layer"></div>
+      </div>
+      <input id="inline-editor" type="text" placeholder="พิมพ์ชื่อ…">
+      <div id="zoom-indicator">100%</div>
+    </div>
+    <div id="statusbar">
+      <span id="status-msg">เลือกเครื่องมือ แล้วคลิกบนแผนที่เพื่อวาง | ดับเบิลคลิก object เพื่อแก้ชื่อ</span>
+      <div style="display:flex;gap:10px;align-items:center;flex-shrink:0;">
+        <span><span class="kbd">Scroll</span> ซูม</span>
+        <span><span class="kbd">Space</span>+ลาก เลื่อนแผนที่</span>
+        <span><span class="kbd">Ctrl+D</span> คัดลอก</span>
+        <span><span class="kbd">Del</span> ลบ</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+const PX_PER_M = 9;
+const GRID_M   = 1;
+
+const COLORS = [
+  {hex:'#1565C0',name:'บูธน้ำเงิน'},{hex:'#2E7D32',name:'พื้นที่เขียว'},
+  {hex:'#E65100',name:'เต็นท์ส้ม'},{hex:'#AD1457',name:'บูธชมพู'},
+  {hex:'#6A1B9A',name:'เวที'},{hex:'#00695C',name:'บริการ'},
+  {hex:'#C62828',name:'ห้ามเข้า'},{hex:'#4E342E',name:'อาคาร'},
+  {hex:'#546E7A',name:'ทั่วไป'},{hex:'#F9A825',name:'พื้นที่เหลือง'},
+];
+
+let currentColor = COLORS[0].hex;
+let currentTool  = 'rect';
+let shapes       = [];
+let selectedId   = null;
+let idCounter    = 0;
+
+/* zoom/pan state */
+let scale    = 1;
+let panX     = 0;
+let panY     = 0;
+let spaceDown = false;
+let panning   = false;
+let panStart  = null;
+
+/* ═══════════════════════════════════════════
+   WORLD TRANSFORM
+═══════════════════════════════════════════ */
+function applyTransform() {
+  const world = document.getElementById('world');
+  world.style.transform = `translate(${panX}px,${panY}px) scale(${scale})`;
+  document.getElementById('zoom-indicator').textContent = Math.round(scale * 100) + '%';
+  drawGrid();
+}
+
+/* ═══════════════════════════════════════════
+   PLAN BACKGROUND
+═══════════════════════════════════════════ */
+function changePlan(src) {
+  const img = document.getElementById('bg-img');
+  if (!src) { img.style.display = 'none'; return; }
+  img.onload  = () => { img.style.display = 'block'; };
+  img.onerror = () => {
+    img.style.display = 'none';
+    setStatus('⚠️ ไม่พบไฟล์ "' + src + '" — วางไฟล์รูปในโฟลเดอร์เดียวกันกับ HTML นี้');
+  };
+  img.src = src;
+}
+
+/* ═══════════════════════════════════════════
+   GRID (drawn on canvas, world-space)
+═══════════════════════════════════════════ */
+function drawGrid() {
+  const wrap = document.getElementById('canvas-wrap');
+  const W = wrap.clientWidth, H = wrap.clientHeight;
+  const cvs = document.getElementById('grid-canvas');
+  /* world canvas needs to cover the viewport regardless of pan/zoom */
+  const worldW = Math.ceil(W / scale) + 200;
+  const worldH = Math.ceil(H / scale) + 200;
+  cvs.width  = worldW;
+  cvs.height = worldH;
+  cvs.style.width  = worldW + 'px';
+  cvs.style.height = worldH + 'px';
+  const ctx = cvs.getContext('2d');
+  ctx.clearRect(0, 0, worldW, worldH);
+  ctx.strokeStyle = 'rgba(0,0,0,0.07)';
+  ctx.lineWidth   = 0.5;
+  const step = GRID_M * PX_PER_M;
+  for (let x = 0; x < worldW; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, worldH); ctx.stroke(); }
+  for (let y = 0; y < worldH; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(worldW, y); ctx.stroke(); }
+}
+window.addEventListener('resize', () => { drawGrid(); });
+
+/* ═══════════════════════════════════════════
+   COORDINATE HELPERS
+   clientXY → world XY (accounts for pan+scale)
+═══════════════════════════════════════════ */
+function clientToWorld(cx, cy) {
+  const wrap = document.getElementById('canvas-wrap');
+  const rect = wrap.getBoundingClientRect();
+  return {
+    x: (cx - rect.left - panX) / scale,
+    y: (cy - rect.top  - panY) / scale,
+  };
+}
+
+function snapV(v) {
+  if (!document.getElementById('snap-cb').checked) return Math.round(v);
+  const g = GRID_M * PX_PER_M;
+  return Math.round(v / g) * g;
+}
+function pxToM(px) { return +(px / PX_PER_M).toFixed(1); }
+function mToPx(m)  { return Math.round(m * PX_PER_M); }
+function mStr(m)   { return (m % 1 === 0 ? m : m.toFixed(1)) + ' ม.'; }
+
+/* ═══════════════════════════════════════════
+   ZOOM / PAN (canvas-wrap events)
+═══════════════════════════════════════════ */
+const wrap = document.getElementById('canvas-wrap');
+
+/* Scroll = zoom around mouse */
+wrap.addEventListener('wheel', e => {
+  e.preventDefault();
+  const rect = wrap.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  const delta = e.deltaY < 0 ? 1.1 : 0.91;
+  const newScale = Math.min(8, Math.max(0.15, scale * delta));
+  /* adjust pan so zoom centers on mouse */
+  panX = mx - (mx - panX) * (newScale / scale);
+  panY = my - (my - panY) * (newScale / scale);
+  scale = newScale;
+  applyTransform();
+}, { passive: false });
+
+/* Space = pan mode */
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space' && !spaceDown && document.activeElement.tagName !== 'INPUT') {
+    e.preventDefault(); spaceDown = true;
+    wrap.classList.add('space-down');
+  }
+  if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
+  if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId) { e.preventDefault(); deleteSelected(); }
+  if (e.key === 'Escape') deselectAll();
+  if ((e.ctrlKey || e.metaKey) && e.key === 'd') { e.preventDefault(); copySelected(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === '0') { e.preventDefault(); scale=1; panX=0; panY=0; applyTransform(); }
+});
+document.addEventListener('keyup', e => {
+  if (e.code === 'Space') { spaceDown = false; wrap.classList.remove('space-down'); }
+});
+
+wrap.addEventListener('mousedown', e => {
+  if (spaceDown) {
+    panning = true;
+    panStart = { x: e.clientX - panX, y: e.clientY - panY };
+    wrap.classList.add('panning');
+    e.preventDefault();
+  }
+});
+document.addEventListener('mousemove', e => {
+  if (panning) {
+    panX = e.clientX - panStart.x;
+    panY = e.clientY - panStart.y;
+    applyTransform();
+    return;
+  }
+  /* position display */
+  const wp = clientToWorld(e.clientX, e.clientY);
+  document.getElementById('pos-info').textContent =
+    `ตำแหน่ง: ${pxToM(wp.x).toFixed(1)} × ${pxToM(wp.y).toFixed(1)} ม.`;
+});
+document.addEventListener('mouseup', () => {
+  if (panning) { panning = false; wrap.classList.remove('panning'); }
+});
+
+/* ═══════════════════════════════════════════
+   SWATCHES
+═══════════════════════════════════════════ */
+function buildSwatches(containerId, onPick) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  c.innerHTML = '';
+  const activeSh  = shapes.find(s => s.id === selectedId);
+  const activeCol = containerId === 'prop-swatches' ? (activeSh||{}).color : currentColor;
+  COLORS.forEach(col => {
+    const s = document.createElement('div');
+    s.className = 'swatch' + (col.hex === activeCol ? ' active' : '');
+    s.style.background = col.hex;
+    s.title = col.name;
+    s.onclick = () => { currentColor = col.hex; onPick(col.hex); refreshSwatches(); };
+    c.appendChild(s);
+  });
+}
+function refreshSwatches() {
+  buildSwatches('color-swatches', () => {});
+  buildSwatches('prop-swatches', onPropColor);
+}
+function onPropColor(hex) {
+  const sh = shapes.find(s => s.id === selectedId);
+  if (sh) { sh.color = hex; renderShape(sh); updateLegend(); }
+}
+
+/* ═══════════════════════════════════════════
+   TOOL
+═══════════════════════════════════════════ */
+function setTool(t) {
+  currentTool = t;
+  document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tool-' + t).classList.add('active');
+  const cur = { select:'default', text:'text', rect:'crosshair', circle:'crosshair' };
+  wrap.style.cursor = cur[t] || 'crosshair';
+}
+
+/* ═══════════════════════════════════════════
+   CREATE
+═══════════════════════════════════════════ */
+function createShape(type, x, y, wM, hM, color, name) {
+  const id = 'sh_' + (++idCounter);
+  const sh = { id, type, x, y, wM, hM, color: color||currentColor, name: name||'' };
+  shapes.push(sh);
+  renderShape(sh);
+  updateLegend();
+  return sh;
+}
+
+/* ═══════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════ */
+function renderShape(sh) {
+  let el = document.getElementById(sh.id);
+  const wPx = mToPx(sh.wM), hPx = mToPx(sh.hM);
+
+  if (!el) {
+    el = document.createElement('div');
+    el.className = 'shape-el';
+    el.id = sh.id;
+
+    const inner = document.createElement('div');
+    inner.className = 'shape-inner';
+    const lbl = document.createElement('span');
+    lbl.className = 'shape-label';
+    inner.appendChild(lbl);
+    el.appendChild(inner);
+
+    const rh = document.createElement('div');
+    rh.className = 'resize-handle';
+    el.appendChild(rh);
+
+    attachShapeEvents(el, rh, sh);
+    document.getElementById('shapes-layer').appendChild(el);
+  }
+
+  el.style.left   = sh.x + 'px';
+  el.style.top    = sh.y + 'px';
+  el.style.width  = wPx + 'px';
+  el.style.height = hPx + 'px';
+
+  const inner = el.querySelector('.shape-inner');
+  inner.style.background   = sh.color + 'bb';
+  inner.style.border       = '1.5px solid ' + sh.color;
+  inner.style.borderRadius = sh.type === 'circle' ? '50%' : '4px';
+
+  const txt = sh.name
+    ? sh.name + '\n' + mStr(sh.wM) + '×' + mStr(sh.hM)
+    : mStr(sh.wM) + '×' + mStr(sh.hM);
+  el.querySelector('.shape-label').textContent = txt;
+  el.classList.toggle('selected', sh.id === selectedId);
+}
+
+/* ═══════════════════════════════════════════
+   SHAPE EVENTS (drag, resize, dblclick)
+═══════════════════════════════════════════ */
+function attachShapeEvents(el, rh, sh) {
+  /* ── single click: select ── */
+  el.addEventListener('mousedown', e => {
+    if (e.target === rh) return;
+    if (spaceDown) return; /* let pan handle it */
+    e.stopPropagation();
+    if (currentTool !== 'select') return;
+    selectShape(sh.id);
+
+    /* drag */
+    const startW = clientToWorld(e.clientX, e.clientY);
+    const origX = sh.x, origY = sh.y;
+    let moved = false;
+
+    const mm = ev => {
+      const w = clientToWorld(ev.clientX, ev.clientY);
+      sh.x = snapV(origX + (w.x - startW.x));
+      sh.y = snapV(origY + (w.y - startW.y));
+      moved = true;
+      renderShape(sh);
+    };
+    const mu = () => {
+      document.removeEventListener('mousemove', mm);
+      document.removeEventListener('mouseup', mu);
+    };
+    document.addEventListener('mousemove', mm);
+    document.addEventListener('mouseup', mu);
+  });
+
+  /* ── double click: inline edit ── */
+  el.addEventListener('dblclick', e => {
+    e.stopPropagation();
+    selectShape(sh.id);
+    openInlineEditor(sh, el);
+  });
+
+  /* ── resize handle ── */
+  rh.addEventListener('mousedown', e => {
+    e.stopPropagation(); e.preventDefault();
+    const startW  = clientToWorld(e.clientX, e.clientY);
+    const origWpx = mToPx(sh.wM), origHpx = mToPx(sh.hM);
+    const mm = ev => {
+      const w = clientToWorld(ev.clientX, ev.clientY);
+      const nw = Math.max(mToPx(0.5), snapV(origWpx + (w.x - startW.x)));
+      const nh = Math.max(mToPx(0.5), snapV(origHpx + (w.y - startW.y)));
+      sh.wM = pxToM(nw); sh.hM = pxToM(nh);
+      renderShape(sh); updatePropsForm();
+    };
+    const mu = () => {
+      document.removeEventListener('mousemove', mm);
+      document.removeEventListener('mouseup', mu);
+    };
+    document.addEventListener('mousemove', mm);
+    document.addEventListener('mouseup', mu);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   INLINE TEXT EDITOR
+═══════════════════════════════════════════ */
+function openInlineEditor(sh, el) {
+  const editor = document.getElementById('inline-editor');
+  /* position in client coords relative to canvas-wrap */
+  const wrapRect = wrap.getBoundingClientRect();
+  const elRect   = el.getBoundingClientRect();
+  editor.style.left  = (elRect.left - wrapRect.left) + 'px';
+  editor.style.top   = (elRect.top  - wrapRect.top - 2) + 'px';
+  editor.style.width = Math.max(100, elRect.width) + 'px';
+  editor.style.display = 'block';
+  editor.value = sh.name;
+  editor.focus();
+  editor.select();
+
+  const commit = () => {
+    sh.name = editor.value.trim();
+    editor.style.display = 'none';
+    renderShape(sh);
+    updateLegend();
+    updatePropsForm();
+  };
+  editor.onblur   = commit;
+  editor.onkeydown = e => {
+    if (e.key === 'Enter') { e.preventDefault(); commit(); }
+    if (e.key === 'Escape') { editor.style.display = 'none'; editor.onblur = null; }
+  };
+}
+
+/* ═══════════════════════════════════════════
+   SELECT / DESELECT
+═══════════════════════════════════════════ */
+function selectShape(id) {
+  selectedId = id;
+  shapes.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el) el.classList.toggle('selected', s.id === id);
+  });
+  updatePropsForm();
+  document.getElementById('btn-copy').disabled = false;
+}
+
+function deselectAll() {
+  selectedId = null;
+  shapes.forEach(s => { const el = document.getElementById(s.id); if (el) el.classList.remove('selected'); });
+  updatePropsForm();
+  document.getElementById('btn-copy').disabled = true;
+}
+
+/* ═══════════════════════════════════════════
+   PROPS FORM
+═══════════════════════════════════════════ */
+function updatePropsForm() {
+  const sh = shapes.find(s => s.id === selectedId);
+  document.getElementById('prop-empty').style.display = sh ? 'none' : 'block';
+  document.getElementById('props-form').style.display  = sh ? 'block' : 'none';
+  if (!sh) return;
+  document.getElementById('prop-name').value = sh.name;
+  document.getElementById('prop-w').value    = sh.wM;
+  document.getElementById('prop-h').value    = sh.hM;
+  buildSwatches('prop-swatches', onPropColor);
+}
+
+document.getElementById('prop-name').addEventListener('input', () => {
+  const sh = shapes.find(s => s.id === selectedId);
+  if (sh) { sh.name = document.getElementById('prop-name').value; renderShape(sh); updateLegend(); }
+});
+document.getElementById('prop-w').addEventListener('input', () => {
+  const sh = shapes.find(s => s.id === selectedId);
+  if (sh) { sh.wM = +document.getElementById('prop-w').value || 1; renderShape(sh); }
+});
+document.getElementById('prop-h').addEventListener('input', () => {
+  const sh = shapes.find(s => s.id === selectedId);
+  if (sh) { sh.hM = +document.getElementById('prop-h').value || 1; renderShape(sh); }
+});
+
+/* ═══════════════════════════════════════════
+   CANVAS CLICK → PLACE SHAPE
+═══════════════════════════════════════════ */
+wrap.addEventListener('click', e => {
+  if (spaceDown || panning) return;
+  if (e.target.closest('.shape-el')) return;
+  if (currentTool === 'select') { deselectAll(); return; }
+
+  const wp = clientToWorld(e.clientX, e.clientY);
+  const x = snapV(wp.x), y = snapV(wp.y);
+
+  if (currentTool === 'text') {
+    const sh = createShape('rect', x, y, 4, 0.8, '#546E7A', '');
+    selectShape(sh.id);
+    setTool('select');
+    setTimeout(() => openInlineEditor(sh, document.getElementById(sh.id)), 50);
+    return;
+  }
+
+  const wM = +document.getElementById('inp-w').value || 3;
+  const hM = +document.getElementById('inp-h').value || 2;
+  const sh = createShape(currentTool, x, y, wM, hM, currentColor, '');
+  selectShape(sh.id);
+  setTool('select');
+  setTimeout(() => openInlineEditor(sh, document.getElementById(sh.id)), 50);
+});
+
+/* ═══════════════════════════════════════════
+   COPY / DELETE / CLEAR
+═══════════════════════════════════════════ */
+function copySelected() {
+  const sh = shapes.find(s => s.id === selectedId);
+  if (!sh) return;
+  const ns = createShape(sh.type, sh.x + mToPx(1), sh.y + mToPx(1), sh.wM, sh.hM, sh.color, sh.name);
+  selectShape(ns.id);
+  setStatus('คัดลอกแล้ว — ลากไปวางตำแหน่งที่ต้องการ');
+}
+
+function deleteSelected() {
+  if (!selectedId) return;
+  const el = document.getElementById(selectedId);
+  if (el) el.remove();
+  shapes = shapes.filter(s => s.id !== selectedId);
+  selectedId = null;
+  updatePropsForm(); updateLegend();
+  document.getElementById('btn-copy').disabled = true;
+}
+
+function clearAll() {
+  if (!shapes.length) return;
+  if (!confirm('ล้าง object ทั้งหมด?')) return;
+  shapes.forEach(s => { const el = document.getElementById(s.id); if (el) el.remove(); });
+  shapes = []; selectedId = null;
+  updatePropsForm(); updateLegend();
+  document.getElementById('btn-copy').disabled = true;
+}
+
+/* ═══════════════════════════════════════════
+   LEGEND / STATUS
+═══════════════════════════════════════════ */
+function updateLegend() {
+  const list = document.getElementById('legend-list');
+  const named = shapes.filter(s => s.name);
+  if (!named.length) { list.innerHTML = '<span class="legend-empty">ยังไม่มีชื่อ object</span>'; return; }
+  const seen = {};
+  named.forEach(s => { seen[s.name+'|'+s.color] = s; });
+  list.innerHTML = Object.values(seen).map(s =>
+    `<div class="legend-item"><div class="legend-dot" style="background:${s.color}"></div><span>${s.name} (${mStr(s.wM)}×${mStr(s.hM)})</span></div>`
+  ).join('');
+}
+
+let statusTimer;
+function setStatus(msg) {
+  document.getElementById('status-msg').textContent = msg;
+  clearTimeout(statusTimer);
+  statusTimer = setTimeout(() => {
+    document.getElementById('status-msg').textContent = 'เลือกเครื่องมือ แล้วคลิกบนแผนที่เพื่อวาง | ดับเบิลคลิก object เพื่อแก้ชื่อ';
+  }, 3000);
+}
+
+/* ═══════════════════════════════════════════
+   EXPORT PDF
+═══════════════════════════════════════════ */
+async function exportPDF() {
+  setStatus('กำลัง export PDF...');
+  try {
+    /* hide inline editor if open */
+    document.getElementById('inline-editor').style.display = 'none';
+    const cvs = await html2canvas(wrap, { scale:2, useCORS:true, backgroundColor:'#e4e2dc' });
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation:'landscape', unit:'mm', format:'a4' });
+    const W = pdf.internal.pageSize.getWidth();
+    const H = pdf.internal.pageSize.getHeight();
+    pdf.setFontSize(14);
+    pdf.text('ผังจัดงาน — ศาลเจ้า', W/2, 11, { align:'center' });
+    pdf.setFontSize(8);
+    pdf.text('มาตราส่วน 1:500  |  ' + new Date().toLocaleDateString('th-TH'), W/2, 16, { align:'center' });
+    pdf.addImage(cvs.toDataURL('image/png'), 'PNG', 4, 19, W-8, H-26);
+    const named = shapes.filter(s => s.name);
+    if (named.length) {
+      pdf.setFontSize(6.5);
+      let tx=6, ty=H-4;
+      named.forEach((s,i) => {
+        pdf.text(`${i+1}. ${s.name} (${s.wM}×${s.hM} ม.)`, tx, ty);
+        tx += 55; if (tx > W-20) { tx=6; ty-=4; }
+      });
+    }
+    pdf.save('ผังจัดงาน-ศาลเจ้า.pdf');
+    setStatus('Export PDF สำเร็จ ✓');
+  } catch(err) {
+    setStatus('Export ไม่สำเร็จ: ' + err.message);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+drawGrid();
+buildSwatches('color-swatches', () => {});
+buildSwatches('prop-swatches', onPropColor);
+changePlan(document.getElementById('plan-select').value);
+</script>
+</body>
+</html>
