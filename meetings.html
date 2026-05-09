@@ -350,6 +350,33 @@
       .panel-head,.viewer-actions { flex-direction:column; align-items:flex-start; }
       .pdf-frame,.preview-wrap,.viewer-empty { min-height:68vh; }
     }
+    .btn-ai {
+      color: #fff;
+      background: linear-gradient(135deg, #6d3fc0, #4a2490);
+      box-shadow: 0 12px 24px rgba(109,63,192,.28);
+      gap: 7px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-ai::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.12), transparent);
+      pointer-events: none;
+    }
+    .btn-ai:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(109,63,192,.38);
+    }
+    .btn-ai-spark {
+      font-size: 1rem;
+      animation: sparkle 2.2s ease-in-out infinite;
+    }
+    @keyframes sparkle {
+      0%,100% { transform: scale(1) rotate(0deg); opacity:1; }
+      50% { transform: scale(1.25) rotate(15deg); opacity:.85; }
+    }
   </style>
 </head>
 <body>
@@ -455,6 +482,9 @@
           <a id="openBtn" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">เปิดในแท็บใหม่</a>
           <a id="downloadBtn" class="btn btn-secondary" href="#" target="_blank" rel="noopener noreferrer">ดาวน์โหลด PDF</a>
           <button id="copyBtn" class="btn btn-secondary" type="button">คัดลอกลิงก์</button>
+          <a href="meeting-summarizer.html" target="_blank" rel="noopener noreferrer" class="btn btn-ai">
+            <span class="btn-ai-spark">✦</span> สรุปการประชุมจากเสียง
+          </a>
         </div>
 
         <div class="preview-wrap">
